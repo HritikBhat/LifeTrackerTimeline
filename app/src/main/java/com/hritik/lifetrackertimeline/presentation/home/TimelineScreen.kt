@@ -12,7 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -28,9 +28,12 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hritik.lifetrackertimeline.data.local.entity.TaskEntity
+import com.hritik.lifetrackertimeline.presentation.home.TimelineUiItem
+import com.hritik.lifetrackertimeline.presentation.home.getIconByName
 import java.text.SimpleDateFormat
 import java.util.*
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TimelineScreen(
     viewModel: TimelineViewModel = hiltViewModel()
@@ -38,19 +41,47 @@ fun TimelineScreen(
     val timeSlots = remember { generateTimeSlots() }
     val timelineItems by viewModel.timelineItems.collectAsState()
     val availableTasks by viewModel.availableTasks.collectAsState()
+    val selectedDateStr by viewModel.selectedDate.collectAsState()
     
     var showEditDialog by remember { mutableStateOf(false) }
     var selectedTimeSlot by remember { mutableStateOf("") }
     var itemToEdit by remember { mutableStateOf<TimelineUiItem?>(null) }
+    var showDatePicker by remember { mutableStateOf(false) }
 
-    // Dynamic current time
     var currentTime by remember { mutableStateOf(SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())) }
     
-    // Update time every minute
     LaunchedEffect(Unit) {
         while (true) {
             currentTime = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
             kotlinx.coroutines.delay(60000)
+        }
+    }
+
+    if (showDatePicker) {
+        val datePickerState = rememberDatePickerState(
+            initialSelectedDateMillis = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(selectedDateStr)?.time
+        )
+        DatePickerDialog(
+            onDismissRequest = { showDatePicker = false },
+            confirmButton = {
+                TextButton(onClick = {
+                    datePickerState.selectedDateMillis?.let {
+                        val date = Date(it)
+                        val formattedDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
+                        viewModel.setSelectedDate(formattedDate)
+                    }
+                    showDatePicker = false
+                }) {
+                    Text("OK")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDatePicker = false }) {
+                    Text("Cancel")
+                }
+            }
+        ) {
+            DatePicker(state = datePickerState)
         }
     }
 
@@ -71,47 +102,61 @@ fun TimelineScreen(
         )
     }
 
-    Scaffold(
-        containerColor = Color(0xFFF8F9FE)
-    ) { paddingValues ->
+    val displayDate = remember(selectedDateStr) {
+        val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(selectedDateStr) ?: Date()
+        val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        if (selectedDateStr == today) "Today's Focus"
+        else SimpleDateFormat("EEEE, MMM dd", Locale.getDefault()).format(date)
+    }
+
+    val headerDate = remember(selectedDateStr) {
+        val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(selectedDateStr) ?: Date()
+        SimpleDateFormat("EEEE, MMM dd", Locale.getDefault()).format(date).uppercase()
+    }
+
+    // Removed outer Scaffold to prevent double padding and redundant layout logic
+    Box(modifier = Modifier.fillMaxSize().background(Color(0xFFF8F9FE))) {
         LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues),
+            modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(0.dp),
-            contentPadding = PaddingValues(bottom = 100.dp)
+            contentPadding = PaddingValues(bottom = 80.dp) // Reduced from 100dp
         ) {
             item {
-                // Header Section
                 Column(
                     modifier = Modifier
                         .padding(horizontal = 20.dp)
                         .fillMaxWidth()
+                        .clickable { showDatePicker = true }
                 ) {
-                    Spacer(modifier = Modifier.height(24.dp))
+                    Spacer(modifier = Modifier.height(16.dp)) // Reduced top space
                     
                     Text(
-                        text = SimpleDateFormat("EEEE, MMM dd", Locale.getDefault()).format(Date()).uppercase(),
+                        text = headerDate,
                         style = MaterialTheme.typography.labelMedium,
                         color = Color(0xFF5C6BC0),
                         letterSpacing = 1.sp,
                         fontWeight = FontWeight.Bold
                     )
                     
-                    Text(
-                        text = "Today's Focus",
-                        style = MaterialTheme.typography.headlineLarge,
-                        fontWeight = FontWeight.ExtraBold,
-                        color = Color(0xFF1A1A1A)
-                    )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text = displayDate,
+                            style = MaterialTheme.typography.headlineLarge,
+                            fontWeight = FontWeight.ExtraBold,
+                            color = Color(0xFF1A1A1A),
+                            modifier = Modifier.weight(1f)
+                        )
+                        Icon(Icons.Default.ArrowDropDown, contentDescription = "Change Date", tint = Color.Gray)
+                    }
                     
-                    Spacer(modifier = Modifier.height(24.dp))
+                    Spacer(modifier = Modifier.height(16.dp)) // Reduced space before items
                 }
             }
 
-            items(timeSlots) { time ->
-                val item = timelineItems.find { it.timeSlot == time }
-                val nextSlot = getNextSlot(time)
+            items(timeSlots, key = { it }) { time ->
+                val item = timelineItems[time]
+                val nextSlot = remember(time) { getNextSlot(time) }
+                val isCurrent = remember(currentTime, time, nextSlot) { isTimeBetween(currentTime, time, nextSlot) }
                 
                 Box(
                     modifier = Modifier
@@ -147,7 +192,7 @@ fun TimelineScreen(
                             )
                         }
                         
-                        if (isTimeBetween(currentTime, time, nextSlot)) {
+                        if (isCurrent && selectedDateStr == SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())) {
                             CurrentTimeIndicator(currentTime)
                         }
                     }
@@ -211,7 +256,6 @@ fun EditTimelineBlockDialog(
                 Spacer(modifier = Modifier.height(24.dp))
                 
                 if (selectedTask != null) {
-                    // Preview Card
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -316,10 +360,9 @@ fun EditTimelineBlockDialog(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     if (initialItem != null) {
-                        IconButton(onClick = onDelete) {
-                            Icon(Icons.Default.LocationOn, contentDescription = "Delete", tint = Color.Red) // Using LocationOn as a placeholder for Delete if Delete icon not imported, but Icons.Default.Delete should work. Actually I'll use text.
-                        }
                         TextButton(onClick = onDelete) {
+                            Icon(Icons.Default.Delete, contentDescription = null, tint = Color.Red)
+                            Spacer(modifier = Modifier.width(4.dp))
                             Text("Remove", color = Color.Red)
                         }
                     } else {
@@ -354,7 +397,7 @@ fun TimelineItemRow(item: TimelineUiItem, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 20.dp)
+            .padding(bottom = 16.dp) // Reduced padding
             .clickable { onClick() }
     ) {
         Text(
@@ -441,7 +484,7 @@ fun EmptyTimelineItemRow(time: String, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 20.dp)
+            .padding(bottom = 16.dp) // Reduced padding
             .clickable { onClick() }
     ) {
         Text(
@@ -513,7 +556,7 @@ fun CurrentTimeIndicator(time: String) {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 20.dp)
+            .padding(bottom = 16.dp) // Aligned with items
     ) {
         Text(
             text = time,

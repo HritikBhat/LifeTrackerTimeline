@@ -7,6 +7,7 @@ import com.hritik.lifetrackertimeline.data.local.entity.TimelineEntity
 import com.hritik.lifetrackertimeline.data.repository.TaskRepository
 import com.hritik.lifetrackertimeline.data.repository.TimelineRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -36,7 +37,8 @@ class TimelineViewModel @Inject constructor(
     val availableTasks: StateFlow<List<TaskEntity>> = taskRepository.getAllTasks()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    val timelineItems: StateFlow<List<TimelineUiItem>> = combine(
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val timelineItems: StateFlow<Map<String, TimelineUiItem>> = combine(
         _selectedDate.flatMapLatest { date -> timelineRepository.getTimelineByDate(date) },
         taskRepository.getAllTasks()
     ) { timelineEntries, tasks ->
@@ -53,8 +55,12 @@ class TimelineViewModel @Inject constructor(
                     isCompleted = entry.isCompleted
                 )
             }
-        }
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+        }.associateBy { it.timeSlot }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+
+    fun setSelectedDate(date: String) {
+        _selectedDate.value = date
+    }
 
     fun upsertTimelineEntry(timeSlot: String, taskId: Int) {
         viewModelScope.launch {

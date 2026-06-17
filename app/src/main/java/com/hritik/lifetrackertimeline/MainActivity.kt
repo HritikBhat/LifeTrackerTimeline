@@ -9,6 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import com.google.android.gms.ads.MobileAds
 import com.hritik.lifetrackertimeline.navigation.LifeTrackerNavGraph
 import com.hritik.lifetrackertimeline.ui.theme.LifeTrackerTimelineTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,6 +18,10 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
+        // Initialize Mobile Ads
+        MobileAds.initialize(this) {}
+
         enableEdgeToEdge()
         setContent {
             LifeTrackerTimelineTheme {

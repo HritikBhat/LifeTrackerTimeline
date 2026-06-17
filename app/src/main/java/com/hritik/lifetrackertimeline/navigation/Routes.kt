@@ -28,6 +28,12 @@ sealed class BottomBarScreen(
         icon = Icons.Default.Timeline
     )
 
+    object Tasks : BottomBarScreen(
+        route = "task",
+        title = "Tasks",
+        icon = Icons.Default.Task
+    )
+
     object Analytics : BottomBarScreen(
         route = "analytics",
         title = "Analytics",
@@ -41,8 +47,8 @@ sealed class BottomBarScreen(
     )
 
     object Profile : BottomBarScreen(
-        route = "task",
-        title = "My Task",
-        icon = Icons.Default.Task
+        route = "profile",
+        title = "Profile",
+        icon = Icons.Default.Person
     )
 }

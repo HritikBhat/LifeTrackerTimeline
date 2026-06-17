@@ -8,12 +8,24 @@ import com.hritik.lifetrackertimeline.data.local.dao.TaskDao
 import com.hritik.lifetrackertimeline.data.local.dao.TimelineDao
 import com.hritik.lifetrackertimeline.data.local.dao.UserDao
 import com.hritik.lifetrackertimeline.data.local.database.AppDatabase
+import com.hritik.lifetrackertimeline.data.repository.*
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class RepositoryModule {
+    @Binds
+    @Singleton
+    abstract fun bindBillingRepository(
+        billingRepositoryImpl: BillingRepositoryImpl
+    ): BillingRepository
+}
 
 @Module
 @InstallIn(SingletonComponent::class)
