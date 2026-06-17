@@ -12,6 +12,7 @@ sealed class Screen(val route: String) {
     object Splash : Screen("splash")
     object Login : Screen("login")
     object Main : Screen("main")
+    object Premium : Screen("premium")
     object AddEditTask : Screen("add_edit_task/{taskId}") {
         fun createRoute(taskId: Int) = "add_edit_task/$taskId"
     }

@@ -82,7 +82,8 @@ class AuthViewModel @Inject constructor(
                     uid = user.uid,
                     displayName = user.displayName,
                     email = user.email,
-                    photoUrl = user.photoUrl
+                    photoUrl = user.photoUrl,
+                    isPremium = user.isPremium
                 )
                 userRepository.saveUser(userEntity)
                 _authState.value = AuthState.Authenticated

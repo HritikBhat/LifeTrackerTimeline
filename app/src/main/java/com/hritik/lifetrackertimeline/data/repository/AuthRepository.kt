@@ -90,7 +90,8 @@ class AuthRepository @Inject constructor(
                     email = user.email ?: "",
                     photoUrl = user.photoUrl?.toString() ?: "",
                     createdAt = Timestamp.now(),
-                    lastLoginAt = Timestamp.now()
+                    lastLoginAt = Timestamp.now(),
+                    isPremium = false // Default for new users
                 )
             }
             

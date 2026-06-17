@@ -104,9 +104,8 @@ fun MainScreen(
             composable(BottomBarScreen.Profile.route) {
                 ProfileScreen(
                     authViewModel = authViewModel,
-                    userRepository = viewModel.userRepository,
-                    premiumManager = viewModel.premiumManager,
-                    billingRepository = viewModel.billingRepository
+                    mainViewModel = viewModel,
+                    onNavigateToPremium = { rootNavController.navigate(Screen.Premium.route) }
                 )
             }
         }

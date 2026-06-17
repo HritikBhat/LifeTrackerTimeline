@@ -13,6 +13,7 @@ import com.hritik.lifetrackertimeline.presentation.auth.SplashScreen
 import com.hritik.lifetrackertimeline.presentation.home.AddEditTaskScreen
 import com.hritik.lifetrackertimeline.presentation.main.MainScreen
 import com.hritik.lifetrackertimeline.presentation.components.InterstitialAdHandler
+import com.hritik.lifetrackertimeline.presentation.premium.PremiumScreen
 
 @Composable
 fun LifeTrackerNavGraph(
@@ -60,6 +61,10 @@ fun LifeTrackerNavGraph(
                 authViewModel = authViewModel,
                 rootNavController = navController
             )
+        }
+
+        composable(Screen.Premium.route) {
+            PremiumScreen(navController = navController)
         }
 
         composable(
