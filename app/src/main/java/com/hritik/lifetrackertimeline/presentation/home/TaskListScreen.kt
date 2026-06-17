@@ -6,27 +6,38 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hritik.lifetrackertimeline.presentation.auth.AuthViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.compose.ui.draw.scale
+import com.hritik.lifetrackertimeline.data.local.entity.TaskEntity
+import com.hritik.lifetrackertimeline.navigation.Screen
+import com.hritik.lifetrackertimeline.presentation.auth.AuthViewModel
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskListScreen(
     authViewModel: AuthViewModel,
-    rootNavController: NavHostController
+    rootNavController: NavHostController,
+    viewModel: TaskViewModel = hiltViewModel()
 ) {
+    val tasks by viewModel.allTasks.collectAsState()
+    var searchQuery by remember { mutableStateOf("") }
+    
+    val filteredTasks = tasks.filter {
+        it.title.contains(searchQuery, ignoreCase = true) || 
+        it.notes.contains(searchQuery, ignoreCase = true)
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -52,7 +63,7 @@ fun TaskListScreen(
         Spacer(modifier = Modifier.height(16.dp))
         
         Button(
-            onClick = { /* TODO */ },
+            onClick = { rootNavController.navigate(Screen.AddEditTask.createRoute(-1)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
@@ -67,10 +78,10 @@ fun TaskListScreen(
         Spacer(modifier = Modifier.height(16.dp))
         
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = searchQuery,
+            onValueChange = { searchQuery = it },
             modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("Filter categories...", color = Color.Gray) },
+            placeholder = { Text("Filter tasks...", color = Color.Gray) },
             leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = Color.Gray) },
             shape = RoundedCornerShape(12.dp),
             colors = OutlinedTextFieldDefaults.colors(
@@ -87,8 +98,15 @@ fun TaskListScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(bottom = 32.dp)
         ) {
-            items(manageTasks) { task ->
-                ManageTaskItem(task)
+            items(filteredTasks, key = { it.id }) { task ->
+                ManageTaskItem(
+                    task = task,
+                    onEdit = { rootNavController.navigate(Screen.AddEditTask.createRoute(task.id)) },
+                    onDelete = { viewModel.deleteTask(task) },
+                    onToggleActive = { isActive ->
+                        viewModel.updateTask(task.copy(isActive = isActive))
+                    }
+                )
             }
             
             item {
@@ -111,7 +129,12 @@ fun TaskListScreen(
 }
 
 @Composable
-fun ManageTaskItem(task: ManageTask) {
+fun ManageTaskItem(
+    task: TaskEntity,
+    onEdit: () -> Unit,
+    onDelete: () -> Unit,
+    onToggleActive: (Boolean) -> Unit
+) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -125,10 +148,14 @@ fun ManageTaskItem(task: ManageTask) {
             Surface(
                 modifier = Modifier.size(48.dp),
                 shape = RoundedCornerShape(12.dp),
-                color = Color(0xFFF0F2FF)
+                color = Color(task.color).copy(alpha = 0.1f)
             ) {
                 Box(contentAlignment = Alignment.Center) {
-                    Text(task.icon, fontSize = 20.sp)
+                    Icon(
+                        imageVector = getIconByName(task.icon),
+                        contentDescription = null,
+                        tint = Color(task.color)
+                    )
                 }
             }
             
@@ -141,7 +168,7 @@ fun ManageTaskItem(task: ManageTask) {
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = task.description,
+                    text = task.notes,
                     style = MaterialTheme.typography.bodySmall,
                     color = Color.Gray,
                     maxLines = 2
@@ -149,16 +176,15 @@ fun ManageTaskItem(task: ManageTask) {
             }
             
             Row(verticalAlignment = Alignment.CenterVertically) {
-                IconButton(onClick = { /* TODO */ }, modifier = Modifier.size(32.dp)) {
+                IconButton(onClick = onEdit, modifier = Modifier.size(32.dp)) {
                     Icon(Icons.Default.Edit, contentDescription = "Edit", tint = Color.Gray, modifier = Modifier.size(18.dp))
                 }
-                IconButton(onClick = { /* TODO */ }, modifier = Modifier.size(32.dp)) {
+                IconButton(onClick = onDelete, modifier = Modifier.size(32.dp)) {
                     Icon(Icons.Default.Delete, contentDescription = "Delete", tint = Color(0xFFEF5350), modifier = Modifier.size(18.dp))
                 }
-                var checked by remember { mutableStateOf(task.isActive) }
                 Switch(
-                    checked = checked,
-                    onCheckedChange = { checked = it },
+                    checked = task.isActive,
+                    onCheckedChange = onToggleActive,
                     modifier = Modifier.scale(0.8f),
                     colors = SwitchDefaults.colors(
                         checkedThumbColor = Color.White,
@@ -169,19 +195,3 @@ fun ManageTaskItem(task: ManageTask) {
         }
     }
 }
-
-
-
-data class ManageTask(
-    val title: String,
-    val description: String,
-    val isActive: Boolean,
-    val icon: String
-)
-
-val manageTasks = listOf(
-    ManageTask("Morning Deep Work", "Focus on high-priority coding tasks without interruptions.", true, "💡"),
-    ManageTask("Daily Standup", "Sync with the team on progress and blockers.", false, "👥"),
-    ManageTask("Inbox Zero Sprint", "Clear all pending emails and organize the workspace.", false, "✉️"),
-    ManageTask("System Maintenance", "Update dependencies and check server health logs.", true, "⚙️")
-)

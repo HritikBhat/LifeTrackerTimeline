@@ -21,7 +21,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.hritik.lifetrackertimeline.navigation.BottomBarScreen
+import com.hritik.lifetrackertimeline.navigation.Screen
 import com.hritik.lifetrackertimeline.presentation.auth.AuthViewModel
+import com.hritik.lifetrackertimeline.presentation.home.AnalyticsScreen
+import com.hritik.lifetrackertimeline.presentation.home.CalendarScreen
 import com.hritik.lifetrackertimeline.presentation.home.TaskListScreen
 import com.hritik.lifetrackertimeline.presentation.home.TimelineScreen
 
@@ -67,7 +70,7 @@ fun MainScreen(
             // FAB shown only on Timeline and Profile (Task List) screens
             if (currentRoute == BottomBarScreen.Timeline.route || currentRoute == BottomBarScreen.Profile.route) {
                 FloatingActionButton(
-                    onClick = { /* TODO: Add Task */ },
+                    onClick = { rootNavController.navigate(Screen.AddEditTask.createRoute(-1)) },
                     containerColor = Color(0xFF0047AB),
                     contentColor = Color.White,
                     shape = CircleShape
@@ -86,13 +89,12 @@ fun MainScreen(
                 TimelineScreen()
             }
             composable(BottomBarScreen.Analytics.route) {
-                PlaceholderScreen("Analytics")
+                AnalyticsScreen()
             }
             composable(BottomBarScreen.Calendar.route) {
-                PlaceholderScreen("Calendar")
+                CalendarScreen()
             }
             composable(BottomBarScreen.Profile.route) {
-                // Showing TaskListScreen here as per the second image which has Profile highlighted
                 TaskListScreen(authViewModel, rootNavController)
             }
         }
@@ -103,7 +105,6 @@ fun MainScreen(
 fun BottomBar(navController: NavHostController) {
     val screens = listOf(
         BottomBarScreen.Timeline,
-        BottomBarScreen.Analytics,
         BottomBarScreen.Calendar,
         BottomBarScreen.Profile
     )
