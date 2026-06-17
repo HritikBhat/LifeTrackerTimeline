@@ -12,6 +12,7 @@ import com.hritik.lifetrackertimeline.presentation.auth.LoginScreen
 import com.hritik.lifetrackertimeline.presentation.auth.SplashScreen
 import com.hritik.lifetrackertimeline.presentation.home.AddEditTaskScreen
 import com.hritik.lifetrackertimeline.presentation.main.MainScreen
+import com.hritik.lifetrackertimeline.presentation.components.InterstitialAdHandler
 
 @Composable
 fun LifeTrackerNavGraph(
@@ -19,6 +20,9 @@ fun LifeTrackerNavGraph(
     startDestination: String = Screen.Splash.route
 ) {
     val authViewModel: AuthViewModel = hiltViewModel()
+    
+    // Manage interstitial ads globally across the main app screens
+    InterstitialAdHandler()
 
     NavHost(
         navController = navController,

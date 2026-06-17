@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.hritik.lifetrackertimeline.data.local.entity.TaskEntity
+import com.hritik.lifetrackertimeline.presentation.components.AdBanner
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
@@ -85,6 +86,16 @@ fun AddEditTaskScreen(
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFFF8F9FE))
             )
+        },
+        bottomBar = {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color(0xFFF8F9FE))
+                    .navigationBarsPadding()
+            ) {
+                AdBanner()
+            }
         },
         containerColor = Color(0xFFF8F9FE)
     ) { padding ->
