@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import com.hritik.lifetrackertimeline.presentation.auth.AuthViewModel
 import com.hritik.lifetrackertimeline.presentation.auth.LoginScreen
 import com.hritik.lifetrackertimeline.presentation.auth.SplashScreen
-import com.hritik.lifetrackertimeline.presentation.home.HomeScreen
+import com.hritik.lifetrackertimeline.presentation.main.MainScreen
 
 @Composable
 fun LifeTrackerNavGraph(
@@ -25,7 +25,7 @@ fun LifeTrackerNavGraph(
             SplashScreen(
                 viewModel = authViewModel,
                 onNavigateToHome = {
-                    navController.navigate(Screen.Home.route) {
+                    navController.navigate(Screen.Main.route) {
                         popUpTo(Screen.Splash.route) { inclusive = true }
                     }
                 },
@@ -41,21 +41,17 @@ fun LifeTrackerNavGraph(
             LoginScreen(
                 viewModel = authViewModel,
                 onNavigateToHome = {
-                    navController.navigate(Screen.Home.route) {
+                    navController.navigate(Screen.Main.route) {
                         popUpTo(Screen.Login.route) { inclusive = true }
                     }
                 }
             )
         }
 
-        composable(Screen.Home.route) {
-            HomeScreen(
-                viewModel = authViewModel,
-                onLogout = {
-                    navController.navigate(Screen.Login.route) {
-                        popUpTo(Screen.Home.route) { inclusive = true }
-                    }
-                }
+        composable(Screen.Main.route) {
+            MainScreen(
+                authViewModel = authViewModel,
+                rootNavController = navController
             )
         }
     }
