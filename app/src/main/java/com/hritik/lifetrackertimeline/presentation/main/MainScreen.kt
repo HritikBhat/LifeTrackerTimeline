@@ -1,5 +1,6 @@
 package com.hritik.lifetrackertimeline.presentation.main
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -39,67 +40,75 @@ fun MainScreen(
     val navController = rememberNavController()
     val isPremium by viewModel.premiumManager.isPremium.collectAsState()
     
-    Column(modifier = Modifier.fillMaxSize()) {
-        Scaffold(
-            modifier = Modifier.weight(1f),
-            topBar = {
-                CenterAlignedTopAppBar(
-                    title = { Text("LifeTracker Timeline", style = MaterialTheme.typography.titleLarge) },
-                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                        containerColor = Color.White
-                    )
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = { Text("LifeTracker Timeline", style = MaterialTheme.typography.titleLarge) },
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = Color.White
                 )
-            },
-            bottomBar = {
-                BottomBar(navController = navController)
-            },
-            floatingActionButton = {
-                val navBackStackEntry by navController.currentBackStackEntryAsState()
-                val currentRoute = navBackStackEntry?.destination?.route
-                
-                if (currentRoute == BottomBarScreen.Timeline.route || currentRoute == BottomBarScreen.Tasks.route) {
-                    FloatingActionButton(
-                        onClick = { rootNavController.navigate(Screen.AddEditTask.createRoute(-1)) },
-                        containerColor = Color(0xFF0047AB),
-                        contentColor = Color.White,
-                        shape = CircleShape
-                    ) {
-                        Icon(Icons.Default.Add, contentDescription = "Add Task")
-                    }
-                }
-            }
-        ) { innerPadding ->
-            NavHost(
-                navController = navController,
-                startDestination = BottomBarScreen.Timeline.route,
-                modifier = Modifier.padding(innerPadding)
+            )
+        },
+        bottomBar = {
+            // Container for both BottomBar and AdBanner
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color(0xFFF8F9FE))
             ) {
-                composable(BottomBarScreen.Timeline.route) {
-                    TimelineScreen()
+                BottomBar(navController = navController)
+                
+                if (!isPremium) {
+                    AdBanner()
                 }
-                composable(BottomBarScreen.Analytics.route) {
-                    AnalyticsScreen()
-                }
-                composable(BottomBarScreen.Calendar.route) {
-                    CalendarScreen()
-                }
-                composable(BottomBarScreen.Tasks.route) {
-                    TaskListScreen(authViewModel, rootNavController)
-                }
-                composable(BottomBarScreen.Profile.route) {
-                    ProfileScreen(
-                        authViewModel = authViewModel,
-                        userRepository = viewModel.userRepository,
-                        premiumManager = viewModel.premiumManager,
-                        billingRepository = viewModel.billingRepository
-                    )
+                
+                // This spacer handles the system navigation bar height,
+                // pushing everything (Ad + Nav) above the system buttons.
+                Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
+            }
+        },
+        floatingActionButton = {
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val currentRoute = navBackStackEntry?.destination?.route
+            
+            if (currentRoute == BottomBarScreen.Timeline.route || currentRoute == BottomBarScreen.Tasks.route) {
+                FloatingActionButton(
+                    onClick = { rootNavController.navigate(Screen.AddEditTask.createRoute(-1)) },
+                    containerColor = Color(0xFF0047AB),
+                    contentColor = Color.White,
+                    shape = CircleShape
+                ) {
+                    Icon(Icons.Default.Add, contentDescription = "Add Task")
                 }
             }
         }
-        
-        // Banner Ad below bottom navigation if not premium
-        if (!isPremium) {
-            AdBanner()
+    ) { innerPadding ->
+        NavHost(
+            navController = navController,
+            startDestination = BottomBarScreen.Timeline.route,
+            modifier = Modifier.padding(innerPadding)
+        ) {
+            composable(BottomBarScreen.Timeline.route) {
+                TimelineScreen()
+            }
+            composable(BottomBarScreen.Analytics.route) {
+                AnalyticsScreen()
+            }
+            composable(BottomBarScreen.Calendar.route) {
+                CalendarScreen()
+            }
+            composable(BottomBarScreen.Tasks.route) {
+                TaskListScreen(authViewModel, rootNavController)
+            }
+            composable(BottomBarScreen.Profile.route) {
+                ProfileScreen(
+                    authViewModel = authViewModel,
+                    userRepository = viewModel.userRepository,
+                    premiumManager = viewModel.premiumManager,
+                    billingRepository = viewModel.billingRepository
+                )
+            }
         }
     }
 }
@@ -115,13 +124,15 @@ fun BottomBar(navController: NavHostController) {
     val currentDestination = navBackStackEntry?.destination
 
     NavigationBar(
+        modifier = Modifier.height(72.dp), // Reduced height from default 80dp
         containerColor = Color(0xFFF8F9FE),
-        tonalElevation = 0.dp
+        tonalElevation = 0.dp,
+        windowInsets = WindowInsets(0.dp) // Disable internal insets as we handle them in the parent Column
     ) {
         screens.forEach { screen ->
             val selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true
             NavigationBarItem(
-                label = { Text(text = screen.title) },
+                label = { Text(text = screen.title, style = MaterialTheme.typography.labelSmall) },
                 icon = { Icon(imageVector = screen.icon, contentDescription = screen.title) },
                 selected = selected,
                 onClick = {
