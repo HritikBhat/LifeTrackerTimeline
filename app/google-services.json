@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "102006101297",
+    "project_id": "lifetracker-timeline",
+    "storage_bucket": "lifetracker-timeline.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:102006101297:android:1033499c2f2df1ae950c10",
+        "android_client_info": {
+          "package_name": "com.hritik.lifetrackertimeline"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "102006101297-l9dn0i53k7qp118c7fdr34sjemicdp8q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hritik.lifetrackertimeline",
+            "certificate_hash": "e502a2f6c86c5b98d4d42794325b9cbf77c73681"
+          }
+        },
+        {
+          "client_id": "102006101297-4au59he28o35msleav9fvtro1prmcltf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDocImLx5Qq0BtkruwcqPe3PCzL884CuyI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "102006101297-4au59he28o35msleav9fvtro1prmcltf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
