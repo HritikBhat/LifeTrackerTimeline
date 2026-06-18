@@ -107,7 +107,7 @@
 
     <!-- Task Selection Screen -->
     <string name="select_task_header">कार्य चुनें</string>
-    <string name="search_tasks">कार्य खोजें...</string>
+    <string name="search_tasks">कार्य दर्ज करें</string>
     <string name="previous_tasks">पिछले कार्य</string>
     <string name="total_suffix">%1$d कुल</string>
     <string name="no_tasks_found">कोई कार्य नहीं मिला</string>

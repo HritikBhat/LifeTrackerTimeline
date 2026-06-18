@@ -107,7 +107,7 @@
 
     <!-- Task Selection Screen -->
     <string name="select_task_header">SELECT TASK</string>
-    <string name="search_tasks">Search tasks...</string>
+    <string name="search_tasks">Enter task</string>
     <string name="previous_tasks">PREVIOUS TASKS</string>
     <string name="total_suffix">%1$d TOTAL</string>
     <string name="no_tasks_found">No tasks found</string>

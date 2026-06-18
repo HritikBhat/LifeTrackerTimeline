@@ -107,7 +107,7 @@
 
     <!-- Task Selection Screen -->
     <string name="select_task_header">SELECCIONAR TAREA</string>
-    <string name="search_tasks">Buscar tareas...</string>
+    <string name="search_tasks">Introducir tarea</string>
     <string name="previous_tasks">TAREAS ANTERIORES</string>
     <string name="total_suffix">%1$d TOTAL</string>
     <string name="no_tasks_found">No se encontraron tareas</string>

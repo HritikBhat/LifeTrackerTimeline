@@ -107,7 +107,7 @@
 
     <!-- Task Selection Screen -->
     <string name="select_task_header">タスクを選択</string>
-    <string name="search_tasks">タスクを検索...</string>
+    <string name="search_tasks">タスクを入力</string>
     <string name="previous_tasks">以前のタスク</string>
     <string name="total_suffix">合計 %1$d 件</string>
     <string name="no_tasks_found">タスクが見つかりません</string>

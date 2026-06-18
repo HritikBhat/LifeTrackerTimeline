@@ -107,7 +107,7 @@
 
     <!-- Task Selection Screen -->
     <string name="select_task_header">AUFGABE WÄHLEN</string>
-    <string name="search_tasks">Aufgaben suchen...</string>
+    <string name="search_tasks">Aufgabe eingeben</string>
     <string name="previous_tasks">VORHERIGE AUFGABEN</string>
     <string name="total_suffix">%1$d GESAMT</string>
     <string name="no_tasks_found">Keine Aufgaben gefunden</string>

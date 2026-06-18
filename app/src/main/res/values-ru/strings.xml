@@ -107,7 +107,7 @@
 
     <!-- Task Selection Screen -->
     <string name="select_task_header">ВЫБЕРИТЕ ЗАДАЧУ</string>
-    <string name="search_tasks">Поиск задач...</string>
+    <string name="search_tasks">Введите задачу</string>
     <string name="previous_tasks">ПРЕДЫДУЩИЕ ЗАДАЧИ</string>
     <string name="total_suffix">ВСЕГО %1$d</string>
     <string name="no_tasks_found">Задачи не найдены</string>
