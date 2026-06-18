@@ -53,8 +53,13 @@ fun ProfileScreen(
     
     var showIntervalDialog by remember { mutableStateOf(false) }
     var showLanguageDialog by remember { mutableStateOf(false) }
-    
-    val intervals = listOf("Every 30 mins", "Every 1 hour", "2 hour", "Never")
+
+    val intervals = listOf(
+        stringResource(R.string.interval_30_mins),
+        stringResource(R.string.interval_1_hour),
+        stringResource(R.string.interval_2_hours),
+        stringResource(R.string.interval_never)
+    )
     
     val languages = listOf(
         stringResource(R.string.lang_english) to "en",
