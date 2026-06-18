@@ -1,6 +1,7 @@
 package com.hritik.lifetrackertimeline.presentation.components
 
 import android.app.Activity
+import android.util.Log
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
@@ -19,14 +20,17 @@ import kotlin.run
 
 @Composable
 fun InterstitialAdHandler() {
-    val context = LocalContext.current
     val isPremium = LocalIsPremium.current
+    Log.d("isPremz","Flag: $isPremium")
+    if (isPremium) return
+
+    val context = LocalContext.current
     var interstitialAd by remember { mutableStateOf<InterstitialAd?>(null) }
     var isAdShowing by remember { mutableStateOf(false) }
     var wasInBackground by remember { mutableStateOf(false) }
 
     val loadAd = {
-        if (!isPremium && interstitialAd == null && !isAdShowing) {
+        if (interstitialAd == null && !isAdShowing) {
             val adUnitId = if (Global.isAppOnTest) {
                 "ca-app-pub-3940256099942544/1033173712" // Test Interstitial ID
             } else {
@@ -50,11 +54,9 @@ fun InterstitialAdHandler() {
         }
     }
 
-    // Load ad initially or when premium status changes
-    LaunchedEffect(isPremium) {
-        if (!isPremium) {
-            loadAd()
-        }
+    // Load ad initially
+    LaunchedEffect(Unit) {
+        loadAd()
     }
 
     // Lifecycle observer to show ad when returning to app (foreground)
@@ -63,21 +65,18 @@ fun InterstitialAdHandler() {
         val observer = LifecycleEventObserver { _, event ->
             when (event) {
                 Lifecycle.Event.ON_STOP -> {
-                    // Only mark as background if we aren't currently showing an ad.
-                    // Showing an ad often triggers ON_STOP for the underlying activity.
                     if (!isAdShowing) {
                         wasInBackground = true
                     }
                 }
                 Lifecycle.Event.ON_RESUME -> {
-                    // Only show if the user is returning from actual background and no ad is showing.
-                    if (wasInBackground && !isPremium && !isAdShowing) {
+                    if (wasInBackground && !isAdShowing) {
                         interstitialAd?.let { ad ->
                             ad.fullScreenContentCallback = object : FullScreenContentCallback() {
                                 override fun onAdDismissedFullScreenContent() {
                                     interstitialAd = null
                                     isAdShowing = false
-                                    wasInBackground = false // Reset background flag
+                                    wasInBackground = false
                                     loadAd()
                                 }
 
@@ -96,7 +95,6 @@ fun InterstitialAdHandler() {
                             isAdShowing = true
                             ad.show(context as Activity)
                         } ?: run {
-                            // If no ad was ready, reset the background flag to avoid showing it later unexpectedly
                             wasInBackground = false
                             loadAd()
                         }

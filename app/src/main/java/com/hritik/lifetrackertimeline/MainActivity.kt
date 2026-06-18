@@ -17,12 +17,19 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.ads.MobileAds
 import com.hritik.lifetrackertimeline.data.local.DataStoreManager
+import com.hritik.lifetrackertimeline.helper.PremiumManager
+import com.hritik.lifetrackertimeline.helper.PremiumStatusProvider
 import com.hritik.lifetrackertimeline.navigation.LifeTrackerNavGraph
 import com.hritik.lifetrackertimeline.ui.theme.LifeTrackerTimelineTheme
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var premiumManager: PremiumManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
@@ -32,8 +39,10 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContent {
             LifeTrackerTimelineTheme {
-                val navController = rememberNavController()
-                LifeTrackerNavGraph(navController)
+                PremiumStatusProvider(premiumManager = premiumManager) {
+                    val navController = rememberNavController()
+                    LifeTrackerNavGraph(navController)
+                }
             }
         }
     }

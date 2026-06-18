@@ -28,6 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.hritik.lifetrackertimeline.R
 import com.hritik.lifetrackertimeline.data.local.entity.TaskEntity
+import com.hritik.lifetrackertimeline.helper.LocalIsPremium
 import com.hritik.lifetrackertimeline.presentation.components.AdBanner
 import kotlinx.coroutines.launch
 
@@ -42,6 +43,7 @@ fun AddEditTaskScreen(
     viewModel: TaskViewModel = hiltViewModel()
 ) {
     val scope = rememberCoroutineScope()
+    val isPremium = LocalIsPremium.current
     var title by remember { mutableStateOf(taskName ?: "") }
     var notes by remember { mutableStateOf("") }
     var isUnproductive by remember { mutableStateOf(false) }
@@ -106,13 +108,15 @@ fun AddEditTaskScreen(
             )
         },
         bottomBar = {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color(0xFFF8F9FE))
-                    .navigationBarsPadding()
-            ) {
-                AdBanner()
+            if (!isPremium) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color(0xFFF8F9FE))
+                        .navigationBarsPadding()
+                ) {
+                    AdBanner()
+                }
             }
         },
         containerColor = Color(0xFFF8F9FE)
