@@ -12,7 +12,7 @@ class TaskRepository @Inject constructor(
 ) {
     fun getAllTasks(): Flow<List<TaskEntity>> = taskDao.getAllTasks()
 
-    suspend fun insertTask(task: TaskEntity) = taskDao.insertTask(task)
+    suspend fun insertTask(task: TaskEntity): Long = taskDao.insertTask(task)
 
     suspend fun updateTask(task: TaskEntity) = taskDao.updateTask(task)
 

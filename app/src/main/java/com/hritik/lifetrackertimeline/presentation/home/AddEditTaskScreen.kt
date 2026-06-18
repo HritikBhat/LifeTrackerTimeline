@@ -34,6 +34,8 @@ import kotlinx.coroutines.launch
 fun AddEditTaskScreen(
     taskId: Int,
     taskName: String? = null,
+    timeSlot: String? = null,
+    date: String? = null,
     navController: NavController,
     viewModel: TaskViewModel = hiltViewModel()
 ) {
@@ -68,16 +70,28 @@ fun AddEditTaskScreen(
                 actions = {
                     Button(
                         onClick = {
-                            val task = TaskEntity(
-                                id = if (taskId == -1) 0 else taskId,
-                                title = title,
-                                notes = notes,
-                                isUnproductive = isUnproductive,
-                                color = selectedColor.toArgb(),
-                                icon = selectedIcon
-                            )
-                            if (taskId == -1) viewModel.insertTask(task) else viewModel.updateTask(task)
-                            navController.popBackStack()
+                            scope.launch {
+                                val task = TaskEntity(
+                                    id = if (taskId == -1) 0 else taskId,
+                                    title = title,
+                                    notes = notes,
+                                    isUnproductive = isUnproductive,
+                                    color = selectedColor.toArgb(),
+                                    icon = selectedIcon
+                                )
+                                
+                                if (taskId == -1) {
+                                    val newTaskId = viewModel.insertTask(task)
+                                    if (timeSlot != null && date != null) {
+                                        viewModel.upsertTimelineEntry(timeSlot, newTaskId, date)
+                                        // Set a flag to signal the parent to pop TaskSelectionScreen
+                                        navController.previousBackStackEntry?.savedStateHandle?.set("task_created", true)
+                                    }
+                                } else {
+                                    viewModel.updateTask(task)
+                                }
+                                navController.popBackStack()
+                            }
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0047AB)),
                         shape = RoundedCornerShape(20.dp)

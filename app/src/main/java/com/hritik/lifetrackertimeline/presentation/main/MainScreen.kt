@@ -7,10 +7,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -53,6 +50,20 @@ fun MainScreen(
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
+
+    // Check rootNavController's current entry for signals from AddEditTask
+    val rootBackStackEntry by rootNavController.currentBackStackEntryAsState()
+    val taskCreatedByAddEdit = rootBackStackEntry?.savedStateHandle?.get<Boolean>("task_created") ?: false
+    
+    if (taskCreatedByAddEdit) {
+        rootBackStackEntry?.savedStateHandle?.remove<Boolean>("task_created")
+        LaunchedEffect(Unit) {
+            // If we are on TaskSelection, pop it to go back to Timeline
+            if (navController.currentDestination?.route?.startsWith("task_selection") == true) {
+                navController.popBackStack()
+            }
+        }
+    }
 
     // Define top-level destinations where bottom bar should be shown
     val topLevelRoutes = listOf(
@@ -147,7 +158,14 @@ fun MainScreen(
                         navController.popBackStack()
                     },
                     onAddNewTask = { taskName ->
-                        rootNavController.navigate(Screen.AddEditTask.createRoute(-1, taskName))
+                        rootNavController.navigate(
+                            Screen.AddEditTask.createRoute(
+                                taskId = -1, 
+                                taskName = taskName,
+                                timeSlot = timeSlot,
+                                date = date
+                            )
+                        )
                     }
                 )
             }

@@ -62,18 +62,16 @@ class TimelineViewModel @Inject constructor(
         _selectedDate.value = date
     }
 
-    fun upsertTimelineEntry(timeSlot: String, taskId: Int) {
-        viewModelScope.launch {
-            // Check if entry exists for this slot and date, if so update/replace
-            timelineRepository.deleteEntryByTimeAndDate(timeSlot, _selectedDate.value)
-            timelineRepository.insertTimelineEntry(
-                TimelineEntity(
-                    timeSlot = timeSlot,
-                    taskId = taskId,
-                    date = _selectedDate.value
-                )
+    suspend fun upsertTimelineEntry(timeSlot: String, taskId: Int) {
+        // Check if entry exists for this slot and date, if so update/replace
+        timelineRepository.deleteEntryByTimeAndDate(timeSlot, _selectedDate.value)
+        timelineRepository.insertTimelineEntry(
+            TimelineEntity(
+                timeSlot = timeSlot,
+                taskId = taskId,
+                date = _selectedDate.value
             )
-        }
+        )
     }
 
     fun deleteTimelineEntry(timeSlot: String) {

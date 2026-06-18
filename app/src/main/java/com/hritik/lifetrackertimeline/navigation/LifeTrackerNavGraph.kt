@@ -75,14 +75,28 @@ fun LifeTrackerNavGraph(
                     type = NavType.StringType
                     nullable = true
                     defaultValue = null
+                },
+                navArgument("timeSlot") {
+                    type = NavType.StringType
+                    nullable = true
+                    defaultValue = null
+                },
+                navArgument("date") {
+                    type = NavType.StringType
+                    nullable = true
+                    defaultValue = null
                 }
             )
         ) { backStackEntry ->
             val taskId = backStackEntry.arguments?.getInt("taskId") ?: -1
             val taskName = backStackEntry.arguments?.getString("taskName")
+            val timeSlot = backStackEntry.arguments?.getString("timeSlot")
+            val date = backStackEntry.arguments?.getString("date")
             AddEditTaskScreen(
                 taskId = taskId,
                 taskName = taskName,
+                timeSlot = timeSlot,
+                date = date,
                 navController = navController
             )
         }

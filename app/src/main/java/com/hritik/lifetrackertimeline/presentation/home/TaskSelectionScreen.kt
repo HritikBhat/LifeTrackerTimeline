@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hritik.lifetrackertimeline.data.local.entity.TaskEntity
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -37,6 +38,7 @@ fun TaskSelectionScreen(
     onAddNewTask: (String) -> Unit,
     viewModel: TimelineViewModel = hiltViewModel()
 ) {
+    val scope = rememberCoroutineScope()
     var searchQuery by remember { mutableStateOf("") }
     val availableTasks by viewModel.availableTasks.collectAsState()
     
@@ -185,8 +187,10 @@ fun TaskSelectionScreen(
                     TaskSelectionItem(
                         task = task,
                         onClick = {
-                            viewModel.upsertTimelineEntry(timeSlot, task.id)
-                            onTaskSelected(task.id)
+                            scope.launch {
+                                viewModel.upsertTimelineEntry(timeSlot, task.id)
+                                onTaskSelected(task.id)
+                            }
                         }
                     )
                 }
