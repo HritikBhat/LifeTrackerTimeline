@@ -60,7 +60,7 @@ fun AddEditTaskScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
+            CenterAlignedTopAppBar(
                 title = { Text(if (taskId == -1) "Add Task" else "Edit Task", fontWeight = FontWeight.Bold) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
@@ -94,12 +94,13 @@ fun AddEditTaskScreen(
                             }
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0047AB)),
-                        shape = RoundedCornerShape(20.dp)
+                        shape = RoundedCornerShape(20.dp),
+                        modifier = Modifier.padding(end = 8.dp)
                     ) {
                         Text("Save", color = Color.White)
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFFF8F9FE))
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = Color.White)
             )
         },
         bottomBar = {
