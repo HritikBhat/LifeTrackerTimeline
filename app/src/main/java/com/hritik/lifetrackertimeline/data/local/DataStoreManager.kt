@@ -40,4 +40,5 @@ class DataStoreManager @Inject constructor(@ApplicationContext context: Context)
             preferences[LANGUAGE] = languageCode
         }
     }
+
 }

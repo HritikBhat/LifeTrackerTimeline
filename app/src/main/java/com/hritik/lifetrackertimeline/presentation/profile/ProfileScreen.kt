@@ -1,12 +1,13 @@
 package com.hritik.lifetrackertimeline.presentation.profile
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -30,11 +31,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.core.os.LocaleListCompat
 import coil.compose.AsyncImage
 import com.hritik.lifetrackertimeline.R
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import com.hritik.lifetrackertimeline.presentation.auth.AuthViewModel
 import com.hritik.lifetrackertimeline.presentation.main.MainViewModel
+import java.util.Locale
 
 @Composable
 fun ProfileScreen(
@@ -120,10 +123,20 @@ fun ProfileScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable {
+                                    Log.d("LANGUAGE", "Selected = $code")
                                     mainViewModel.updateLanguage(code)
+
                                     AppCompatDelegate.setApplicationLocales(
                                         LocaleListCompat.forLanguageTags(code)
                                     )
+
+                                    Log.d(
+                                        "LANGUAGE",
+                                        "Applied = ${
+                                            AppCompatDelegate.getApplicationLocales().toLanguageTags()
+                                        }"
+                                    )
+
                                     showLanguageDialog = false
                                 }
                                 .padding(16.dp),
