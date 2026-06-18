@@ -81,10 +81,16 @@ class AuthRepository @Inject constructor(
             val snapshot = userRef.get().await()
             
             val userData = if (snapshot.exists()) {
+                // Update only lastLoginAt to avoid overwriting other fields (like isPremium)
+                val now = Timestamp.now()
+                userRef.update("lastLoginAt", now).await()
+                
+                // Fetch the boolean explicitly as a fail-safe against mapping issues
+                val isPremiumFromDb = snapshot.getBoolean("isPremium") ?: false
                 val existingUser = snapshot.toObject(User::class.java)!!
-                existingUser.copy(lastLoginAt = Timestamp.now())
+                existingUser.copy(lastLoginAt = now, isPremium = isPremiumFromDb)
             } else {
-                User(
+                val newUser = User(
                     uid = user.uid,
                     displayName = user.displayName ?: "",
                     email = user.email ?: "",
@@ -93,9 +99,10 @@ class AuthRepository @Inject constructor(
                     lastLoginAt = Timestamp.now(),
                     isPremium = false // Default for new users
                 )
+                userRef.set(newUser).await()
+                newUser
             }
             
-            userRef.set(userData).await()
             Result.success(userData)
         } catch (e: Exception) {
             Result.failure(e)

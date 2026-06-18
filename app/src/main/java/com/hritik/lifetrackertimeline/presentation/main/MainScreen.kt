@@ -7,6 +7,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -22,6 +23,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.hritik.lifetrackertimeline.navigation.BottomBarScreen
 import com.hritik.lifetrackertimeline.navigation.Screen
+import com.hritik.lifetrackertimeline.presentation.auth.AuthState
 import com.hritik.lifetrackertimeline.presentation.auth.AuthViewModel
 import com.hritik.lifetrackertimeline.presentation.components.AdBanner
 import com.hritik.lifetrackertimeline.presentation.home.AnalyticsScreen
@@ -39,6 +41,15 @@ fun MainScreen(
 ) {
     val navController = rememberNavController()
     val isPremium by viewModel.premiumManager.isPremium.collectAsState()
+    val authState by authViewModel.authState.collectAsState()
+
+    LaunchedEffect(authState) {
+        if (authState is AuthState.Unauthenticated) {
+            rootNavController.navigate(Screen.Login.route) {
+                popUpTo(Screen.Main.route) { inclusive = true }
+            }
+        }
+    }
     
     Scaffold(
         modifier = Modifier.fillMaxSize(),

@@ -1,6 +1,7 @@
 package com.hritik.lifetrackertimeline.data.model
 
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.PropertyName
 
 data class User(
     val uid: String = "",
@@ -9,5 +10,8 @@ data class User(
     val photoUrl: String = "",
     val createdAt: Timestamp? = null,
     val lastLoginAt: Timestamp? = null,
-    val isPremium: Boolean = false
+    @get:PropertyName("isPremium")
+    @set:PropertyName("isPremium")
+    @JvmField
+    var isPremium: Boolean = false
 )
