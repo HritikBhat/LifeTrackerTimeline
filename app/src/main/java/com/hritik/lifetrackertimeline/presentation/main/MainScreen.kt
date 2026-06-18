@@ -17,19 +17,18 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.hritik.lifetrackertimeline.navigation.BottomBarScreen
 import com.hritik.lifetrackertimeline.navigation.Screen
 import com.hritik.lifetrackertimeline.presentation.auth.AuthState
 import com.hritik.lifetrackertimeline.presentation.auth.AuthViewModel
 import com.hritik.lifetrackertimeline.presentation.components.AdBanner
-import com.hritik.lifetrackertimeline.presentation.home.AnalyticsScreen
-import com.hritik.lifetrackertimeline.presentation.home.CalendarScreen
-import com.hritik.lifetrackertimeline.presentation.home.TaskListScreen
-import com.hritik.lifetrackertimeline.presentation.home.TimelineScreen
+import com.hritik.lifetrackertimeline.presentation.home.*
 import com.hritik.lifetrackertimeline.presentation.profile.ProfileScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -62,7 +61,6 @@ fun MainScreen(
             )
         },
         bottomBar = {
-            // Container for both BottomBar and AdBanner
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -74,8 +72,6 @@ fun MainScreen(
                     AdBanner()
                 }
                 
-                // This spacer handles the system navigation bar height,
-                // pushing everything (Ad + Nav) above the system buttons.
                 Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
             }
         },
@@ -101,7 +97,32 @@ fun MainScreen(
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(BottomBarScreen.Timeline.route) {
-                TimelineScreen()
+                TimelineScreen(
+                    onNavigateToTaskSelection = { timeSlot, date ->
+                        navController.navigate(Screen.TaskSelection.createRoute(timeSlot, date))
+                    }
+                )
+            }
+            composable(
+                route = Screen.TaskSelection.route,
+                arguments = listOf(
+                    navArgument("timeSlot") { type = NavType.StringType },
+                    navArgument("date") { type = NavType.StringType }
+                )
+            ) { backStackEntry ->
+                val timeSlot = backStackEntry.arguments?.getString("timeSlot") ?: ""
+                val date = backStackEntry.arguments?.getString("date") ?: ""
+                TaskSelectionScreen(
+                    timeSlot = timeSlot,
+                    date = date,
+                    onNavigateBack = { navController.popBackStack() },
+                    onTaskSelected = { taskId ->
+                        navController.popBackStack()
+                    },
+                    onAddNewTask = {
+                        rootNavController.navigate(Screen.AddEditTask.createRoute(-1))
+                    }
+                )
             }
             composable(BottomBarScreen.Analytics.route) {
                 AnalyticsScreen()
@@ -127,17 +148,17 @@ fun MainScreen(
 fun BottomBar(navController: NavHostController) {
     val screens = listOf(
         BottomBarScreen.Timeline,
-        BottomBarScreen.Tasks,
+//        BottomBarScreen.Tasks,
         BottomBarScreen.Profile
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
     NavigationBar(
-        modifier = Modifier.height(72.dp), // Reduced height from default 80dp
+        modifier = Modifier.height(72.dp),
         containerColor = Color(0xFFF8F9FE),
         tonalElevation = 0.dp,
-        windowInsets = WindowInsets(0.dp) // Disable internal insets as we handle them in the parent Column
+        windowInsets = WindowInsets(0.dp)
     ) {
         screens.forEach { screen ->
             val selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true

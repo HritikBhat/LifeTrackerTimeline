@@ -12,7 +12,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -25,29 +24,21 @@ import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hritik.lifetrackertimeline.data.local.entity.TaskEntity
-import com.hritik.lifetrackertimeline.presentation.home.TimelineUiItem
-import com.hritik.lifetrackertimeline.presentation.home.getIconByName
 import java.text.SimpleDateFormat
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TimelineScreen(
+    onNavigateToTaskSelection: (String, String) -> Unit,
     viewModel: TimelineViewModel = hiltViewModel()
 ) {
     val timeSlots = remember { generateTimeSlots() }
     val timelineItems by viewModel.timelineItems.collectAsState()
-    val availableTasks by viewModel.availableTasks.collectAsState()
     val selectedDateStr by viewModel.selectedDate.collectAsState()
     
-    var showEditDialog by remember { mutableStateOf(false) }
-    var selectedTimeSlot by remember { mutableStateOf("") }
-    var itemToEdit by remember { mutableStateOf<TimelineUiItem?>(null) }
     var showDatePicker by remember { mutableStateOf(false) }
-
     var currentTime by remember { mutableStateOf(SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())) }
     
     LaunchedEffect(Unit) {
@@ -85,23 +76,6 @@ fun TimelineScreen(
         }
     }
 
-    if (showEditDialog) {
-        EditTimelineBlockDialog(
-            timeSlot = selectedTimeSlot,
-            initialItem = itemToEdit,
-            availableTasks = availableTasks,
-            onDismiss = { showEditDialog = false },
-            onSave = { taskId ->
-                viewModel.upsertTimelineEntry(selectedTimeSlot, taskId)
-                showEditDialog = false
-            },
-            onDelete = {
-                viewModel.deleteTimelineEntry(selectedTimeSlot)
-                showEditDialog = false
-            }
-        )
-    }
-
     val displayDate = remember(selectedDateStr) {
         val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(selectedDateStr) ?: Date()
         val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
@@ -114,12 +88,11 @@ fun TimelineScreen(
         SimpleDateFormat("EEEE, MMM dd", Locale.getDefault()).format(date).uppercase()
     }
 
-    // Removed outer Scaffold to prevent double padding and redundant layout logic
     Box(modifier = Modifier.fillMaxSize().background(Color(0xFFF8F9FE))) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(0.dp),
-            contentPadding = PaddingValues(bottom = 80.dp) // Reduced from 100dp
+            contentPadding = PaddingValues(bottom = 80.dp)
         ) {
             item {
                 Column(
@@ -128,7 +101,7 @@ fun TimelineScreen(
                         .fillMaxWidth()
                         .clickable { showDatePicker = true }
                 ) {
-                    Spacer(modifier = Modifier.height(16.dp)) // Reduced top space
+                    Spacer(modifier = Modifier.height(16.dp))
                     
                     Text(
                         text = headerDate,
@@ -149,7 +122,7 @@ fun TimelineScreen(
                         Icon(Icons.Default.ArrowDropDown, contentDescription = "Change Date", tint = Color.Gray)
                     }
                     
-                    Spacer(modifier = Modifier.height(16.dp)) // Reduced space before items
+                    Spacer(modifier = Modifier.height(16.dp))
                 }
             }
 
@@ -175,20 +148,12 @@ fun TimelineScreen(
                         if (item != null) {
                             TimelineItemRow(
                                 item = item,
-                                onClick = {
-                                    selectedTimeSlot = time
-                                    itemToEdit = item
-                                    showEditDialog = true
-                                }
+                                onClick = { onNavigateToTaskSelection(time, selectedDateStr) }
                             )
                         } else {
                             EmptyTimelineItemRow(
                                 time = time,
-                                onClick = {
-                                    selectedTimeSlot = time
-                                    itemToEdit = null
-                                    showEditDialog = true
-                                }
+                                onClick = { onNavigateToTaskSelection(time, selectedDateStr) }
                             )
                         }
                         
@@ -222,182 +187,11 @@ private fun getNextSlot(current: String): String {
 }
 
 @Composable
-fun EditTimelineBlockDialog(
-    timeSlot: String,
-    initialItem: TimelineUiItem?,
-    availableTasks: List<TaskEntity>,
-    onDismiss: () -> Unit,
-    onSave: (Int) -> Unit,
-    onDelete: () -> Unit
-) {
-    var selectedTask by remember { 
-        mutableStateOf(
-            availableTasks.find { it.id == initialItem?.taskId } ?: availableTasks.firstOrNull()
-        )
-    }
-    var expanded by remember { mutableStateOf(false) }
-
-    Dialog(onDismissRequest = onDismiss) {
-        Surface(
-            shape = RoundedCornerShape(24.dp),
-            color = Color.White,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Column(
-                modifier = Modifier.padding(24.dp)
-            ) {
-                Text(
-                    text = if (initialItem == null) "Add Timeline Block" else "Edit Timeline Block",
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF1A1A1A)
-                )
-                
-                Spacer(modifier = Modifier.height(24.dp))
-                
-                if (selectedTask != null) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clip(RoundedCornerShape(16.dp))
-                            .background(Color(0xFFF8F9FE))
-                            .border(1.dp, Color(0xFFEEEEEE), RoundedCornerShape(16.dp))
-                    ) {
-                        Row(modifier = Modifier.height(IntrinsicSize.Min)) {
-                            Box(
-                                modifier = Modifier
-                                    .width(4.dp)
-                                    .fillMaxHeight()
-                                    .background(Color(selectedTask!!.color))
-                            )
-                            Column(modifier = Modifier.padding(16.dp)) {
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.SpaceBetween
-                                ) {
-                                    Text(
-                                        text = "$timeSlot - ${getEndTime(timeSlot)}",
-                                        style = MaterialTheme.typography.labelSmall,
-                                        color = Color.Gray,
-                                        fontWeight = FontWeight.Bold
-                                    )
-                                }
-                                Text(
-                                    text = selectedTask!!.title,
-                                    style = MaterialTheme.typography.titleMedium,
-                                    fontWeight = FontWeight.Bold,
-                                    modifier = Modifier.padding(top = 4.dp)
-                                )
-                                Text(
-                                    text = selectedTask!!.notes,
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = Color.Gray,
-                                    modifier = Modifier.padding(top = 4.dp)
-                                )
-                            }
-                        }
-                    }
-                } else {
-                    Text("No tasks available. Please add tasks in the Task List first.", color = Color.Red)
-                }
-                
-                Spacer(modifier = Modifier.height(24.dp))
-                
-                Text(
-                    text = "SELECT TASK",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = Color.Gray,
-                    fontWeight = FontWeight.Bold,
-                    letterSpacing = 1.sp
-                )
-                
-                Spacer(modifier = Modifier.height(8.dp))
-                
-                Box {
-                    OutlinedCard(
-                        onClick = { expanded = true },
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(12.dp),
-                        colors = CardDefaults.outlinedCardColors(containerColor = Color(0xFFFBFBFF)),
-                        border = CardDefaults.outlinedCardBorder().copy(width = 0.5.dp)
-                    ) {
-                        Row(
-                            modifier = Modifier.padding(16.dp).fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = selectedTask?.title ?: "Select a task",
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = Color(0xFF1A1A1A)
-                            )
-                            Icon(Icons.Default.ArrowDropDown, contentDescription = null, tint = Color.Gray)
-                        }
-                    }
-                    
-                    DropdownMenu(
-                        expanded = expanded,
-                        onDismissRequest = { expanded = false },
-                        modifier = Modifier.fillMaxWidth(0.7f).background(Color.White)
-                    ) {
-                        availableTasks.forEach { task ->
-                            DropdownMenuItem(
-                                text = { Text(task.title) },
-                                onClick = {
-                                    selectedTask = task
-                                    expanded = false
-                                }
-                            )
-                        }
-                    }
-                }
-                
-                Spacer(modifier = Modifier.height(32.dp))
-                
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    if (initialItem != null) {
-                        TextButton(onClick = onDelete) {
-                            Icon(Icons.Default.Delete, contentDescription = null, tint = Color.Red)
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Text("Remove", color = Color.Red)
-                        }
-                    } else {
-                        Spacer(modifier = Modifier.width(1.dp))
-                    }
-
-                    Row {
-                        TextButton(onClick = onDismiss) {
-                            Text("Cancel", color = Color(0xFF0047BB), fontWeight = FontWeight.Bold)
-                        }
-                        Spacer(modifier = Modifier.width(16.dp))
-                        Button(
-                            onClick = {
-                                selectedTask?.let { onSave(it.id) }
-                            },
-                            enabled = selectedTask != null,
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0047BB)),
-                            shape = RoundedCornerShape(12.dp),
-                            contentPadding = PaddingValues(horizontal = 24.dp, vertical = 12.dp)
-                        ) {
-                            Text("Save", fontWeight = FontWeight.Bold)
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
 fun TimelineItemRow(item: TimelineUiItem, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 16.dp) // Reduced padding
+            .padding(bottom = 16.dp)
             .clickable { onClick() }
     ) {
         Text(
@@ -484,7 +278,7 @@ fun EmptyTimelineItemRow(time: String, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 16.dp) // Reduced padding
+            .padding(bottom = 16.dp)
             .clickable { onClick() }
     ) {
         Text(
@@ -556,7 +350,7 @@ fun CurrentTimeIndicator(time: String) {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 16.dp) // Aligned with items
+            .padding(bottom = 16.dp)
     ) {
         Text(
             text = time,
@@ -596,16 +390,4 @@ private fun generateTimeSlots(): List<String> {
         slots.add(String.format(Locale.getDefault(), "%02d:30", hour))
     }
     return slots
-}
-
-private fun getEndTime(startTime: String): String {
-    val parts = startTime.split(":")
-    var hour = parts[0].toInt()
-    var minute = parts[1].toInt() + 30
-    if (minute >= 60) {
-        hour += 1
-        minute = 0
-    }
-    if (hour >= 24) hour = 0
-    return String.format(Locale.getDefault(), "%02d:%02d", hour, minute)
 }

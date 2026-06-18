@@ -16,6 +16,9 @@ sealed class Screen(val route: String) {
     object AddEditTask : Screen("add_edit_task/{taskId}") {
         fun createRoute(taskId: Int) = "add_edit_task/$taskId"
     }
+    object TaskSelection : Screen("task_selection/{timeSlot}/{date}") {
+        fun createRoute(timeSlot: String, date: String) = "task_selection/$timeSlot/$date"
+    }
 }
 
 sealed class BottomBarScreen(
