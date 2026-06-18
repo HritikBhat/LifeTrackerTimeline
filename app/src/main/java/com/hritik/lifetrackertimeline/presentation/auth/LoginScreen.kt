@@ -53,11 +53,10 @@ fun LoginScreen(
                 elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
             ) {
                 Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-                    // Replace with actual logo
-                    // Image(
-                    //     painter = painterResource(id = R.drawable.ic_logo),
-                    //     contentDescription = "Logo"
-                    // )
+                     Image(
+                         painter = painterResource(id = R.drawable.ic_app_logo),
+                         contentDescription = "Logo"
+                     )
                 }
             }
 
@@ -93,11 +92,11 @@ fun LoginScreen(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center
                     ) {
-                        // Image(
-                        //     painter = painterResource(id = R.drawable.ic_google),
-                        //     contentDescription = "Google Logo",
-                        //     modifier = Modifier.size(24.dp)
-                        // )
+                         Image(
+                             painter = painterResource(id = R.drawable.ic_google),
+                             contentDescription = "Google Logo",
+                             modifier = Modifier.size(24.dp)
+                         )
                         Spacer(modifier = Modifier.width(12.dp))
                         Text(
                             text = "Continue with Google",
