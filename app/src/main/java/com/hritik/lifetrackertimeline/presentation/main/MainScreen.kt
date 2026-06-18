@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -53,8 +54,30 @@ fun MainScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val currentRoute = navBackStackEntry?.destination?.route
+            
+            // Check if current destination is a top-level screen
+            val isTopLevelDestination = currentRoute == BottomBarScreen.Timeline.route ||
+                    currentRoute == BottomBarScreen.Analytics.route ||
+                    currentRoute == BottomBarScreen.Calendar.route ||
+                    currentRoute == BottomBarScreen.Tasks.route ||
+                    currentRoute == BottomBarScreen.Profile.route
+
+            val canPop = navController.previousBackStackEntry != null && !isTopLevelDestination
+
             CenterAlignedTopAppBar(
                 title = { Text("LifeTracker Timeline", style = MaterialTheme.typography.titleLarge) },
+                navigationIcon = {
+                    if (canPop) {
+                        IconButton(onClick = { navController.popBackStack() }) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = "Back"
+                            )
+                        }
+                    }
+                },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = Color.White
                 )

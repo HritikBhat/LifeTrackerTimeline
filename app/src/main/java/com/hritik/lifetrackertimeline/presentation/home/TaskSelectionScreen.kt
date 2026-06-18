@@ -8,7 +8,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Schedule
@@ -66,9 +65,7 @@ fun TaskSelectionScreen(
                     .background(Color(0xFFF8F9FE))
                     .padding(horizontal = 16.dp, vertical = 8.dp)
             ) {
-                IconButton(onClick = onNavigateBack) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-                }
+                Spacer(modifier = Modifier.height(8.dp))
                 
                 Text(
                     text = "SELECT TASK",
@@ -127,7 +124,6 @@ fun TaskSelectionScreen(
                         singleLine = true
                     )
                     
-                    // Show Add button ONLY if the filtered listing is empty, else hide.
                     if (filteredTasks.isEmpty()) {
                         Spacer(modifier = Modifier.width(12.dp))
                         FloatingActionButton(
@@ -204,8 +200,7 @@ fun EmptyTaskState() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight(1f)
-            .padding(bottom = 0.dp),
+            .fillMaxHeight(1f),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -222,7 +217,6 @@ fun EmptyTaskState() {
                 modifier = Modifier.size(40.dp),
                 tint = Color(0xFF5C6BC0)
             )
-            // Search icon with "x" badge
         }
         
         Spacer(modifier = Modifier.height(24.dp))
@@ -280,7 +274,7 @@ fun TaskSelectionItem(task: TaskEntity, onClick: () -> Unit) {
                     color = Color(0xFF1A1A1A)
                 )
                 Text(
-                    text = "Last used: Today", // Mocked for now
+                    text = "Last used: Today",
                     style = MaterialTheme.typography.bodySmall,
                     color = Color.Gray
                 )
