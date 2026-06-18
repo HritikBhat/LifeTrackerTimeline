@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -55,7 +56,7 @@ fun LoginScreen(
                 Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
                      Image(
                          painter = painterResource(id = R.drawable.ic_app_logo),
-                         contentDescription = "Logo"
+                         contentDescription = stringResource(R.string.app_logo_desc)
                      )
                 }
             }
@@ -63,14 +64,14 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(32.dp))
 
             Text(
-                text = "LifeTracker",
+                text = stringResource(R.string.app_name_login),
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF1A237E)
             )
 
             Text(
-                text = "Track Every 30 Minutes of Your Life",
+                text = stringResource(R.string.app_tagline),
                 fontSize = 16.sp,
                 color = Color.Gray
             )
@@ -94,12 +95,12 @@ fun LoginScreen(
                     ) {
                          Image(
                              painter = painterResource(id = R.drawable.ic_google),
-                             contentDescription = "Google Logo",
+                             contentDescription = stringResource(R.string.google_logo_desc),
                              modifier = Modifier.size(24.dp)
                          )
                         Spacer(modifier = Modifier.width(12.dp))
                         Text(
-                            text = "Continue with Google",
+                            text = stringResource(R.string.continue_with_google),
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Medium,
                             color = Color.Black
@@ -111,9 +112,9 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(48.dp))
 
             Row {
-                Text(text = "Privacy Policy", fontSize = 12.sp, color = Color.Gray)
+                Text(text = stringResource(R.string.privacy_policy), fontSize = 12.sp, color = Color.Gray)
                 Spacer(modifier = Modifier.width(32.dp))
-                Text(text = "Terms of Service", fontSize = 12.sp, color = Color.Gray)
+                Text(text = stringResource(R.string.terms_of_service), fontSize = 12.sp, color = Color.Gray)
             }
         }
     }

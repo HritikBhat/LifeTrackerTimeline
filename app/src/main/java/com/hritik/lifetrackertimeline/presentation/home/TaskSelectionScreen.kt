@@ -18,11 +18,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.hritik.lifetrackertimeline.R
 import com.hritik.lifetrackertimeline.data.local.entity.TaskEntity
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -70,7 +72,7 @@ fun TaskSelectionScreen(
                 Spacer(modifier = Modifier.height(8.dp))
                 
                 Text(
-                    text = "SELECT TASK",
+                    text = stringResource(R.string.select_task_header),
                     style = MaterialTheme.typography.labelMedium,
                     color = Color(0xFF5C6BC0),
                     letterSpacing = 1.sp,
@@ -115,7 +117,7 @@ fun TaskSelectionScreen(
                         value = searchQuery,
                         onValueChange = { searchQuery = it },
                         modifier = Modifier.weight(1f),
-                        placeholder = { Text("Search tasks...") },
+                        placeholder = { Text(stringResource(R.string.search_tasks)) },
                         leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
                         shape = RoundedCornerShape(12.dp),
                         colors = OutlinedTextFieldDefaults.colors(
@@ -135,7 +137,7 @@ fun TaskSelectionScreen(
                             shape = CircleShape,
                             modifier = Modifier.size(56.dp)
                         ) {
-                            Icon(Icons.Default.Add, contentDescription = "Add Task")
+                            Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_task))
                         }
                     }
                 }
@@ -148,14 +150,14 @@ fun TaskSelectionScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "PREVIOUS TASKS",
+                        text = stringResource(R.string.previous_tasks),
                         style = MaterialTheme.typography.labelSmall,
                         color = Color.Gray,
                         fontWeight = FontWeight.Bold,
                         letterSpacing = 1.sp
                     )
                     Text(
-                        text = "${filteredTasks.size} TOTAL",
+                        text = stringResource(R.string.total_suffix, filteredTasks.size),
                         style = MaterialTheme.typography.labelSmall,
                         color = Color.Gray,
                         fontWeight = FontWeight.Bold
@@ -226,7 +228,7 @@ fun EmptyTaskState() {
         Spacer(modifier = Modifier.height(24.dp))
         
         Text(
-            text = "No tasks found",
+            text = stringResource(R.string.no_tasks_found),
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             color = Color(0xFF1A1A1A)
@@ -235,7 +237,7 @@ fun EmptyTaskState() {
         Spacer(modifier = Modifier.height(8.dp))
         
         Text(
-            text = "Try a different search term or create\na new task using the button above.",
+            text = stringResource(R.string.no_tasks_found_desc),
             style = MaterialTheme.typography.bodyMedium,
             color = Color.Gray,
             textAlign = TextAlign.Center,
@@ -246,20 +248,19 @@ fun EmptyTaskState() {
 
 @Composable
 fun TaskSelectionItem(task: TaskEntity, onClick: () -> Unit) {
-    val lastUsedText = remember(task.lastSelectedAt) {
-        if (task.lastSelectedAt == 0L) {
-            "Never used"
-        } else {
+    val lastUsedText = when {
+        task.lastSelectedAt == 0L -> stringResource(R.string.never_used)
+        else -> {
             val now = System.currentTimeMillis()
             val diff = now - task.lastSelectedAt
             val days = diff / (24 * 60 * 60 * 1000)
             
             when {
-                diff < 60 * 1000 -> "Just now"
-                diff < 60 * 60 * 1000 -> "${diff / (60 * 1000)}m ago"
-                diff < 24 * 60 * 60 * 1000 -> "${diff / (60 * 60 * 1000)}h ago"
-                days == 1L -> "Yesterday"
-                days < 7 -> "$days days ago"
+                diff < 60 * 1000 -> stringResource(R.string.just_now)
+                diff < 60 * 60 * 1000 -> stringResource(R.string.minutes_ago, diff / (60 * 1000))
+                diff < 24 * 60 * 60 * 1000 -> stringResource(R.string.hours_ago, diff / (60 * 60 * 1000))
+                days == 1L -> stringResource(R.string.yesterday)
+                days < 7 -> stringResource(R.string.days_ago, days)
                 else -> {
                     val sdf = SimpleDateFormat("MMM dd", Locale.getDefault())
                     sdf.format(Date(task.lastSelectedAt))
@@ -300,7 +301,7 @@ fun TaskSelectionItem(task: TaskEntity, onClick: () -> Unit) {
                     color = Color(0xFF1A1A1A)
                 )
                 Text(
-                    text = if (task.lastSelectedAt == 0L) "Never used" else "Last used: $lastUsedText",
+                    text = if (task.lastSelectedAt == 0L) stringResource(R.string.never_used) else stringResource(R.string.last_used_prefix, lastUsedText),
                     style = MaterialTheme.typography.bodySmall,
                     color = Color.Gray
                 )

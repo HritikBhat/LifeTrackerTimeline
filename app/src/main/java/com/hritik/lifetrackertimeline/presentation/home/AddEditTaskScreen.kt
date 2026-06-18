@@ -20,11 +20,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.hritik.lifetrackertimeline.R
 import com.hritik.lifetrackertimeline.data.local.entity.TaskEntity
 import com.hritik.lifetrackertimeline.presentation.components.AdBanner
 import kotlinx.coroutines.launch
@@ -61,10 +63,10 @@ fun AddEditTaskScreen(
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text(if (taskId == -1) "Add Task" else "Edit Task", fontWeight = FontWeight.Bold) },
+                title = { Text(if (taskId == -1) stringResource(R.string.add_task) else stringResource(R.string.edit_task), fontWeight = FontWeight.Bold) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.Default.Close, contentDescription = "Back")
+                        Icon(Icons.Default.Close, contentDescription = stringResource(R.string.back))
                     }
                 },
                 actions = {
@@ -97,7 +99,7 @@ fun AddEditTaskScreen(
                         shape = RoundedCornerShape(20.dp),
                         modifier = Modifier.padding(end = 8.dp)
                     ) {
-                        Text("Save", color = Color.White)
+                        Text(stringResource(R.string.save), color = Color.White)
                     }
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = Color.White)
@@ -122,8 +124,8 @@ fun AddEditTaskScreen(
                 .padding(16.dp)
                 .verticalScroll(rememberScrollState())
         ) {
-            SectionContainer(title = "Task Details") {
-                Text("TASK NAME", style = MaterialTheme.typography.labelSmall, color = Color.Gray)
+            SectionContainer(title = stringResource(R.string.task_details)) {
+                Text(stringResource(R.string.label_task_name), style = MaterialTheme.typography.labelSmall, color = Color.Gray)
                 OutlinedTextField(
                     value = title,
                     onValueChange = { title = it },
@@ -131,7 +133,7 @@ fun AddEditTaskScreen(
                     shape = RoundedCornerShape(8.dp)
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                Text("NOTES", style = MaterialTheme.typography.labelSmall, color = Color.Gray)
+                Text(stringResource(R.string.label_notes), style = MaterialTheme.typography.labelSmall, color = Color.Gray)
                 OutlinedTextField(
                     value = notes,
                     onValueChange = { notes = it },
@@ -146,13 +148,13 @@ fun AddEditTaskScreen(
                         checked = isUnproductive,
                         onCheckedChange = { isUnproductive = it }
                     )
-                    Text("Mark as Unproductive", style = MaterialTheme.typography.bodyMedium)
+                    Text(stringResource(R.string.mark_as_unproductive), style = MaterialTheme.typography.bodyMedium)
                 }
             }
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            SectionContainer(title = "IDENTIFIER COLOR") {
+            SectionContainer(title = stringResource(R.string.identifier_color)) {
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     items(colors) { color ->
                         Box(
@@ -173,7 +175,7 @@ fun AddEditTaskScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            SectionContainer(title = "TASK ICON") {
+            SectionContainer(title = stringResource(R.string.task_icon)) {
                 FlowRow(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -218,7 +220,7 @@ fun AddEditTaskScreen(
                 ) {
                     Icon(Icons.Default.Delete, contentDescription = null, tint = Color.Red)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Delete Task", color = Color.Red)
+                    Text(stringResource(R.string.delete_task), color = Color.Red)
                 }
             }
         }

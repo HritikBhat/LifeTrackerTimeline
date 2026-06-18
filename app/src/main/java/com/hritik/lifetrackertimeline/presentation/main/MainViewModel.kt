@@ -33,6 +33,12 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun updateLanguage(languageCode: String) {
+        viewModelScope.launch {
+            dataStoreManager.saveLanguage(languageCode)
+        }
+    }
+
     private fun scheduleNotification(interval: String) {
         val workManager = WorkManager.getInstance(context)
         if (interval == "Never") {

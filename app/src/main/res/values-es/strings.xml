@@ -1,0 +1,131 @@
+<resources>
+    <string name="app_name">LifeTracker Timeline</string>
+    <string name="profile_picture">Foto de perfil</string>
+    <string name="user_name">Nombre de usuario</string>
+    <string name="email_placeholder">email@example.com</string>
+    <string name="notification_interval">Intervalo de notificación</string>
+    <string name="premium_member">Miembro Premium</string>
+    <string name="get_a_pro">Obtener Pro</string>
+    <string name="change_language">Cambiar idioma</string>
+    <string name="share_app">Compartir aplicación</string>
+    <string name="logout">Cerrar sesión</string>
+    <string name="select_notification_interval">Seleccionar intervalo de notificación</string>
+    <string name="select_language">Seleccionar idioma</string>
+    <string name="cancel">Cancelar</string>
+    <string name="notification_permission_required">Se requiere permiso de notificación para los recordatorios</string>
+    <string name="share_text">Echa un vistazo a LifeTracker Timeline: https://play.google.com/store/apps/details?id=%1$s</string>
+
+    <!-- Intervals -->
+    <string name="interval_30_mins">Cada 30 min</string>
+    <string name="interval_1_hour">Cada 1 hora</string>
+    <string name="interval_2_hours">2 horas</string>
+    <string name="interval_never">Nunca</string>
+
+    <!-- Languages -->
+    <string name="lang_english">Inglés</string>
+    <string name="lang_hindi">Hindi</string>
+    <string name="lang_german">Alemán</string>
+    <string name="lang_spanish">Español</string>
+    <string name="lang_french">Francés</string>
+    <string name="lang_russian">Ruso</string>
+    <string name="lang_japanese">Japonés</string>
+
+    <!-- Add/Edit Task -->
+    <string name="add_task">Agregar tarea</string>
+    <string name="edit_task">Editar tarea</string>
+    <string name="back">Atrás</string>
+    <string name="save">Guardar</string>
+    <string name="task_details">Detalles de la tarea</string>
+    <string name="label_task_name">NOMBRE DE LA TAREA</string>
+    <string name="label_notes">NOTAS</string>
+    <string name="mark_as_unproductive">Marcar como improductivo</string>
+    <string name="identifier_color">COLOR IDENTIFICADOR</string>
+    <string name="task_icon">ICONO DE TAREA</string>
+    <string name="delete_task">Eliminar tarea</string>
+
+    <!-- Icons -->
+    <string name="icon_work">Trabajo</string>
+    <string name="icon_fitness">Fitness</string>
+    <string name="icon_food">Comida</string>
+    <string name="icon_study">Estudio</string>
+    <string name="icon_code">Código</string>
+    <string name="icon_art">Arte</string>
+    <string name="icon_music">Música</string>
+    <string name="icon_sleep">Sueño</string>
+    <string name="icon_shop">Tienda</string>
+    <string name="icon_travel">Viaje</string>
+
+    <!-- Task List -->
+    <string name="management">GESTIÓN</string>
+    <string name="task_list">Lista de tareas</string>
+    <string name="add_new_task">Agregar nueva tarea</string>
+    <string name="filter_tasks">Filtrar tareas...</string>
+    <string name="edit">Editar</string>
+    <string name="delete">Eliminar</string>
+
+    <!-- Calendar Screen -->
+    <string name="no_activities_logged">No hay actividades registradas para este día.</string>
+    <string name="log_new_activity">Registrar nueva actividad</string>
+    <string name="efficiency_message">La eficiencia personal ha subido un 12%% este mes.</string>
+    <string name="activity_density">DENSIDAD DE ACTIVIDAD</string>
+    <string name="less">Menos</string>
+    <string name="more">Más</string>
+    <string name="today">HOY</string>
+    <string name="day_details">Detalles del día</string>
+    <string name="productivity_score">Puntuación de productividad</string>
+    <string name="deep_work">Trabajo profundo</string>
+    <string name="hours_suffix">%1$s h</string>
+    <string name="previous">Anterior</string>
+    <string name="next">Siguiente</string>
+
+    <!-- Analytics Screen -->
+    <string name="weekly_trend">Tendencia semanal</string>
+    <string name="activity_intensity_baseline">Intensidad de actividad vs. línea base</string>
+    <string name="week">Semana</string>
+    <string name="month">Mes</string>
+    <string name="this_week">ESTA SEMANA</string>
+    <string name="vs_last_week">+12%% vs la semana pasada</string>
+    <string name="daily_avg">PROM. DIARIO</string>
+    <string name="goal_hours">Meta: %1$s</string>
+    <string name="peak_productivity">Pico de productividad</string>
+    <string name="focus_allocation">Asignación de enfoque</string>
+    <string name="monthly_highlights">Aspectos destacados del mes</string>
+    <string name="activity_name">Nombre de la actividad</string>
+    <string name="total_duration">Duración total</string>
+    <string name="monthly_trend">Tendencia mensual</string>
+    <string name="hours_label">Horas</string>
+    <string name="hours_value">%1$sh</string>
+
+    <!-- Home Screen -->
+    <string name="welcome_message">Bienvenido a LifeTracker Timeline</string>
+
+    <!-- Timeline Screen -->
+    <string name="ok">Aceptar</string>
+    <string name="todays_focus">Enfoque de hoy</string>
+    <string name="change_date">Cambiar fecha</string>
+    <string name="select_task">Seleccionar tarea</string>
+
+    <!-- Task Selection Screen -->
+    <string name="select_task_header">SELECCIONAR TAREA</string>
+    <string name="search_tasks">Buscar tareas...</string>
+    <string name="previous_tasks">TAREAS ANTERIORES</string>
+    <string name="total_suffix">%1$d TOTAL</string>
+    <string name="no_tasks_found">No se encontraron tareas</string>
+    <string name="no_tasks_found_desc">Pruebe con un término de búsqueda diferente o cree\nuna nueva tarea usando el botón de arriba.</string>
+    <string name="never_used">Nunca usado</string>
+    <string name="just_now">Recién ahora</string>
+    <string name="minutes_ago">hace %1$d m</string>
+    <string name="hours_ago">hace %1$d h</string>
+    <string name="yesterday">Ayer</string>
+    <string name="days_ago">hace %1$d días</string>
+    <string name="last_used_prefix">Último uso: %1$s</string>
+
+    <!-- Login Screen -->
+    <string name="app_logo_desc">Logo</string>
+    <string name="app_name_login">LifeTracker</string>
+    <string name="app_tagline">Rastrea cada 30 minutos de tu vida</string>
+    <string name="google_logo_desc">Logo de Google</string>
+    <string name="continue_with_google">Continuar con Google</string>
+    <string name="privacy_policy">Política de privacidad</string>
+    <string name="terms_of_service">Términos de servicio</string>
+</resources>

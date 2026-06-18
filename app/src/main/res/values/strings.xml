@@ -1,3 +1,131 @@
 <resources>
     <string name="app_name">LifeTracker Timeline</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="user_name">User Name</string>
+    <string name="email_placeholder">email@example.com</string>
+    <string name="notification_interval">Notification Interval</string>
+    <string name="premium_member">Premium Member</string>
+    <string name="get_a_pro">Get a Pro</string>
+    <string name="change_language">Change Language</string>
+    <string name="share_app">Share App</string>
+    <string name="logout">Logout</string>
+    <string name="select_notification_interval">Select Notification Interval</string>
+    <string name="select_language">Select Language</string>
+    <string name="cancel">Cancel</string>
+    <string name="notification_permission_required">Notification permission is required for reminders</string>
+    <string name="share_text">Check out LifeTracker Timeline: https://play.google.com/store/apps/details?id=%1$s</string>
+
+    <!-- Intervals -->
+    <string name="interval_30_mins">Every 30 mins</string>
+    <string name="interval_1_hour">Every 1 hour</string>
+    <string name="interval_2_hours">2 hours</string>
+    <string name="interval_never">Never</string>
+
+    <!-- Languages -->
+    <string name="lang_english">English</string>
+    <string name="lang_hindi">Hindi</string>
+    <string name="lang_german">German</string>
+    <string name="lang_spanish">Spanish</string>
+    <string name="lang_french">French</string>
+    <string name="lang_russian">Russian</string>
+    <string name="lang_japanese">Japanese</string>
+
+    <!-- Add/Edit Task -->
+    <string name="add_task">Add Task</string>
+    <string name="edit_task">Edit Task</string>
+    <string name="back">Back</string>
+    <string name="save">Save</string>
+    <string name="task_details">Task Details</string>
+    <string name="label_task_name">TASK NAME</string>
+    <string name="label_notes">NOTES</string>
+    <string name="mark_as_unproductive">Mark as Unproductive</string>
+    <string name="identifier_color">IDENTIFIER COLOR</string>
+    <string name="task_icon">TASK ICON</string>
+    <string name="delete_task">Delete Task</string>
+
+    <!-- Icons -->
+    <string name="icon_work">Work</string>
+    <string name="icon_fitness">Fitness</string>
+    <string name="icon_food">Food</string>
+    <string name="icon_study">Study</string>
+    <string name="icon_code">Code</string>
+    <string name="icon_art">Art</string>
+    <string name="icon_music">Music</string>
+    <string name="icon_sleep">Sleep</string>
+    <string name="icon_shop">Shop</string>
+    <string name="icon_travel">Travel</string>
+
+    <!-- Task List -->
+    <string name="management">MANAGEMENT</string>
+    <string name="task_list">Task List</string>
+    <string name="add_new_task">Add New Task</string>
+    <string name="filter_tasks">Filter tasks...</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+
+    <!-- Calendar Screen -->
+    <string name="no_activities_logged">No activities logged for this day.</string>
+    <string name="log_new_activity">Log New Activity</string>
+    <string name="efficiency_message">Personal efficiency is up 12%% this month.</string>
+    <string name="activity_density">ACTIVITY DENSITY</string>
+    <string name="less">Less</string>
+    <string name="more">More</string>
+    <string name="today">TODAY</string>
+    <string name="day_details">Day Details</string>
+    <string name="productivity_score">Productivity Score</string>
+    <string name="deep_work">Deep Work</string>
+    <string name="hours_suffix">%1$s hrs</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+
+    <!-- Analytics Screen -->
+    <string name="weekly_trend">Weekly Trend</string>
+    <string name="activity_intensity_baseline">Activity intensity vs. baseline</string>
+    <string name="week">Week</string>
+    <string name="month">Month</string>
+    <string name="this_week">THIS WEEK</string>
+    <string name="vs_last_week">+12%% vs last week</string>
+    <string name="daily_avg">DAILY AVG</string>
+    <string name="goal_hours">Goal: %1$s</string>
+    <string name="peak_productivity">Peak Productivity</string>
+    <string name="focus_allocation">Focus Allocation</string>
+    <string name="monthly_highlights">Monthly Highlights</string>
+    <string name="activity_name">Activity Name</string>
+    <string name="total_duration">Total Duration</string>
+    <string name="monthly_trend">Monthly Trend</string>
+    <string name="hours_label">Hours</string>
+    <string name="hours_value">%1$sh</string>
+
+    <!-- Home Screen -->
+    <string name="welcome_message">Welcome to LifeTracker Timeline</string>
+
+    <!-- Timeline Screen -->
+    <string name="ok">OK</string>
+    <string name="todays_focus">Today\'s Focus</string>
+    <string name="change_date">Change Date</string>
+    <string name="select_task">Select Task</string>
+
+    <!-- Task Selection Screen -->
+    <string name="select_task_header">SELECT TASK</string>
+    <string name="search_tasks">Search tasks...</string>
+    <string name="previous_tasks">PREVIOUS TASKS</string>
+    <string name="total_suffix">%1$d TOTAL</string>
+    <string name="no_tasks_found">No tasks found</string>
+    <string name="no_tasks_found_desc">Try a different search term or create\na new task using the button above.</string>
+    <string name="never_used">Never used</string>
+    <string name="just_now">Just now</string>
+    <string name="minutes_ago">%1$d m ago</string>
+    <string name="hours_ago">%1$d h ago</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="days_ago">%1$d days ago</string>
+    <string name="last_used_prefix">Last used: %1$s</string>
+
+    <!-- Login Screen -->
+    <string name="app_logo_desc">Logo</string>
+    <string name="app_name_login">LifeTracker</string>
+    <string name="app_tagline">Track Every 30 Minutes of Your Life</string>
+    <string name="google_logo_desc">Google Logo</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="terms_of_service">Terms of Service</string>
 </resources>

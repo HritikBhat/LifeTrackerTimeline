@@ -19,11 +19,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.hritik.lifetrackertimeline.R
 import com.hritik.lifetrackertimeline.data.local.entity.TimelineEntity
 import java.text.SimpleDateFormat
 import java.util.*
@@ -80,7 +82,7 @@ fun CalendarScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "No activities logged for this day.",
+                            text = stringResource(R.string.no_activities_logged),
                             color = Color.Gray,
                             style = MaterialTheme.typography.bodyMedium
                         )
@@ -107,7 +109,7 @@ fun CalendarScreen(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(Icons.Default.Add, contentDescription = null, tint = Color(0xFF5C6BC0))
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text("Log New Activity", color = Color(0xFF5C6BC0), fontWeight = FontWeight.Bold)
+                        Text(stringResource(R.string.log_new_activity), color = Color(0xFF5C6BC0), fontWeight = FontWeight.Bold)
                     }
                 }
             }
@@ -148,7 +150,7 @@ fun CalendarHeader(
                         .clip(RoundedCornerShape(8.dp))
                         .background(Color(0xFFE8EAF6))
                 ) {
-                    Icon(Icons.Default.ChevronLeft, contentDescription = "Previous")
+                    Icon(Icons.Default.ChevronLeft, contentDescription = stringResource(R.string.previous))
                 }
                 Spacer(modifier = Modifier.width(8.dp))
                 IconButton(
@@ -158,13 +160,13 @@ fun CalendarHeader(
                         .clip(RoundedCornerShape(8.dp))
                         .background(Color(0xFFE8EAF6))
                 ) {
-                    Icon(Icons.Default.ChevronRight, contentDescription = "Next")
+                    Icon(Icons.Default.ChevronRight, contentDescription = stringResource(R.string.next))
                 }
             }
         }
         
         Text(
-            text = "Personal efficiency is up 12% this month.",
+            text = stringResource(R.string.efficiency_message),
             style = MaterialTheme.typography.bodyMedium,
             color = Color.Gray,
             modifier = Modifier.padding(top = 4.dp)
@@ -181,7 +183,7 @@ fun ActivityDensityLegend() {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "ACTIVITY DENSITY",
+            text = stringResource(R.string.activity_density),
             style = MaterialTheme.typography.labelSmall,
             fontWeight = FontWeight.Bold,
             color = Color.Gray,
@@ -190,7 +192,7 @@ fun ActivityDensityLegend() {
         
         Spacer(modifier = Modifier.weight(1f))
         
-        Text(text = "Less", style = MaterialTheme.typography.labelSmall, color = Color.Gray)
+        Text(text = stringResource(R.string.less), style = MaterialTheme.typography.labelSmall, color = Color.Gray)
         Spacer(modifier = Modifier.width(4.dp))
         DensityBox(Color(0xFFE8EAF6))
         DensityBox(Color(0xFFC5CAE9))
@@ -198,7 +200,7 @@ fun ActivityDensityLegend() {
         DensityBox(Color(0xFF3F51B5))
         DensityBox(Color(0xFF1A237E))
         Spacer(modifier = Modifier.width(4.dp))
-        Text(text = "More", style = MaterialTheme.typography.labelSmall, color = Color.Gray)
+        Text(text = stringResource(R.string.more), style = MaterialTheme.typography.labelSmall, color = Color.Gray)
     }
 }
 
@@ -358,7 +360,7 @@ fun DayCell(
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             if (isToday && isSelected) {
                 Text(
-                    text = "TODAY",
+                    text = stringResource(R.string.today),
                     style = MaterialTheme.typography.labelSmall,
                     fontSize = 7.sp,
                     fontWeight = FontWeight.Bold,
@@ -395,7 +397,7 @@ fun DayDetailsHeader(selectedDate: Calendar) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "Day Details",
+            text = stringResource(R.string.day_details),
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold
         )
@@ -416,9 +418,9 @@ fun DayDetailsHeader(selectedDate: Calendar) {
     
     // Summary Cards
     Column(modifier = Modifier.padding(horizontal = 20.dp)) {
-        DetailRow("Productivity Score", "84/100", Color(0xFF3F51B5))
+        DetailRow(stringResource(R.string.productivity_score), "84/100", Color(0xFF3F51B5))
         Spacer(modifier = Modifier.height(8.dp))
-        DetailRow("Deep Work", "5.2 hrs", Color(0xFF673AB7))
+        DetailRow(stringResource(R.string.deep_work), stringResource(R.string.hours_suffix, "5.2"), Color(0xFF673AB7))
         Spacer(modifier = Modifier.height(16.dp))
     }
 }

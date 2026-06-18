@@ -18,6 +18,7 @@ class DataStoreManager @Inject constructor(@ApplicationContext context: Context)
 
     companion object {
         val NOTIFICATION_INTERVAL = stringPreferencesKey("notification_interval")
+        val LANGUAGE = stringPreferencesKey("language")
     }
 
     val notificationInterval: Flow<String> = dataStore.data.map { preferences ->
@@ -27,6 +28,16 @@ class DataStoreManager @Inject constructor(@ApplicationContext context: Context)
     suspend fun saveNotificationInterval(interval: String) {
         dataStore.edit { preferences ->
             preferences[NOTIFICATION_INTERVAL] = interval
+        }
+    }
+
+    val selectedLanguage: Flow<String> = dataStore.data.map { preferences ->
+        preferences[LANGUAGE] ?: "en"
+    }
+
+    suspend fun saveLanguage(languageCode: String) {
+        dataStore.edit { preferences ->
+            preferences[LANGUAGE] = languageCode
         }
     }
 }

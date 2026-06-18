@@ -6,6 +6,7 @@ import android.os.Build
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -26,9 +27,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.core.os.LocaleListCompat
 import coil.compose.AsyncImage
+import com.hritik.lifetrackertimeline.R
 import com.hritik.lifetrackertimeline.presentation.auth.AuthViewModel
 import com.hritik.lifetrackertimeline.presentation.main.MainViewModel
 
@@ -42,22 +46,35 @@ fun ProfileScreen(
     val user by mainViewModel.userRepository.user.collectAsState(initial = null)
     val isPremium by mainViewModel.premiumManager.isPremium.collectAsState(initial = false)
     val notificationInterval by mainViewModel.dataStoreManager.notificationInterval.collectAsState(initial = "Never")
+    val selectedLanguage by mainViewModel.dataStoreManager.selectedLanguage.collectAsState(initial = "en")
     
     var showIntervalDialog by remember { mutableStateOf(false) }
+    var showLanguageDialog by remember { mutableStateOf(false) }
+    
     val intervals = listOf("Every 30 mins", "Every 1 hour", "2 hour", "Never")
+    
+    val languages = listOf(
+        stringResource(R.string.lang_english) to "en",
+        stringResource(R.string.lang_hindi) to "hi",
+        stringResource(R.string.lang_german) to "de",
+        stringResource(R.string.lang_spanish) to "es",
+        stringResource(R.string.lang_french) to "fr",
+        stringResource(R.string.lang_russian) to "ru",
+        stringResource(R.string.lang_japanese) to "ja"
+    )
 
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         if (!isGranted) {
-            Toast.makeText(context, "Notification permission is required for reminders", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.notification_permission_required), Toast.LENGTH_SHORT).show()
         }
     }
 
     if (showIntervalDialog) {
         AlertDialog(
             onDismissRequest = { showIntervalDialog = false },
-            title = { Text("Select Notification Interval") },
+            title = { Text(stringResource(R.string.select_notification_interval)) },
             text = {
                 Column {
                     intervals.forEach { interval ->
@@ -86,7 +103,45 @@ fun ProfileScreen(
             },
             confirmButton = {
                 TextButton(onClick = { showIntervalDialog = false }) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.cancel))
+                }
+            }
+        )
+    }
+
+    if (showLanguageDialog) {
+        AlertDialog(
+            onDismissRequest = { showLanguageDialog = false },
+            title = { Text(stringResource(R.string.select_language)) },
+            text = {
+                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                    languages.forEach { (name, code) ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    mainViewModel.updateLanguage(code)
+                                    AppCompatDelegate.setApplicationLocales(
+                                        LocaleListCompat.forLanguageTags(code)
+                                    )
+                                    showLanguageDialog = false
+                                }
+                                .padding(16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            RadioButton(
+                                selected = code == selectedLanguage,
+                                onClick = null
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(text = name)
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = { showLanguageDialog = false }) {
+                    Text(stringResource(R.string.cancel))
                 }
             }
         )
@@ -104,7 +159,7 @@ fun ProfileScreen(
         Spacer(modifier = Modifier.height(24.dp))
         AsyncImage(
             model = user?.photoUrl,
-            contentDescription = "Profile Picture",
+            contentDescription = stringResource(R.string.profile_picture),
             modifier = Modifier
                 .size(100.dp)
                 .clip(CircleShape),
@@ -112,12 +167,12 @@ fun ProfileScreen(
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
-            text = user?.displayName ?: "User Name",
+            text = user?.displayName ?: stringResource(R.string.user_name),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold
         )
         Text(
-            text = user?.email ?: "email@example.com",
+            text = user?.email ?: stringResource(R.string.email_placeholder),
             style = MaterialTheme.typography.bodyMedium,
             color = Color.Gray
         )
@@ -126,7 +181,7 @@ fun ProfileScreen(
         // Sections
         ProfileItem(
             icon = Icons.Default.Notifications,
-            title = "Notification Interval",
+            title = stringResource(R.string.notification_interval),
             trailing = {
                 Text(
                     text = notificationInterval,
@@ -139,17 +194,31 @@ fun ProfileScreen(
 
         ProfileItem(
             icon = Icons.Default.Star,
-            title = if (isPremium) "Premium Member" else "Get a Pro",
+            title = if (isPremium) stringResource(R.string.premium_member) else stringResource(R.string.get_a_pro),
             onClick = onNavigateToPremium
         )
 
         ProfileItem(
+            icon = Icons.Default.Language,
+            title = stringResource(R.string.change_language),
+            trailing = {
+                Text(
+                    text = languages.find { it.second == selectedLanguage }?.first ?: stringResource(R.string.lang_english),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color(0xFF673AB7)
+                )
+            },
+            onClick = { showLanguageDialog = true }
+        )
+
+        ProfileItem(
             icon = Icons.Default.Share,
-            title = "Share App",
+            title = stringResource(R.string.share_app),
             onClick = {
+                val shareText = context.getString(R.string.share_text, context.packageName)
                 val sendIntent: Intent = Intent().apply {
                     action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_TEXT, "Check out LifeTracker Timeline: https://play.google.com/store/apps/details?id=${context.packageName}")
+                    putExtra(Intent.EXTRA_TEXT, shareText)
                     type = "text/plain"
                 }
                 val shareIntent = Intent.createChooser(sendIntent, null)
@@ -159,7 +228,7 @@ fun ProfileScreen(
 
         ProfileItem(
             icon = Icons.AutoMirrored.Filled.Logout,
-            title = "Logout",
+            title = stringResource(R.string.logout),
             titleColor = Color.Red,
             onClick = {
                 authViewModel.logout()

@@ -13,11 +13,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.hritik.lifetrackertimeline.R
 import com.hritik.lifetrackertimeline.data.local.entity.TaskEntity
 import com.hritik.lifetrackertimeline.navigation.Screen
 import com.hritik.lifetrackertimeline.presentation.auth.AuthViewModel
@@ -46,14 +48,14 @@ fun TaskListScreen(
         Spacer(modifier = Modifier.height(16.dp))
         
         Text(
-            text = "MANAGEMENT",
+            text = stringResource(R.string.management),
             style = MaterialTheme.typography.labelMedium,
             color = Color(0xFF3F51B5),
             letterSpacing = 1.sp
         )
         
         Text(
-            text = "Task List",
+            text = stringResource(R.string.task_list),
             style = MaterialTheme.typography.headlineLarge,
             fontWeight = FontWeight.Bold,
             color = Color(0xFF1A1A1A)
@@ -75,7 +77,7 @@ fun TaskListScreen(
         ) {
             Icon(Icons.Default.Add, contentDescription = null)
             Spacer(modifier = Modifier.width(8.dp))
-            Text("Add New Task", fontSize = 16.sp)
+            Text(stringResource(R.string.add_new_task), fontSize = 16.sp)
         }
         
         Spacer(modifier = Modifier.height(16.dp))
@@ -84,7 +86,7 @@ fun TaskListScreen(
             value = searchQuery,
             onValueChange = { searchQuery = it },
             modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("Filter tasks...", color = Color.Gray) },
+            placeholder = { Text(stringResource(R.string.filter_tasks), color = Color.Gray) },
             leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = Color.Gray) },
             shape = RoundedCornerShape(12.dp),
             colors = OutlinedTextFieldDefaults.colors(
@@ -164,10 +166,10 @@ fun ManageTaskItem(
             
             Row(verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = onEdit, modifier = Modifier.size(32.dp)) {
-                    Icon(Icons.Default.Edit, contentDescription = "Edit", tint = Color.Gray, modifier = Modifier.size(18.dp))
+                    Icon(Icons.Default.Edit, contentDescription = stringResource(R.string.edit), tint = Color.Gray, modifier = Modifier.size(18.dp))
                 }
                 IconButton(onClick = onDelete, modifier = Modifier.size(32.dp)) {
-                    Icon(Icons.Default.Delete, contentDescription = "Delete", tint = Color(0xFFEF5350), modifier = Modifier.size(18.dp))
+                    Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.delete), tint = Color(0xFFEF5350), modifier = Modifier.size(18.dp))
                 }
                 Switch(
                     checked = task.isActive,

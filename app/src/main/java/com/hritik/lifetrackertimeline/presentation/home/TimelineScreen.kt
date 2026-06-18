@@ -21,10 +21,12 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.hritik.lifetrackertimeline.R
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -63,12 +65,12 @@ fun TimelineScreen(
                     }
                     showDatePicker = false
                 }) {
-                    Text("OK")
+                    Text(stringResource(R.string.ok))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showDatePicker = false }) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.cancel))
                 }
             }
         ) {
@@ -79,9 +81,12 @@ fun TimelineScreen(
     val displayDate = remember(selectedDateStr) {
         val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(selectedDateStr) ?: Date()
         val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-        if (selectedDateStr == today) "Today's Focus"
+        if (selectedDateStr == today) null // Special case for localized "Today's Focus"
         else SimpleDateFormat("EEEE, MMM dd", Locale.getDefault()).format(date)
     }
+    
+    val todayLabel = stringResource(R.string.todays_focus)
+    val actualDisplayDate = displayDate ?: todayLabel
 
     val headerDate = remember(selectedDateStr) {
         val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(selectedDateStr) ?: Date()
@@ -113,13 +118,13 @@ fun TimelineScreen(
                     
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
-                            text = displayDate,
+                            text = actualDisplayDate,
                             style = MaterialTheme.typography.headlineLarge,
                             fontWeight = FontWeight.ExtraBold,
                             color = Color(0xFF1A1A1A),
                             modifier = Modifier.weight(1f)
                         )
-                        Icon(Icons.Default.ArrowDropDown, contentDescription = "Change Date", tint = Color.Gray)
+                        Icon(Icons.Default.ArrowDropDown, contentDescription = stringResource(R.string.change_date), tint = Color.Gray)
                     }
                     
                     Spacer(modifier = Modifier.height(16.dp))
@@ -334,7 +339,7 @@ fun EmptyTimelineItemRow(time: String, onClick: () -> Unit) {
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "Select Task",
+                    text = stringResource(R.string.select_task),
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color(0xFFBDBDBD),
                     fontWeight = FontWeight.Medium

@@ -1,0 +1,122 @@
+<resources>
+    <string name="app_name">LifeTracker Timeline</string>
+    <string name="profile_picture">प्रोफ़ाइल चित्र</string>
+    <string name="user_name">उपयोगकर्ता का नाम</string>
+    <string name="email_placeholder">email@example.com</string>
+    <string name="notification_interval">अधिसूचना अंतराल</string>
+    <string name="premium_member">प्रीमियम सदस्य</string>
+    <string name="get_a_pro">प्रो प्राप्त करें</string>
+    <string name="change_language">भाषा बदलें</string>
+    <string name="share_app">ऐप साझा करें</string>
+    <string name="logout">लॉग आउट</string>
+    <string name="select_notification_interval">अधिसूचना अंतराल चुनें</string>
+    <string name="select_language">भाषा चुनें</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="notification_permission_required">रिमाइंडर के लिए अधिसूचना अनुमति आवश्यक है</string>
+    <string name="share_text">LifeTracker Timeline देखें: https://play.google.com/store/apps/details?id=%1$s</string>
+
+    <!-- Intervals -->
+    <string name="interval_30_mins">हर 30 मिनट</string>
+    <string name="interval_1_hour">हर 1 घंटा</string>
+    <string name="interval_2_hours">2 घंटे</string>
+    <string name="interval_never">कभी नहीं</string>
+
+    <!-- Languages -->
+    <string name="lang_english">अंग्रेज़ी</string>
+    <string name="lang_hindi">हिन्दी</string>
+    <string name="lang_german">जर्मन</string>
+    <string name="lang_spanish">स्पेनिश</string>
+    <string name="lang_french">फ्रेंच</string>
+    <string name="lang_russian">रूसी</string>
+    <string name="lang_japanese">जापानी</string>
+
+    <!-- Add/Edit Task -->
+    <string name="add_task">कार्य जोड़ें</string>
+    <string name="edit_task">कार्य संपादित करें</string>
+    <string name="back">पीछे</string>
+    <string name="save">सहेजें</string>
+    <string name="task_details">कार्य विवरण</string>
+    <string name="label_task_name">कार्य का नाम</string>
+    <string name="label_notes">नोट्स</string>
+    <string name="mark_as_unproductive">अनुत्पादक के रूप में चिह्नित करें</string>
+    <string name="identifier_color">पहचानकर्ता रंग</string>
+    <string name="task_icon">कार्य आइकन</string>
+    <string name="delete_task">कार्य हटाएं</string>
+
+    <!-- Icons -->
+    <string name="icon_work">काम</string>
+    <string name="icon_fitness">फिटनेस</string>
+    <string name="icon_food">भोजन</string>
+    <string name="icon_study">अध्ययन</string>
+    <string name="icon_code">कोड</string>
+    <string name="icon_art">कला</string>
+    <string name="icon_music">संगीत</string>
+    <string name="icon_sleep">नींद</string>
+    <string name="icon_shop">खरीदारी</string>
+    <string name="icon_travel">यात्रा</string>
+
+    <!-- Task List -->
+    <string name="management">प्रबंधन</string>
+    <string name="task_list">कार्य सूची</string>
+    <string name="add_new_task">नया कार्य जोड़ें</string>
+    <string name="filter_tasks">कार्यों को फ़िल्टर करें...</string>
+    <string name="edit">संपादित करें</string>
+    <string name="delete">हटाएं</string>
+
+    <!-- Calendar Screen -->
+    <string name="no_activities_logged">इस दिन के लिए कोई गतिविधि दर्ज नहीं की गई।</string>
+    <string name="log_new_activity">नई गतिविधि दर्ज करें</string>
+    <string name="efficiency_message">व्यक्तिगत दक्षता इस महीने 12%% बढ़ी है।</string>
+    <string name="activity_density">गतिविधि घनत्व</string>
+    <string name="less">कम</string>
+    <string name="more">अधिक</string>
+    <string name="today">आज</string>
+    <string name="day_details">दिन का विवरण</string>
+    <string name="productivity_score">उत्पादकता स्कोर</string>
+    <string name="deep_work">गहरा काम</string>
+    <string name="hours_suffix">%1$s घंटे</string>
+    <string name="previous">पिछला</string>
+    <string name="next">अगला</string>
+
+    <!-- Analytics Screen -->
+    <string name="weekly_trend">साप्ताहिक रुझान</string>
+    <string name="activity_intensity_baseline">गतिविधि तीव्रता बनाम बेसलाइन</string>
+    <string name="week">सप्ताह</string>
+    <string name="month">महीना</string>
+    <string name="this_week">इस सप्ताह</string>
+    <string name="vs_last_week">पिछले सप्ताह की तुलना में +12%%</string>
+    <string name="daily_avg">दैनिक औसत</string>
+    <string name="goal_hours">लक्ष्य: %1$s</string>
+    <string name="peak_productivity">चरम उत्पादकता</string>
+    <string name="focus_allocation">फोकस आवंटन</string>
+    <string name="monthly_highlights">मासिक मुख्य आकर्षण</string>
+    <string name="activity_name">गतिविधि का नाम</string>
+    <string name="total_duration">कुल अवधि</string>
+    <string name="monthly_trend">मासिक रुझान</string>
+    <string name="hours_label">घंटे</string>
+    <string name="hours_value">%1$s घंटे</string>
+
+    <!-- Home Screen -->
+    <string name="welcome_message">LifeTracker Timeline में आपका स्वागत है</string>
+
+    <!-- Timeline Screen -->
+    <string name="ok">ठीक है</string>
+    <string name="todays_focus">आज का फोकस</string>
+    <string name="change_date">तारीख बदलें</string>
+    <string name="select_task">कार्य चुनें</string>
+
+    <!-- Task Selection Screen -->
+    <string name="select_task_header">कार्य चुनें</string>
+    <string name="search_tasks">कार्य खोजें...</string>
+    <string name="previous_tasks">पिछले कार्य</string>
+    <string name="total_suffix">%1$d कुल</string>
+    <string name="no_tasks_found">कोई कार्य नहीं मिला</string>
+    <string name="no_tasks_found_desc">किसी भिन्न खोज शब्द का प्रयास करें या ऊपर दिए गए बटन का उपयोग करके एक नया कार्य बनाएं।</string>
+    <string name="never_used">कभी उपयोग नहीं किया गया</string>
+    <string name="just_now">अभी-अभी</string>
+    <string name="minutes_ago">%1$d मिनट पहले</string>
+    <string name="hours_ago">%1$d घंटे पहले</string>
+    <string name="yesterday">कल</string>
+    <string name="days_ago">%1$d दिन पहले</string>
+    <string name="last_used_prefix">अंतिम बार उपयोग किया गया: %1$s</string>
+</resources>

@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">LifeTracker Timeline</string>
+    <string name="profile_picture">Фото профиля</string>
+    <string name="user_name">Имя пользователя</string>
+    <string name="email_placeholder">email@example.com</string>
+    <string name="notification_interval">Интервал уведомлений</string>
+    <string name="premium_member">Премиум-участник</string>
+    <string name="get_a_pro">Получить Pro</string>
+    <string name="change_language">Сменить язык</string>
+    <string name="share_app">Поделиться приложением</string>
+    <string name="logout">Выйти</string>
+    <string name="select_notification_interval">Выберите интервал уведомлений</string>
+    <string name="select_language">Выберите язык</string>
+    <string name="cancel">Отмена</string>
+    <string name="notification_permission_required">Разрешение на уведомления необходимо для напоминаний</string>
+    <string name="share_text">Посмотрите LifeTracker Timeline: https://play.google.com/store/apps/details?id=%1$s</string>
+
+    <!-- Intervals -->
+    <string name="interval_30_mins">Каждые 30 мин</string>
+    <string name="interval_1_hour">Каждый 1 час</string>
+    <string name="interval_2_hours">2 часа</string>
+    <string name="interval_never">Никогда</string>
+
+    <!-- Languages -->
+    <string name="lang_english">Английский</string>
+    <string name="lang_hindi">Хинди</string>
+    <string name="lang_german">Немецкий</string>
+    <string name="lang_spanish">Испанский</string>
+    <string name="lang_french">Французский</string>
+    <string name="lang_russian">Русский</string>
+    <string name="lang_japanese">Японский</string>
+</resources>

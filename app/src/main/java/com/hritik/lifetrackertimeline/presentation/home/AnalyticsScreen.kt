@@ -16,10 +16,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.hritik.lifetrackertimeline.R
 
 @Composable
 fun AnalyticsScreen(
@@ -79,12 +81,12 @@ fun WeeklyTrendCard(trend: List<Pair<String, Int>>) {
             ) {
                 Column {
                     Text(
-                        text = "Weekly Trend",
+                        text = stringResource(R.string.weekly_trend),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = "Activity intensity vs. baseline",
+                        text = stringResource(R.string.activity_intensity_baseline),
                         style = MaterialTheme.typography.bodySmall,
                         color = Color.Gray
                     )
@@ -96,7 +98,7 @@ fun WeeklyTrendCard(trend: List<Pair<String, Int>>) {
                 ) {
                     Row(modifier = Modifier.padding(4.dp)) {
                         Text(
-                            text = "Week",
+                            text = stringResource(R.string.week),
                             modifier = Modifier
                                 .background(Color.White, RoundedCornerShape(6.dp))
                                 .padding(horizontal = 12.dp, vertical = 4.dp),
@@ -104,7 +106,7 @@ fun WeeklyTrendCard(trend: List<Pair<String, Int>>) {
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = "Month",
+                            text = stringResource(R.string.month),
                             modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
                             fontSize = 12.sp,
                             color = Color.Gray
@@ -174,7 +176,7 @@ fun TotalHoursCard(totalHours: String) {
     ) {
         Column(modifier = Modifier.padding(24.dp)) {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                Text(text = "THIS WEEK", color = Color.White.copy(alpha = 0.8f), style = MaterialTheme.typography.labelMedium)
+                Text(text = stringResource(R.string.this_week), color = Color.White.copy(alpha = 0.8f), style = MaterialTheme.typography.labelMedium)
                 Icon(Icons.Default.TrendingUp, contentDescription = null, tint = Color.White)
             }
             Text(
@@ -184,7 +186,7 @@ fun TotalHoursCard(totalHours: String) {
                 fontWeight = FontWeight.Bold,
                 fontSize = 40.sp
             )
-            Text(text = "+12% vs last week", color = Color.White.copy(alpha = 0.8f), style = MaterialTheme.typography.bodySmall)
+            Text(text = stringResource(R.string.vs_last_week), color = Color.White.copy(alpha = 0.8f), style = MaterialTheme.typography.bodySmall)
         }
     }
 }
@@ -197,11 +199,11 @@ fun DailyAvgCard(avg: String) {
         shape = RoundedCornerShape(24.dp)
     ) {
         Column(modifier = Modifier.padding(20.dp)) {
-            Text(text = "DAILY AVG", color = Color.Gray, style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold)
+            Text(text = stringResource(R.string.daily_avg), color = Color.Gray, style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold)
             Row(verticalAlignment = Alignment.Bottom) {
                 Text(text = avg, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text = "Goal: 8h", color = Color(0xFF3F51B5), style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(bottom = 4.dp))
+                Text(text = stringResource(R.string.goal_hours, "8h"), color = Color(0xFF3F51B5), style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(bottom = 4.dp))
             }
             Spacer(modifier = Modifier.height(12.dp))
             LinearProgressIndicator(
@@ -223,7 +225,7 @@ fun PeakProductivityCard(data: List<Pair<String, Int>>) {
     ) {
         Column(modifier = Modifier.padding(20.dp)) {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                Text(text = "Peak Productivity", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+                Text(text = stringResource(R.string.peak_productivity), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
                 Surface(color = Color(0xFFE8EAF6), shape = RoundedCornerShape(16.dp)) {
                     Text(text = "10 AM - 12 PM", modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp), fontSize = 10.sp, color = Color(0xFF3F51B5), fontWeight = FontWeight.Bold)
                 }
@@ -267,7 +269,7 @@ fun FocusAllocationCard(items: List<FocusAllocationItem>) {
         shape = RoundedCornerShape(24.dp)
     ) {
         Column(modifier = Modifier.padding(20.dp)) {
-            Text(text = "Focus Allocation", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+            Text(text = stringResource(R.string.focus_allocation), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
             Spacer(modifier = Modifier.height(20.dp))
             
             items.forEach { item ->
@@ -278,7 +280,7 @@ fun FocusAllocationCard(items: List<FocusAllocationItem>) {
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(text = item.title, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
                         }
-                        Text(text = "${item.hours}h", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
+                        Text(text = stringResource(R.string.hours_value, item.hours.toString()), style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     LinearProgressIndicator(
@@ -296,12 +298,12 @@ fun FocusAllocationCard(items: List<FocusAllocationItem>) {
 @Composable
 fun MonthlyHighlightsSection(items: List<MonthlyHighlightItem>) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        Text(text = "Monthly Highlights", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, modifier = Modifier.padding(vertical = 8.dp))
+        Text(text = stringResource(R.string.monthly_highlights), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, modifier = Modifier.padding(vertical = 8.dp))
         
         Row(modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-            Text(text = "Activity Name", style = MaterialTheme.typography.labelSmall, color = Color.Gray, modifier = Modifier.weight(1.5f))
-            Text(text = "Total Duration", style = MaterialTheme.typography.labelSmall, color = Color.Gray, modifier = Modifier.weight(1f))
-            Text(text = "Monthly Trend", style = MaterialTheme.typography.labelSmall, color = Color.Gray, modifier = Modifier.weight(1f), textAlign = androidx.compose.ui.text.style.TextAlign.End)
+            Text(text = stringResource(R.string.activity_name), style = MaterialTheme.typography.labelSmall, color = Color.Gray, modifier = Modifier.weight(1.5f))
+            Text(text = stringResource(R.string.total_duration), style = MaterialTheme.typography.labelSmall, color = Color.Gray, modifier = Modifier.weight(1f))
+            Text(text = stringResource(R.string.monthly_trend), style = MaterialTheme.typography.labelSmall, color = Color.Gray, modifier = Modifier.weight(1f), textAlign = androidx.compose.ui.text.style.TextAlign.End)
         }
 
         items.forEach { item ->
@@ -330,7 +332,7 @@ fun MonthlyHighlightsSection(items: List<MonthlyHighlightItem>) {
                     
                     Column(modifier = Modifier.weight(1f)) {
                         Text(text = "${item.hours}", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
-                        Text(text = "Hours", style = MaterialTheme.typography.labelSmall, color = Color.Gray)
+                        Text(text = stringResource(R.string.hours_label), style = MaterialTheme.typography.labelSmall, color = Color.Gray)
                     }
 
                     Box(modifier = Modifier.weight(1f).height(30.dp)) {
