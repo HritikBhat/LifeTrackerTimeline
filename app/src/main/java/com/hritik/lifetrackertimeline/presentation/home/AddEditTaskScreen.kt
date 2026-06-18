@@ -33,11 +33,12 @@ import kotlinx.coroutines.launch
 @Composable
 fun AddEditTaskScreen(
     taskId: Int,
+    taskName: String? = null,
     navController: NavController,
     viewModel: TaskViewModel = hiltViewModel()
 ) {
     val scope = rememberCoroutineScope()
-    var title by remember { mutableStateOf("") }
+    var title by remember { mutableStateOf(taskName ?: "") }
     var notes by remember { mutableStateOf("") }
     var isUnproductive by remember { mutableStateOf(false) }
     var selectedColor by remember { mutableStateOf(colors[0]) }

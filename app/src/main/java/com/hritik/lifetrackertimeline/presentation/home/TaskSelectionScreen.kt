@@ -34,7 +34,7 @@ fun TaskSelectionScreen(
     date: String,
     onNavigateBack: () -> Unit,
     onTaskSelected: (Int) -> Unit,
-    onAddNewTask: () -> Unit,
+    onAddNewTask: (String) -> Unit,
     viewModel: TimelineViewModel = hiltViewModel()
 ) {
     var searchQuery by remember { mutableStateOf("") }
@@ -124,10 +124,10 @@ fun TaskSelectionScreen(
                         singleLine = true
                     )
                     
-                    if (filteredTasks.isEmpty()) {
+                    if (searchQuery.isNotBlank()) {
                         Spacer(modifier = Modifier.width(12.dp))
                         FloatingActionButton(
-                            onClick = onAddNewTask,
+                            onClick = { onAddNewTask(searchQuery) },
                             containerColor = Color(0xFF0047AB),
                             contentColor = Color.White,
                             shape = CircleShape,

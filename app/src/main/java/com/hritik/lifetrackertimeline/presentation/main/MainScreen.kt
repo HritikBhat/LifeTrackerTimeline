@@ -50,22 +50,27 @@ fun MainScreen(
             }
         }
     }
-    
+
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
+    // Define top-level destinations where bottom bar should be shown
+    val topLevelRoutes = listOf(
+        BottomBarScreen.Timeline.route,
+        BottomBarScreen.Analytics.route,
+        BottomBarScreen.Calendar.route,
+        BottomBarScreen.Tasks.route,
+        BottomBarScreen.Profile.route
+    )
+
+    // Only show bottom bar for top-level routes
+    val showBottomBar = currentRoute in topLevelRoutes
+    // Show back icon only when not on a top-level screen and we can go back
+    val canPop = navController.previousBackStackEntry != null && currentRoute !in topLevelRoutes
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
-            val currentRoute = navBackStackEntry?.destination?.route
-            
-            // Check if current destination is a top-level screen
-            val isTopLevelDestination = currentRoute == BottomBarScreen.Timeline.route ||
-                    currentRoute == BottomBarScreen.Analytics.route ||
-                    currentRoute == BottomBarScreen.Calendar.route ||
-                    currentRoute == BottomBarScreen.Tasks.route ||
-                    currentRoute == BottomBarScreen.Profile.route
-
-            val canPop = navController.previousBackStackEntry != null && !isTopLevelDestination
-
             CenterAlignedTopAppBar(
                 title = { Text("LifeTracker Timeline", style = MaterialTheme.typography.titleLarge) },
                 navigationIcon = {
@@ -84,24 +89,23 @@ fun MainScreen(
             )
         },
         bottomBar = {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color(0xFFF8F9FE))
-            ) {
-                BottomBar(navController = navController)
-                
-                if (!isPremium) {
-                    AdBanner()
+            if (showBottomBar) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color(0xFFF8F9FE))
+                ) {
+                    BottomBar(navController = navController)
+                    
+                    if (!isPremium) {
+                        AdBanner()
+                    }
+                    
+                    Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
                 }
-                
-                Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
             }
         },
         floatingActionButton = {
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
-            val currentRoute = navBackStackEntry?.destination?.route
-            
             if (currentRoute == BottomBarScreen.Timeline.route || currentRoute == BottomBarScreen.Tasks.route) {
                 FloatingActionButton(
                     onClick = { rootNavController.navigate(Screen.AddEditTask.createRoute(-1)) },
@@ -117,7 +121,7 @@ fun MainScreen(
         NavHost(
             navController = navController,
             startDestination = BottomBarScreen.Timeline.route,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(if (showBottomBar) innerPadding else PaddingValues(0.dp))
         ) {
             composable(BottomBarScreen.Timeline.route) {
                 TimelineScreen(
@@ -142,8 +146,8 @@ fun MainScreen(
                     onTaskSelected = { taskId ->
                         navController.popBackStack()
                     },
-                    onAddNewTask = {
-                        rootNavController.navigate(Screen.AddEditTask.createRoute(-1))
+                    onAddNewTask = { taskName ->
+                        rootNavController.navigate(Screen.AddEditTask.createRoute(-1, taskName))
                     }
                 )
             }

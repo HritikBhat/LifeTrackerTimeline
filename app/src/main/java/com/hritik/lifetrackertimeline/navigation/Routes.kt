@@ -13,8 +13,10 @@ sealed class Screen(val route: String) {
     object Login : Screen("login")
     object Main : Screen("main")
     object Premium : Screen("premium")
-    object AddEditTask : Screen("add_edit_task/{taskId}") {
-        fun createRoute(taskId: Int) = "add_edit_task/$taskId"
+    object AddEditTask : Screen("add_edit_task/{taskId}?taskName={taskName}") {
+        fun createRoute(taskId: Int, taskName: String? = null) = 
+            if (taskName != null) "add_edit_task/$taskId?taskName=$taskName" 
+            else "add_edit_task/$taskId"
     }
     object TaskSelection : Screen("task_selection/{timeSlot}/{date}") {
         fun createRoute(timeSlot: String, date: String) = "task_selection/$timeSlot/$date"

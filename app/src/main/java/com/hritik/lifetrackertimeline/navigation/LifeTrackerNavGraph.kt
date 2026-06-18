@@ -69,11 +69,20 @@ fun LifeTrackerNavGraph(
 
         composable(
             route = Screen.AddEditTask.route,
-            arguments = listOf(navArgument("taskId") { type = NavType.IntType })
+            arguments = listOf(
+                navArgument("taskId") { type = NavType.IntType },
+                navArgument("taskName") { 
+                    type = NavType.StringType
+                    nullable = true
+                    defaultValue = null
+                }
+            )
         ) { backStackEntry ->
             val taskId = backStackEntry.arguments?.getInt("taskId") ?: -1
+            val taskName = backStackEntry.arguments?.getString("taskName")
             AddEditTaskScreen(
                 taskId = taskId,
+                taskName = taskName,
                 navController = navController
             )
         }

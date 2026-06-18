@@ -62,7 +62,11 @@ fun TaskListScreen(
         Spacer(modifier = Modifier.height(16.dp))
         
         Button(
-            onClick = { rootNavController.navigate(Screen.AddEditTask.createRoute(-1)) },
+            onClick = { 
+                rootNavController.navigate(
+                    Screen.AddEditTask.createRoute(-1, searchQuery.ifBlank { null })
+                ) 
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
