@@ -29,4 +29,103 @@
     <string name="lang_french">Французский</string>
     <string name="lang_russian">Русский</string>
     <string name="lang_japanese">Японский</string>
+
+    <!-- Add/Edit Task -->
+    <string name="add_task">Добавить задачу</string>
+    <string name="edit_task">Редактировать задачу</string>
+    <string name="back">Назад</string>
+    <string name="save">Сохранить</string>
+    <string name="task_details">Сведения о задаче</string>
+    <string name="label_task_name">НАЗВАНИЕ ЗАДАЧИ</string>
+    <string name="label_notes">ЗАМЕТКИ</string>
+    <string name="mark_as_unproductive">Отметить как непродуктивную</string>
+    <string name="identifier_color">ЦВЕТ ИДЕНТИФИКАТОРА</string>
+    <string name="task_icon">ЗНАЧОК ЗАДАЧИ</string>
+    <string name="delete_task">Удалить задачу</string>
+
+    <!-- Icons -->
+    <string name="icon_work">Работа</string>
+    <string name="icon_fitness">Фитнес</string>
+    <string name="icon_food">Еда</string>
+    <string name="icon_study">Учёба</string>
+    <string name="icon_code">Кодинг</string>
+    <string name="icon_art">Искусство</string>
+    <string name="icon_music">Музыка</string>
+    <string name="icon_sleep">Сон</string>
+    <string name="icon_shop">Покупки</string>
+    <string name="icon_travel">Путешествия</string>
+
+    <!-- Task List -->
+    <string name="management">УПРАВЛЕНИЕ</string>
+    <string name="task_list">Список задач</string>
+    <string name="add_new_task">Добавить новую задачу</string>
+    <string name="filter_tasks">Фильтр задач...</string>
+    <string name="edit">Редактировать</string>
+    <string name="delete">Удалить</string>
+
+    <!-- Calendar Screen -->
+    <string name="no_activities_logged">На этот день активности не зарегистрированы.</string>
+    <string name="log_new_activity">Записать новую активность</string>
+    <string name="efficiency_message">Личная эффективность выросла на 12%% в этом месяце.</string>
+    <string name="activity_density">ПЛОТНОСТЬ АКТИВНОСТИ</string>
+    <string name="less">Меньше</string>
+    <string name="more">Больше</string>
+    <string name="today">СЕГОДНЯ</string>
+    <string name="day_details">Детали дня</string>
+    <string name="productivity_score">Оценка продуктивности</string>
+    <string name="deep_work">Глубокая работа</string>
+    <string name="hours_suffix">%1$s ч</string>
+    <string name="previous">Назад</string>
+    <string name="next">Вперёд</string>
+
+    <!-- Analytics Screen -->
+    <string name="weekly_trend">Недельный тренд</string>
+    <string name="activity_intensity_baseline">Интенсивность активности относительно среднего</string>
+    <string name="week">Неделя</string>
+    <string name="month">Месяц</string>
+    <string name="this_week">ЭТА НЕДЕЛЯ</string>
+    <string name="vs_last_week">+12%% к прошлой неделе</string>
+    <string name="daily_avg">СРЕДНЕЕ ЗА ДЕНЬ</string>
+    <string name="goal_hours">Цель: %1$s</string>
+    <string name="peak_productivity">Пик продуктивности</string>
+    <string name="focus_allocation">Распределение внимания</string>
+    <string name="monthly_highlights">Главные события месяца</string>
+    <string name="activity_name">Название активности</string>
+    <string name="total_duration">Общая длительность</string>
+    <string name="monthly_trend">Месячный тренд</string>
+    <string name="hours_label">Часы</string>
+    <string name="hours_value">%1$sч</string>
+
+    <!-- Home Screen -->
+    <string name="welcome_message">Добро пожаловать в LifeTracker Timeline</string>
+
+    <!-- Timeline Screen -->
+    <string name="ok">ОК</string>
+    <string name="todays_focus">Фокус на сегодня</string>
+    <string name="change_date">Изменить дату</string>
+    <string name="select_task">Выбрать задачу</string>
+
+    <!-- Task Selection Screen -->
+    <string name="select_task_header">ВЫБЕРИТЕ ЗАДАЧУ</string>
+    <string name="search_tasks">Поиск задач...</string>
+    <string name="previous_tasks">ПРЕДЫДУЩИЕ ЗАДАЧИ</string>
+    <string name="total_suffix">ВСЕГО %1$d</string>
+    <string name="no_tasks_found">Задачи не найдены</string>
+    <string name="no_tasks_found_desc">Попробуйте другой поисковый запрос\nили создайте новую задачу с помощью кнопки выше.</string>
+    <string name="never_used">Никогда не использовалась</string>
+    <string name="just_now">Только что</string>
+    <string name="minutes_ago">%1$d мин назад</string>
+    <string name="hours_ago">%1$d ч назад</string>
+    <string name="yesterday">Вчера</string>
+    <string name="days_ago">%1$d дн. назад</string>
+    <string name="last_used_prefix">Последнее использование: %1$s</string>
+
+    <!-- Login Screen -->
+    <string name="app_logo_desc">Логотип</string>
+    <string name="app_name_login">LifeTracker</string>
+    <string name="app_tagline">Отслеживайте каждые 30 минут своей жизни</string>
+    <string name="google_logo_desc">Логотип Google</string>
+    <string name="continue_with_google">Продолжить с Google</string>
+    <string name="privacy_policy">Политика конфиденциальности</string>
+    <string name="terms_of_service">Условия использования</string>
 </resources>

@@ -29,4 +29,103 @@
     <string name="lang_french">フランス語</string>
     <string name="lang_russian">ロシア語</string>
     <string name="lang_japanese">日本語</string>
+
+    <!-- Add/Edit Task -->
+    <string name="add_task">タスクを追加</string>
+    <string name="edit_task">タスクを編集</string>
+    <string name="back">戻る</string>
+    <string name="save">保存</string>
+    <string name="task_details">タスク詳細</string>
+    <string name="label_task_name">タスク名</string>
+    <string name="label_notes">メモ</string>
+    <string name="mark_as_unproductive">非生産的としてマーク</string>
+    <string name="identifier_color">識別カラー</string>
+    <string name="task_icon">タスクアイコン</string>
+    <string name="delete_task">タスクを削除</string>
+
+    <!-- Icons -->
+    <string name="icon_work">仕事</string>
+    <string name="icon_fitness">フィットネス</string>
+    <string name="icon_food">食事</string>
+    <string name="icon_study">勉強</string>
+    <string name="icon_code">コーディング</string>
+    <string name="icon_art">アート</string>
+    <string name="icon_music">音楽</string>
+    <string name="icon_sleep">睡眠</string>
+    <string name="icon_shop">買い物</string>
+    <string name="icon_travel">旅行</string>
+
+    <!-- Task List -->
+    <string name="management">管理</string>
+    <string name="task_list">タスクリスト</string>
+    <string name="add_new_task">新しいタスクを追加</string>
+    <string name="filter_tasks">タスクを検索...</string>
+    <string name="edit">編集</string>
+    <string name="delete">削除</string>
+
+    <!-- Calendar Screen -->
+    <string name="no_activities_logged">この日に記録されたアクティビティはありません。</string>
+    <string name="log_new_activity">新しいアクティビティを記録</string>
+    <string name="efficiency_message">今月の個人効率は12%%向上しました。</string>
+    <string name="activity_density">アクティビティ密度</string>
+    <string name="less">少ない</string>
+    <string name="more">多い</string>
+    <string name="today">今日</string>
+    <string name="day_details">日別詳細</string>
+    <string name="productivity_score">生産性スコア</string>
+    <string name="deep_work">集中作業</string>
+    <string name="hours_suffix">%1$s時間</string>
+    <string name="previous">前へ</string>
+    <string name="next">次へ</string>
+
+    <!-- Analytics Screen -->
+    <string name="weekly_trend">週間トレンド</string>
+    <string name="activity_intensity_baseline">平均と比較した活動強度</string>
+    <string name="week">週</string>
+    <string name="month">月</string>
+    <string name="this_week">今週</string>
+    <string name="vs_last_week">先週比 +12%%</string>
+    <string name="daily_avg">1日平均</string>
+    <string name="goal_hours">目標: %1$s</string>
+    <string name="peak_productivity">最高生産性</string>
+    <string name="focus_allocation">時間配分</string>
+    <string name="monthly_highlights">今月のハイライト</string>
+    <string name="activity_name">アクティビティ名</string>
+    <string name="total_duration">合計時間</string>
+    <string name="monthly_trend">月間トレンド</string>
+    <string name="hours_label">時間</string>
+    <string name="hours_value">%1$s時間</string>
+
+    <!-- Home Screen -->
+    <string name="welcome_message">LifeTracker Timelineへようこそ</string>
+
+    <!-- Timeline Screen -->
+    <string name="ok">OK</string>
+    <string name="todays_focus">今日のフォーカス</string>
+    <string name="change_date">日付を変更</string>
+    <string name="select_task">タスクを選択</string>
+
+    <!-- Task Selection Screen -->
+    <string name="select_task_header">タスクを選択</string>
+    <string name="search_tasks">タスクを検索...</string>
+    <string name="previous_tasks">以前のタスク</string>
+    <string name="total_suffix">合計 %1$d 件</string>
+    <string name="no_tasks_found">タスクが見つかりません</string>
+    <string name="no_tasks_found_desc">別の検索語を試すか、\n上のボタンから新しいタスクを作成してください。</string>
+    <string name="never_used">未使用</string>
+    <string name="just_now">たった今</string>
+    <string name="minutes_ago">%1$d分前</string>
+    <string name="hours_ago">%1$d時間前</string>
+    <string name="yesterday">昨日</string>
+    <string name="days_ago">%1$d日前</string>
+    <string name="last_used_prefix">最終使用: %1$s</string>
+
+    <!-- Login Screen -->
+    <string name="app_logo_desc">ロゴ</string>
+    <string name="app_name_login">LifeTracker</string>
+    <string name="app_tagline">人生の30分ごとを記録しよう</string>
+    <string name="google_logo_desc">Googleロゴ</string>
+    <string name="continue_with_google">Googleで続行</string>
+    <string name="privacy_policy">プライバシーポリシー</string>
+    <string name="terms_of_service">利用規約</string>
 </resources>

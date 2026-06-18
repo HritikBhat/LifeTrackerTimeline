@@ -29,4 +29,103 @@
     <string name="lang_french">Français</string>
     <string name="lang_russian">Russe</string>
     <string name="lang_japanese">Japonais</string>
+
+    <!-- Add/Edit Task -->
+    <string name="add_task">Ajouter une tâche</string>
+    <string name="edit_task">Modifier la tâche</string>
+    <string name="back">Retour</string>
+    <string name="save">Enregistrer</string>
+    <string name="task_details">Détails de la tâche</string>
+    <string name="label_task_name">NOM DE LA TÂCHE</string>
+    <string name="label_notes">NOTES</string>
+    <string name="mark_as_unproductive">Marquer comme non productive</string>
+    <string name="identifier_color">COULEUR D\'IDENTIFICATION</string>
+    <string name="task_icon">ICÔNE DE LA TÂCHE</string>
+    <string name="delete_task">Supprimer la tâche</string>
+
+    <!-- Icons -->
+    <string name="icon_work">Travail</string>
+    <string name="icon_fitness">Fitness</string>
+    <string name="icon_food">Nourriture</string>
+    <string name="icon_study">Études</string>
+    <string name="icon_code">Programmation</string>
+    <string name="icon_art">Art</string>
+    <string name="icon_music">Musique</string>
+    <string name="icon_sleep">Sommeil</string>
+    <string name="icon_shop">Shopping</string>
+    <string name="icon_travel">Voyage</string>
+
+    <!-- Task List -->
+    <string name="management">GESTION</string>
+    <string name="task_list">Liste des tâches</string>
+    <string name="add_new_task">Ajouter une nouvelle tâche</string>
+    <string name="filter_tasks">Filtrer les tâches...</string>
+    <string name="edit">Modifier</string>
+    <string name="delete">Supprimer</string>
+
+    <!-- Calendar Screen -->
+    <string name="no_activities_logged">Aucune activité enregistrée pour cette journée.</string>
+    <string name="log_new_activity">Enregistrer une nouvelle activité</string>
+    <string name="efficiency_message">L\'efficacité personnelle a augmenté de 12%% ce mois-ci.</string>
+    <string name="activity_density">DENSITÉ D\'ACTIVITÉ</string>
+    <string name="less">Moins</string>
+    <string name="more">Plus</string>
+    <string name="today">AUJOURD\'HUI</string>
+    <string name="day_details">Détails de la journée</string>
+    <string name="productivity_score">Score de productivité</string>
+    <string name="deep_work">Travail approfondi</string>
+    <string name="hours_suffix">%1$s h</string>
+    <string name="previous">Précédent</string>
+    <string name="next">Suivant</string>
+
+    <!-- Analytics Screen -->
+    <string name="weekly_trend">Tendance hebdomadaire</string>
+    <string name="activity_intensity_baseline">Intensité de l\'activité par rapport à la moyenne</string>
+    <string name="week">Semaine</string>
+    <string name="month">Mois</string>
+    <string name="this_week">CETTE SEMAINE</string>
+    <string name="vs_last_week">+12%% par rapport à la semaine dernière</string>
+    <string name="daily_avg">MOYENNE QUOTIDIENNE</string>
+    <string name="goal_hours">Objectif : %1$s</string>
+    <string name="peak_productivity">Productivité maximale</string>
+    <string name="focus_allocation">Répartition de l\'attention</string>
+    <string name="monthly_highlights">Moments forts du mois</string>
+    <string name="activity_name">Nom de l\'activité</string>
+    <string name="total_duration">Durée totale</string>
+    <string name="monthly_trend">Tendance mensuelle</string>
+    <string name="hours_label">Heures</string>
+    <string name="hours_value">%1$sh</string>
+
+    <!-- Home Screen -->
+    <string name="welcome_message">Bienvenue sur LifeTracker Timeline</string>
+
+    <!-- Timeline Screen -->
+    <string name="ok">OK</string>
+    <string name="todays_focus">Objectif du jour</string>
+    <string name="change_date">Changer la date</string>
+    <string name="select_task">Sélectionner une tâche</string>
+
+    <!-- Task Selection Screen -->
+    <string name="select_task_header">SÉLECTIONNER UNE TÂCHE</string>
+    <string name="search_tasks">Rechercher des tâches...</string>
+    <string name="previous_tasks">TÂCHES PRÉCÉDENTES</string>
+    <string name="total_suffix">%1$d AU TOTAL</string>
+    <string name="no_tasks_found">Aucune tâche trouvée</string>
+    <string name="no_tasks_found_desc">Essayez un autre terme de recherche ou créez\nune nouvelle tâche avec le bouton ci-dessus.</string>
+    <string name="never_used">Jamais utilisée</string>
+    <string name="just_now">À l\'instant</string>
+    <string name="minutes_ago">Il y a %1$d min</string>
+    <string name="hours_ago">Il y a %1$d h</string>
+    <string name="yesterday">Hier</string>
+    <string name="days_ago">Il y a %1$d jours</string>
+    <string name="last_used_prefix">Dernière utilisation : %1$s</string>
+
+    <!-- Login Screen -->
+    <string name="app_logo_desc">Logo</string>
+    <string name="app_name_login">LifeTracker</string>
+    <string name="app_tagline">Suivez chaque tranche de 30 minutes de votre vie</string>
+    <string name="google_logo_desc">Logo Google</string>
+    <string name="continue_with_google">Continuer avec Google</string>
+    <string name="privacy_policy">Politique de confidentialité</string>
+    <string name="terms_of_service">Conditions d\'utilisation</string>
 </resources>

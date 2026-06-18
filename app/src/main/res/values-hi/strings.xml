@@ -119,4 +119,14 @@
     <string name="yesterday">कल</string>
     <string name="days_ago">%1$d दिन पहले</string>
     <string name="last_used_prefix">अंतिम बार उपयोग किया गया: %1$s</string>
+
+
+    <!-- Login Screen -->
+    <string name="app_logo_desc">लोगो</string>
+    <string name="app_name_login">LifeTracker</string>
+    <string name="app_tagline">अपने जीवन के हर 30 मिनट को ट्रैक करें</string>
+    <string name="google_logo_desc">Google लोगो</string>
+    <string name="continue_with_google">Google के साथ जारी रखें</string>
+    <string name="privacy_policy">गोपनीयता नीति</string>
+    <string name="terms_of_service">सेवा की शर्तें</string>
 </resources>
