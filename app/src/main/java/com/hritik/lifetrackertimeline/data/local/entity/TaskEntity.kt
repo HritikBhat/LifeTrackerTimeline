@@ -11,5 +11,6 @@ data class TaskEntity(
     val isUnproductive: Boolean = false,
     val color: Int, // Store as ARGB Int
     val icon: String,
-    val isActive: Boolean = true
+    val isActive: Boolean = true,
+    val lastSelectedAt: Long = 0L
 )

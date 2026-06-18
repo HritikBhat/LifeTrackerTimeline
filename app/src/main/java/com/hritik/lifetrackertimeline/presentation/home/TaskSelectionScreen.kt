@@ -246,6 +246,28 @@ fun EmptyTaskState() {
 
 @Composable
 fun TaskSelectionItem(task: TaskEntity, onClick: () -> Unit) {
+    val lastUsedText = remember(task.lastSelectedAt) {
+        if (task.lastSelectedAt == 0L) {
+            "Never used"
+        } else {
+            val now = System.currentTimeMillis()
+            val diff = now - task.lastSelectedAt
+            val days = diff / (24 * 60 * 60 * 1000)
+            
+            when {
+                diff < 60 * 1000 -> "Just now"
+                diff < 60 * 60 * 1000 -> "${diff / (60 * 1000)}m ago"
+                diff < 24 * 60 * 60 * 1000 -> "${diff / (60 * 60 * 1000)}h ago"
+                days == 1L -> "Yesterday"
+                days < 7 -> "$days days ago"
+                else -> {
+                    val sdf = SimpleDateFormat("MMM dd", Locale.getDefault())
+                    sdf.format(Date(task.lastSelectedAt))
+                }
+            }
+        }
+    }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -278,7 +300,7 @@ fun TaskSelectionItem(task: TaskEntity, onClick: () -> Unit) {
                     color = Color(0xFF1A1A1A)
                 )
                 Text(
-                    text = "Last used: Today",
+                    text = if (task.lastSelectedAt == 0L) "Never used" else "Last used: $lastUsedText",
                     style = MaterialTheme.typography.bodySmall,
                     color = Color.Gray
                 )

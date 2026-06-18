@@ -115,18 +115,6 @@ fun MainScreen(
                     Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
                 }
             }
-        },
-        floatingActionButton = {
-            if (currentRoute == BottomBarScreen.Timeline.route || currentRoute == BottomBarScreen.Tasks.route) {
-                FloatingActionButton(
-                    onClick = { rootNavController.navigate(Screen.AddEditTask.createRoute(-1)) },
-                    containerColor = Color(0xFF0047AB),
-                    contentColor = Color.White,
-                    shape = CircleShape
-                ) {
-                    Icon(Icons.Default.Add, contentDescription = "Add Task")
-                }
-            }
         }
     ) { innerPadding ->
         NavHost(

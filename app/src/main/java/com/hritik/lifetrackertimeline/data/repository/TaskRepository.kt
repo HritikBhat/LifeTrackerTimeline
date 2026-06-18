@@ -19,4 +19,8 @@ class TaskRepository @Inject constructor(
     suspend fun deleteTask(task: TaskEntity) = taskDao.deleteTask(task)
 
     suspend fun getTaskById(taskId: Int): TaskEntity? = taskDao.getTaskById(taskId)
+
+    suspend fun updateLastSelectedAt(taskId: Int, timestamp: Long) {
+        taskDao.updateLastSelectedAt(taskId, timestamp)
+    }
 }
