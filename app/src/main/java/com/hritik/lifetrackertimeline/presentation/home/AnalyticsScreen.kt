@@ -333,7 +333,7 @@ fun PeakProductivityCard(data: List<Pair<String, Int>>, peakTimeRange: String) {
             Spacer(modifier = Modifier.height(24.dp))
 
             Row(
-                modifier = Modifier.fillMaxWidth().height(150.dp),
+                modifier = Modifier.fillMaxWidth().height(160.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.Bottom
             ) {
@@ -342,16 +342,25 @@ fun PeakProductivityCard(data: List<Pair<String, Int>>, peakTimeRange: String) {
                     data.forEach { (label, value) ->
                         val heightFactor = value / maxVal
                         
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Column(
+                            modifier = Modifier.fillMaxHeight(),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Bottom
+                        ) {
                             Box(
-                                modifier = Modifier
-                                    .width(28.dp)
-                                    .fillMaxHeight(heightFactor.coerceAtLeast(0.1f))
-                                    .clip(RoundedCornerShape(topStart = 14.dp, topEnd = 14.dp, bottomStart = 14.dp, bottomEnd = 14.dp))
-                                    .background(if (value.toFloat() == maxVal && value > 0) Color(0xFF0047BB) else Color(0xFFE8EAF6))
-                            )
+                                modifier = Modifier.weight(1f),
+                                contentAlignment = Alignment.BottomCenter
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .width(28.dp)
+                                        .fillMaxHeight(heightFactor.coerceAtLeast(0.1f))
+                                        .clip(RoundedCornerShape(topStart = 14.dp, topEnd = 14.dp, bottomStart = 14.dp, bottomEnd = 14.dp))
+                                        .background(if (value.toFloat() == maxVal && value > 0) Color(0xFF0047BB) else Color(0xFFE8EAF6))
+                                )
+                            }
                             Spacer(modifier = Modifier.height(8.dp))
-                            Text(text = label, fontSize = 10.sp, color = Color.Gray)
+                            Text(text = label, fontSize = 10.sp, color = Color.Gray, textAlign = TextAlign.Center)
                         }
                     }
                 } else {
