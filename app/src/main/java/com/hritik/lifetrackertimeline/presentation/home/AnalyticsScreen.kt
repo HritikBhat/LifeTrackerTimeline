@@ -76,6 +76,12 @@ fun AnalyticsScreen(
             }
 
             item {
+                PeakUnproductivityCard(
+                    data = state.peakUnproductivity
+                )
+            }
+
+            item {
                 FocusAllocationCard(state.focusAllocation)
             }
 
@@ -325,9 +331,6 @@ fun PeakProductivityCard(data: List<Pair<String, Int>>, peakTimeRange: String) {
         Column(modifier = Modifier.padding(20.dp)) {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text(text = stringResource(R.string.peak_productivity), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
-//                Surface(color = Color(0xFFE8EAF6), shape = RoundedCornerShape(16.dp)) {
-//                    Text(text = peakTimeRange, modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp), fontSize = 10.sp, color = Color(0xFF3F51B5), fontWeight = FontWeight.Bold)
-//                }
             }
             
             Spacer(modifier = Modifier.height(24.dp))
@@ -355,8 +358,67 @@ fun PeakProductivityCard(data: List<Pair<String, Int>>, peakTimeRange: String) {
                                     modifier = Modifier
                                         .width(28.dp)
                                         .fillMaxHeight(heightFactor.coerceAtLeast(0.1f))
-                                        .clip(RoundedCornerShape(topStart = 14.dp, topEnd = 14.dp, bottomStart = 14.dp, bottomEnd = 14.dp))
+                                        .clip(RoundedCornerShape(14.dp))
                                         .background(if (value.toFloat() == maxVal && value > 0) Color(0xFF0047BB) else Color(0xFFE8EAF6))
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(text = label, fontSize = 10.sp, color = Color.Gray, textAlign = TextAlign.Center)
+                        }
+                    }
+                } else {
+                    Spacer(modifier = Modifier.height(16.dp))
+                    EmptyStateView(
+                        description = stringResource(R.string.focus_allocation_empty_desc)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun PeakUnproductivityCard(data: List<Pair<String, Int>>) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        shape = RoundedCornerShape(24.dp)
+    ) {
+        Column(modifier = Modifier.padding(20.dp)) {
+            Text(
+                text = stringResource(R.string.peak_unproductivity),
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFFD32F2F)
+            )
+            
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth().height(160.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.Bottom
+            ) {
+                if (data.isNotEmpty() && data.any { it.second > 0 }) {
+                    val maxVal = data.maxOf { it.second }.toFloat().coerceAtLeast(1f)
+                    data.forEach { (label, value) ->
+                        val heightFactor = value / maxVal
+                        
+                        Column(
+                            modifier = Modifier.fillMaxHeight(),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Bottom
+                        ) {
+                            Box(
+                                modifier = Modifier.weight(1f),
+                                contentAlignment = Alignment.BottomCenter
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .width(28.dp)
+                                        .fillMaxHeight(heightFactor.coerceAtLeast(0.1f))
+                                        .clip(RoundedCornerShape(14.dp))
+                                        .background(if (value.toFloat() == maxVal && value > 0) Color(0xFFD32F2F) else Color(0xFFFFEBEE))
                                 )
                             }
                             Spacer(modifier = Modifier.height(8.dp))

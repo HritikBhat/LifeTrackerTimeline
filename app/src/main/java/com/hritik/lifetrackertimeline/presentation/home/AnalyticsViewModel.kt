@@ -24,6 +24,7 @@ data class AnalyticsState(
     val dailyAvg: String = "0h",
     val dailyAvgProgress: Float = 0f,
     val peakProductivity: List<Pair<String, Int>> = emptyList(),
+    val peakUnproductivity: List<Pair<String, Int>> = emptyList(),
     val peakTimeRange: String = "--",
     val focusAllocation: List<FocusAllocationItem> = emptyList(),
     val monthlyHighlights: List<MonthlyHighlightItem> = emptyList(),
@@ -146,6 +147,17 @@ class AnalyticsViewModel @Inject constructor(
                 }
             }
         )
+        
+        // Peak Unproductivity
+        val peakUnprodChart = listOf("Morning", "Noon", "Afternoon", "Evening").zip(
+            timeGroups.values.map { range ->
+                unproductiveEntries.count { entry ->
+                    val hour = entry.timeSlot.split(":")[0].toInt()
+                    hour in range
+                }
+            }
+        )
+
         val maxPeak = peakProdChart.maxByOrNull { it.second }
         val peakTimeRangeLabel = if (maxPeak != null && maxPeak.second > 0) {
             timeGroups.keys.elementAt(listOf("Morning", "Noon", "Afternoon", "Evening").indexOf(maxPeak.first))
@@ -216,6 +228,7 @@ class AnalyticsViewModel @Inject constructor(
             dailyAvg = dailyAvgStr,
             dailyAvgProgress = dailyAvgProgress,
             peakProductivity = peakProdChart.map { it.first.take(3) to it.second }, // Short labels for chart
+            peakUnproductivity = peakUnprodChart.map { it.first.take(3) to it.second },
             peakTimeRange = peakTimeRangeLabel,
             focusAllocation = focusItems,
             monthlyHighlights = monthlyHighlights,

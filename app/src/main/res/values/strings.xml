@@ -88,6 +88,7 @@
     <string name="daily_avg">DAILY AVG</string>
     <string name="goal_hours">Goal: %1$s</string>
     <string name="peak_productivity">Peak Productivity</string>
+    <string name="peak_unproductivity">Peak Unproductivity</string>
     <string name="focus_allocation">Focus Allocation</string>
     <string name="unproductive_activities">Unproductive Activities</string>
     <string name="monthly_highlights">Monthly Highlights</string>
