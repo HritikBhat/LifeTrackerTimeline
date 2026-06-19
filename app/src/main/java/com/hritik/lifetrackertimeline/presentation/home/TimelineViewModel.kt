@@ -62,17 +62,17 @@ class TimelineViewModel @Inject constructor(
         _selectedDate.value = date
     }
 
-    suspend fun upsertTimelineEntry(timeSlot: String, taskId: Int) {
+    suspend fun upsertTimelineEntry(timeSlot: String, taskId: Int, date: String) {
         // Update last selected time for the task
         taskRepository.updateLastSelectedAt(taskId, System.currentTimeMillis())
 
         // Check if entry exists for this slot and date, if so update/replace
-        timelineRepository.deleteEntryByTimeAndDate(timeSlot, _selectedDate.value)
+        timelineRepository.deleteEntryByTimeAndDate(timeSlot, date)
         timelineRepository.insertTimelineEntry(
             TimelineEntity(
                 timeSlot = timeSlot,
                 taskId = taskId,
-                date = _selectedDate.value
+                date = date
             )
         )
     }

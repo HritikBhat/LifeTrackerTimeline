@@ -190,7 +190,7 @@ fun TaskSelectionScreen(
                         task = task,
                         onClick = {
                             scope.launch {
-                                viewModel.upsertTimelineEntry(timeSlot, task.id)
+                                viewModel.upsertTimelineEntry(timeSlot, task.id, date)
                                 onTaskSelected(task.id)
                             }
                         }
