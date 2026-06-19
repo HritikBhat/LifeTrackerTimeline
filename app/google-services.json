@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "102006101297-7mbt2ot2042m8jfp19kkchr9ra0v34qc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hritik.lifetrackertimeline",
+            "certificate_hash": "d5b32439d834c0116ac768e1e506501bbe5cb957"
+          }
+        },
+        {
           "client_id": "102006101297-l9dn0i53k7qp118c7fdr34sjemicdp8q.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

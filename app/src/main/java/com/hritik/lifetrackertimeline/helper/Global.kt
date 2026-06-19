@@ -3,7 +3,7 @@ package com.hritik.lifetrackertimeline.helper
 import android.util.Log
 
 object Global {
-    const val isAppOnTest = true
+    const val isAppOnTest = false
     
     fun log(tag: String, message: String, throwable: Throwable? = null) {
         if (isAppOnTest) {

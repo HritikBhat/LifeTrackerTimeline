@@ -16,7 +16,6 @@ class NotificationWorker(context: Context, workerParams: WorkerParameters) :
     Worker(context, workerParams) {
 
     override fun doWork(): Result {
-        Log.d("NotificationWorker", "Worker started - showing notification")
         showNotification()
         return Result.success()
     }

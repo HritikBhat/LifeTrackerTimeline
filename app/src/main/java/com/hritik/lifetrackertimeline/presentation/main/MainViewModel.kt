@@ -31,7 +31,6 @@ class MainViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             val interval = dataStoreManager.notificationInterval.first()
-            Log.d("MainViewModel", "Initializing notifications with interval: $interval")
             scheduleNotification(interval)
         }
     }
@@ -52,7 +51,6 @@ class MainViewModel @Inject constructor(
     private fun scheduleNotification(interval: String) {
         val workManager = WorkManager.getInstance(context)
         if (interval == "Never" || interval == "0") {
-            Log.d("MainViewModel", "Cancelling notifications")
             workManager.cancelUniqueWork("timeline_notification")
             return
         }
@@ -63,8 +61,6 @@ class MainViewModel @Inject constructor(
             "120", "2 hours", "2 hour" -> 120L
             else -> return
         }
-
-        Log.d("MainViewModel", "Scheduling notification every $repeatInterval minutes")
 
         val workRequest = PeriodicWorkRequestBuilder<NotificationWorker>(
             repeatInterval, TimeUnit.MINUTES

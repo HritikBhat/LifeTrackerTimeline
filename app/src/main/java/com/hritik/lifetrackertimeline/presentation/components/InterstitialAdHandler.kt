@@ -21,7 +21,6 @@ import kotlin.run
 @Composable
 fun InterstitialAdHandler() {
     val isPremium = LocalIsPremium.current
-    Log.d("isPremz","Flag: $isPremium")
     if (isPremium) return
 
     val context = LocalContext.current
