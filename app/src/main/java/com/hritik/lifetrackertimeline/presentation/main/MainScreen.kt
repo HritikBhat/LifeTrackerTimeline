@@ -154,6 +154,9 @@ fun MainScreen(
                                 date = date
                             )
                         )
+                    },
+                    onEditTask = { taskId ->
+                        rootNavController.navigate(Screen.AddEditTask.createRoute(taskId))
                     }
                 )
             }

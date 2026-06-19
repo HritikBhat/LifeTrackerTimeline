@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
@@ -38,6 +39,7 @@ fun TaskSelectionScreen(
     onNavigateBack: () -> Unit,
     onTaskSelected: (Int) -> Unit,
     onAddNewTask: (String) -> Unit,
+    onEditTask: (Int) -> Unit,
     viewModel: TimelineViewModel = hiltViewModel()
 ) {
     val scope = rememberCoroutineScope()
@@ -188,6 +190,7 @@ fun TaskSelectionScreen(
                 items(filteredTasks) { task ->
                     TaskSelectionItem(
                         task = task,
+                        onEdit = { onEditTask(task.id) },
                         onClick = {
                             scope.launch {
                                 viewModel.upsertTimelineEntry(timeSlot, task.id, date)
@@ -247,7 +250,7 @@ fun EmptyTaskState() {
 }
 
 @Composable
-fun TaskSelectionItem(task: TaskEntity, onClick: () -> Unit) {
+fun TaskSelectionItem(task: TaskEntity, onEdit: () -> Unit, onClick: () -> Unit) {
     val lastUsedText = when {
         task.lastSelectedAt == 0L -> stringResource(R.string.never_used)
         else -> {
@@ -304,6 +307,15 @@ fun TaskSelectionItem(task: TaskEntity, onClick: () -> Unit) {
                     text = if (task.lastSelectedAt == 0L) stringResource(R.string.never_used) else stringResource(R.string.last_used_prefix, lastUsedText),
                     style = MaterialTheme.typography.bodySmall,
                     color = Color.Gray
+                )
+            }
+            
+            IconButton(onClick = onEdit) {
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = stringResource(R.string.edit),
+                    tint = Color.Gray,
+                    modifier = Modifier.size(20.dp)
                 )
             }
             
