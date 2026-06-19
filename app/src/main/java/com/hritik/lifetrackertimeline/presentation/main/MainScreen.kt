@@ -181,7 +181,7 @@ fun MainScreen(
 fun BottomBar(navController: NavHostController) {
     val screens = listOf(
         BottomBarScreen.Timeline,
-//        BottomBarScreen.Tasks,
+        BottomBarScreen.Analytics,
         BottomBarScreen.Profile
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()

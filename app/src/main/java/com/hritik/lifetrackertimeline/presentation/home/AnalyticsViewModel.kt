@@ -12,13 +12,22 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
+enum class AnalyticsPeriod {
+    WEEK, MONTH
+}
+
 data class AnalyticsState(
-    val weeklyTrend: List<Pair<String, Int>> = emptyList(),
-    val totalHoursThisWeek: String = "0h 0m",
+    val selectedPeriod: AnalyticsPeriod = AnalyticsPeriod.WEEK,
+    val trendData: List<Pair<String, Int>> = emptyList(),
+    val totalHours: String = "0h 0m",
+    val totalHoursDelta: String = "0%",
     val dailyAvg: String = "0h",
+    val dailyAvgProgress: Float = 0f,
     val peakProductivity: List<Pair<String, Int>> = emptyList(),
+    val peakTimeRange: String = "--",
     val focusAllocation: List<FocusAllocationItem> = emptyList(),
-    val monthlyHighlights: List<MonthlyHighlightItem> = emptyList()
+    val monthlyHighlights: List<MonthlyHighlightItem> = emptyList(),
+    val unproductiveActivities: List<UnproductiveItem> = emptyList()
 )
 
 data class FocusAllocationItem(
@@ -26,6 +35,12 @@ data class FocusAllocationItem(
     val hours: Double,
     val color: Int,
     val percentage: Float
+)
+
+data class UnproductiveItem(
+    val title: String,
+    val hours: Double,
+    val color: Int
 )
 
 data class MonthlyHighlightItem(
@@ -42,64 +57,103 @@ class AnalyticsViewModel @Inject constructor(
     private val taskRepository: TaskRepository
 ) : ViewModel() {
 
+    private val _selectedPeriod = MutableStateFlow(AnalyticsPeriod.WEEK)
+    val selectedPeriod: StateFlow<AnalyticsPeriod> = _selectedPeriod.asStateFlow()
+
     val uiState: StateFlow<AnalyticsState> = combine(
         timelineRepository.getAllTimelineEntries(),
-        taskRepository.getAllTasks()
-    ) { entries, tasks ->
-        calculateAnalytics(entries, tasks)
+        taskRepository.getAllTasks(),
+        _selectedPeriod
+    ) { entries, tasks, period ->
+        calculateAnalytics(entries, tasks, period)
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), AnalyticsState())
 
-    private fun calculateAnalytics(entries: List<TimelineEntity>, tasks: List<TaskEntity>): AnalyticsState {
-        val calendar = Calendar.getInstance()
+    fun setPeriod(period: AnalyticsPeriod) {
+        _selectedPeriod.value = period
+    }
+
+    private fun calculateAnalytics(
+        entries: List<TimelineEntity>,
+        tasks: List<TaskEntity>,
+        period: AnalyticsPeriod
+    ): AnalyticsState {
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         
-        // Filter for last 7 days for weekly trend and total hours
-        val last7Days = (0..6).map { i ->
+        val daysCount = if (period == AnalyticsPeriod.WEEK) 7 else 30
+        val dateRange = (0 until daysCount).map { i ->
             val cal = Calendar.getInstance()
             cal.add(Calendar.DAY_OF_YEAR, -i)
             sdf.format(cal.time)
         }.reversed()
 
-        val weeklyEntries = entries.filter { it.date in last7Days }
-        val productiveWeeklyEntries = weeklyEntries.filter { entry ->
+        val filteredEntries = entries.filter { it.date in dateRange }
+        val productiveEntries = filteredEntries.filter { entry ->
             tasks.find { it.id == entry.taskId }?.isUnproductive == false
         }
-
-        // Weekly Trend
-        val trend = last7Days.map { date ->
-            val dayName = SimpleDateFormat("EEE", Locale.getDefault()).format(sdf.parse(date)!!)
-            val count = productiveWeeklyEntries.count { it.date == date }
-            dayName to count
+        val unproductiveEntries = filteredEntries.filter { entry ->
+            tasks.find { it.id == entry.taskId }?.isUnproductive == true
         }
 
-        // Total Hours (Each entry is 30 mins = 0.5 hours)
-        val totalMinutes = productiveWeeklyEntries.size * 30
-        val hours = totalMinutes / 60
-        val mins = totalMinutes % 60
-        val totalHoursStr = "${hours}h ${mins}m"
-
-        // Daily Avg
-        val dailyAvgHours = if (last7Days.isNotEmpty()) (productiveWeeklyEntries.size * 0.5) / 7 else 0.0
-        val dailyAvgStr = String.format(Locale.getDefault(), "%.1fh", dailyAvgHours)
-
-        // Peak Productivity (by time of day)
-        val timeGroups = mapOf(
-            "Morning" to (6..11),
-            "Noon" to (12..14),
-            "Afternoon" to (15..17),
-            "Evening" to (18..23)
-        )
-        val peakProd = timeGroups.map { (label, range) ->
-            val count = productiveWeeklyEntries.count { entry ->
-                val hour = entry.timeSlot.split(":")[0].toInt()
-                hour in range
+        // Trend Data
+        val trend = dateRange.map { date ->
+            val cal = Calendar.getInstance()
+            cal.time = sdf.parse(date)!!
+            val label = if (period == AnalyticsPeriod.WEEK) {
+                SimpleDateFormat("EEE", Locale.getDefault()).format(cal.time)
+            } else {
+                SimpleDateFormat("d", Locale.getDefault()).format(cal.time)
             }
+            val count = productiveEntries.count { it.date == date }
             label to count
         }
 
+        // Total Hours
+        val currentMinutes = productiveEntries.size * 30
+        val currentHours = currentMinutes / 60
+        val currentMins = currentMinutes % 60
+        val totalHoursStr = "${currentHours}h ${currentMins}m"
+
+        // Calculate Delta (vs previous period)
+        val prevDateRange = (daysCount until 2 * daysCount).map { i ->
+            val cal = Calendar.getInstance()
+            cal.add(Calendar.DAY_OF_YEAR, -i)
+            sdf.format(cal.time)
+        }
+        val prevProductiveEntries = entries.filter { it.date in prevDateRange && tasks.find { t -> t.id == it.taskId }?.isUnproductive == false }
+        val prevMinutes = prevProductiveEntries.size * 30
+        val delta = if (prevMinutes > 0) {
+            val d = ((currentMinutes - prevMinutes).toFloat() / prevMinutes * 100).toInt()
+            (if (d >= 0) "+" else "") + "$d%"
+        } else if (currentMinutes > 0) "+100%" else "0%"
+
+        // Daily Avg
+        val dailyAvgHours = if (dateRange.isNotEmpty()) (productiveEntries.size * 0.5) / daysCount else 0.0
+        val dailyAvgStr = String.format(Locale.getDefault(), "%.1fh", dailyAvgHours)
+        val dailyAvgProgress = (dailyAvgHours / 8.0).coerceIn(0.0, 1.0).toFloat()
+
+        // Peak Productivity
+        val timeGroups = mapOf(
+            "6 AM - 11 AM" to (6..11),
+            "12 PM - 2 PM" to (12..14),
+            "3 PM - 5 PM" to (15..17),
+            "6 PM - 11 PM" to (18..23)
+        )
+        val peakProdChart = listOf("Morning", "Noon", "Afternoon", "Evening").zip(
+            timeGroups.values.map { range ->
+                productiveEntries.count { entry ->
+                    val hour = entry.timeSlot.split(":")[0].toInt()
+                    hour in range
+                }
+            }
+        )
+        val maxPeak = peakProdChart.maxByOrNull { it.second }
+        val peakTimeRangeLabel = if (maxPeak != null && maxPeak.second > 0) {
+            timeGroups.keys.elementAt(listOf("Morning", "Noon", "Afternoon", "Evening").indexOf(maxPeak.first))
+        } else "--"
+
         // Focus Allocation
-        val taskGroups = productiveWeeklyEntries.groupBy { it.taskId }
-        val totalProductiveEntries = productiveWeeklyEntries.size.coerceAtLeast(1)
+        val taskGroups = productiveEntries.groupBy { it.taskId }
+        val totalProductiveEntries = productiveEntries.size.coerceAtLeast(1)
         val focusItems = taskGroups.mapNotNull { (taskId, taskEntries) ->
             tasks.find { it.id == taskId }?.let { task ->
                 FocusAllocationItem(
@@ -111,15 +165,28 @@ class AnalyticsViewModel @Inject constructor(
             }
         }.sortedByDescending { it.hours }.take(4)
 
-        // Monthly Highlights (Last 30 days)
+        // Unproductive Activities
+        val unproductiveGroups = unproductiveEntries.groupBy { it.taskId }
+        val unproductiveItems = unproductiveGroups.mapNotNull { (taskId, taskEntries) ->
+            tasks.find { it.id == taskId }?.let { task ->
+                UnproductiveItem(
+                    title = task.title,
+                    hours = taskEntries.size * 0.5,
+                    color = task.color
+                )
+            }
+        }.sortedByDescending { it.hours }
+
+        // Monthly Highlights
         val cal30 = Calendar.getInstance()
         cal30.add(Calendar.DAY_OF_YEAR, -30)
         val startDate30 = sdf.format(cal30.time)
-        val monthlyEntries = entries.filter { it.date >= startDate30 }
+        val highlightsEntries = entries.filter { it.date >= startDate30 }
         
-        val monthlyHighlights = monthlyEntries.groupBy { it.taskId }.mapNotNull { (taskId, taskEntries) ->
+        val monthlyHighlights = highlightsEntries.filter { entry ->
+            tasks.find { it.id == entry.taskId }?.isUnproductive == false
+        }.groupBy { it.taskId }.mapNotNull { (taskId, taskEntries) ->
             tasks.find { it.id == taskId }?.let { task ->
-                // Simple trend: count per week for last 4 weeks
                 val trendData = (0..3).map { week ->
                     val wStart = Calendar.getInstance()
                     wStart.add(Calendar.DAY_OF_YEAR, -(week + 1) * 7)
@@ -142,12 +209,17 @@ class AnalyticsViewModel @Inject constructor(
         }.sortedByDescending { it.hours }.take(3)
 
         return AnalyticsState(
-            weeklyTrend = trend,
-            totalHoursThisWeek = totalHoursStr,
+            selectedPeriod = period,
+            trendData = trend,
+            totalHours = totalHoursStr,
+            totalHoursDelta = delta,
             dailyAvg = dailyAvgStr,
-            peakProductivity = peakProd,
+            dailyAvgProgress = dailyAvgProgress,
+            peakProductivity = peakProdChart.map { it.first.take(3) to it.second }, // Short labels for chart
+            peakTimeRange = peakTimeRangeLabel,
             focusAllocation = focusItems,
-            monthlyHighlights = monthlyHighlights
+            monthlyHighlights = monthlyHighlights,
+            unproductiveActivities = unproductiveItems
         )
     }
 }

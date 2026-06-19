@@ -89,12 +89,16 @@
     <string name="goal_hours">Goal: %1$s</string>
     <string name="peak_productivity">Peak Productivity</string>
     <string name="focus_allocation">Focus Allocation</string>
+    <string name="unproductive_activities">Unproductive Activities</string>
     <string name="monthly_highlights">Monthly Highlights</string>
     <string name="activity_name">Activity Name</string>
     <string name="total_duration">Total Duration</string>
     <string name="monthly_trend">Monthly Trend</string>
     <string name="hours_label">Hours</string>
     <string name="hours_value">%1$sh</string>
+    <string name="no_data_available">No data available</string>
+    <string name="focus_allocation_empty_desc">Start logging your activities to see where your focus goes.</string>
+    <string name="monthly_highlights_empty_desc">Consistent tracking will show your top monthly achievements here.</string>
 
     <!-- Home Screen -->
     <string name="welcome_message">Welcome to LifeTracker Timeline</string>
