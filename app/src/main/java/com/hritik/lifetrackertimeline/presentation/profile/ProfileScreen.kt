@@ -48,17 +48,18 @@ fun ProfileScreen(
     val context = LocalContext.current
     val user by mainViewModel.userRepository.user.collectAsState(initial = null)
     val isPremium by mainViewModel.premiumManager.isPremium.collectAsState(initial = false)
-    val notificationInterval by mainViewModel.dataStoreManager.notificationInterval.collectAsState(initial = "Never")
+    val notificationInterval by mainViewModel.dataStoreManager.notificationInterval.collectAsState(initial = "0")
     val selectedLanguage by mainViewModel.dataStoreManager.selectedLanguage.collectAsState(initial = "en")
     
     var showIntervalDialog by remember { mutableStateOf(false) }
     var showLanguageDialog by remember { mutableStateOf(false) }
 
-    val intervals = listOf(
-        stringResource(R.string.interval_30_mins),
-        stringResource(R.string.interval_1_hour),
-        stringResource(R.string.interval_2_hours),
-        stringResource(R.string.interval_never)
+    // Map localized labels to consistent numeric values for the ViewModel
+    val intervalOptions = listOf(
+        stringResource(R.string.interval_30_mins) to "30",
+        stringResource(R.string.interval_1_hour) to "60",
+        stringResource(R.string.interval_2_hours) to "120",
+        stringResource(R.string.interval_never) to "0"
     )
     
     val languages = listOf(
@@ -85,26 +86,26 @@ fun ProfileScreen(
             title = { Text(stringResource(R.string.select_notification_interval)) },
             text = {
                 Column {
-                    intervals.forEach { interval ->
+                    intervalOptions.forEach { (label, value) ->
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable {
-                                    if (interval != "Never" && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                    if (value != "0" && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                                         permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                                     }
-                                    mainViewModel.updateNotificationInterval(interval)
+                                    mainViewModel.updateNotificationInterval(value)
                                     showIntervalDialog = false
                                 }
                                 .padding(16.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             RadioButton(
-                                selected = interval == notificationInterval,
+                                selected = value == notificationInterval,
                                 onClick = null
                             )
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text(text = interval)
+                            Text(text = label)
                         }
                     }
                 }
@@ -128,18 +129,10 @@ fun ProfileScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable {
-                                    Log.d("LANGUAGE", "Selected = $code")
                                     mainViewModel.updateLanguage(code)
 
                                     AppCompatDelegate.setApplicationLocales(
                                         LocaleListCompat.forLanguageTags(code)
-                                    )
-
-                                    Log.d(
-                                        "LANGUAGE",
-                                        "Applied = ${
-                                            AppCompatDelegate.getApplicationLocales().toLanguageTags()
-                                        }"
                                     )
 
                                     showLanguageDialog = false
@@ -201,8 +194,10 @@ fun ProfileScreen(
             icon = Icons.Default.Notifications,
             title = stringResource(R.string.notification_interval),
             trailing = {
+                val currentLabel = intervalOptions.find { it.second == notificationInterval }?.first 
+                    ?: stringResource(R.string.interval_never)
                 Text(
-                    text = notificationInterval,
+                    text = currentLabel,
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color(0xFF673AB7)
                 )

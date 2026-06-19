@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
@@ -15,6 +16,7 @@ class NotificationWorker(context: Context, workerParams: WorkerParameters) :
     Worker(context, workerParams) {
 
     override fun doWork(): Result {
+        Log.d("NotificationWorker", "Worker started - showing notification")
         showNotification()
         return Result.success()
     }
@@ -23,14 +25,16 @@ class NotificationWorker(context: Context, workerParams: WorkerParameters) :
         val notificationManager =
             applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        val channelId = "timeline_update_channel"
+        val channelId = "timeline_reminders"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
-                "Timeline Updates",
-                NotificationManager.IMPORTANCE_DEFAULT
+                "Timeline Reminders",
+                NotificationManager.IMPORTANCE_HIGH
             ).apply {
-                description = "Reminders to update your timeline"
+                description = "Reminders to log your latest activities"
+                enableLights(true)
+                enableVibration(true)
             }
             notificationManager.createNotificationChannel(channel)
         }
@@ -38,6 +42,7 @@ class NotificationWorker(context: Context, workerParams: WorkerParameters) :
         val intent = Intent(applicationContext, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
+        
         val pendingIntent = PendingIntent.getActivity(
             applicationContext,
             0,
@@ -46,14 +51,15 @@ class NotificationWorker(context: Context, workerParams: WorkerParameters) :
         )
 
         val notification = NotificationCompat.Builder(applicationContext, channelId)
-            .setSmallIcon(android.R.drawable.ic_dialog_info) // Replace with your app's actual icon
+            .setSmallIcon(android.R.drawable.ic_dialog_info) // Consider using a custom app icon here
             .setContentTitle("Update your Timeline")
-            .setContentText("It's time to log your latest activities!")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentText("It's time to log what you've been doing!")
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setCategory(NotificationCompat.CATEGORY_REMINDER)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
             .build()
 
-        notificationManager.notify(1, notification)
+        notificationManager.notify(System.currentTimeMillis().toInt(), notification)
     }
 }

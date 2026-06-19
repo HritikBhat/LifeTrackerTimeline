@@ -22,7 +22,7 @@ class DataStoreManager @Inject constructor(@ApplicationContext context: Context)
     }
 
     val notificationInterval: Flow<String> = dataStore.data.map { preferences ->
-        preferences[NOTIFICATION_INTERVAL] ?: "Never"
+        preferences[NOTIFICATION_INTERVAL] ?: "0"
     }
 
     suspend fun saveNotificationInterval(interval: String) {
