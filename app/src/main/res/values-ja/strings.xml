@@ -88,13 +88,18 @@
     <string name="daily_avg">1日平均</string>
     <string name="goal_hours">目標: %1$s</string>
     <string name="peak_productivity">最高生産性</string>
+    <string name="peak_unproductivity">非生産性のピーク</string>
     <string name="focus_allocation">時間配分</string>
+    <string name="unproductive_activities">非生産的な活動</string>
     <string name="monthly_highlights">今月のハイライト</string>
     <string name="activity_name">アクティビティ名</string>
     <string name="total_duration">合計時間</string>
     <string name="monthly_trend">月間トレンド</string>
     <string name="hours_label">時間</string>
     <string name="hours_value">%1$s時間</string>
+    <string name="no_data_available">データがありません</string>
+    <string name="focus_allocation_empty_desc">アクティビティの記録を開始して、どこにフォーカスが向いているかを確認しましょう。</string>
+    <string name="monthly_highlights_empty_desc">継続的に追跡することで、月間の主な成果がここに表示されます。</string>
 
     <!-- Home Screen -->
     <string name="welcome_message">LifeTracker Timelineへようこそ</string>
@@ -128,4 +133,19 @@
     <string name="continue_with_google">Googleで続行</string>
     <string name="privacy_policy">プライバシーポリシー</string>
     <string name="terms_of_service">利用規約</string>
+
+    <!-- Premium Screen -->
+    <string name="premium_title">プレミアム</string>
+    <string name="upgrade_to_premium">プレミアムにアップグレード</string>
+    <string name="premium_description">すべての機能をアンロックし、広告なしのエクスペリエンスを楽しみながら、LifeTracker Timelineの開発をサポートしてください。</string>
+    <string name="feature_ad_free">広告なしのエクスペリエンス</string>
+    <string name="feature_priority_support">優先サポート</string>
+    <string name="feature_lifetime_access">無期限アクセス</string>
+    <string name="premium_active">プレミアム有効</string>
+    <string name="restore_purchases">購入を復元</string>
+    <string name="buy_premium_with_price">無期限プレミアムを購入 - %1$s</string>
+    <string name="loading">読み込み中...</string>
+    <string name="premium_confirm_purchase_title">プレミアム購入の確認</string>
+    <string name="premium_confirmation_message">プレミアムアクセスはこのアカウントに永久に関連付けられます：\n\n%1$s\n\n続行する前に、正しいアカウントでログインしていることを確認してください。この購入は別のアカウントに譲渡することはできません。</string>
+    <string name="continue_button">続行</string>
 </resources>

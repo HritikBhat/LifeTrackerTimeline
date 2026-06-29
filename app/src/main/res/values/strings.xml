@@ -133,4 +133,19 @@
     <string name="continue_with_google">Continue with Google</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="terms_of_service">Terms of Service</string>
+
+    <!-- Premium Screen -->
+    <string name="premium_title">Premium</string>
+    <string name="upgrade_to_premium">Upgrade to Premium</string>
+    <string name="premium_description">Unlock all features and enjoy an ad-free experience while supporting the development of LifeTracker Timeline.</string>
+    <string name="feature_ad_free">Ad-free experience</string>
+    <string name="feature_priority_support">Priority support</string>
+    <string name="feature_lifetime_access">Lifetime access</string>
+    <string name="premium_active">Premium Active</string>
+    <string name="restore_purchases">Restore Purchases</string>
+    <string name="buy_premium_with_price">Buy Lifetime Premium - %1$s</string>
+    <string name="loading">Loading...</string>
+    <string name="premium_confirm_purchase_title">Confirm Premium Purchase</string>
+    <string name="premium_confirmation_message">Premium access will be permanently linked to the account:\n\n%1$s\n\nPlease ensure you are logged in with the correct account before continuing. This purchase cannot be transferred to another account.</string>
+    <string name="continue_button">Continue</string>
 </resources>

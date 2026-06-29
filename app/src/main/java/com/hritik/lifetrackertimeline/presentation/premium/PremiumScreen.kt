@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -20,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
+import com.hritik.lifetrackertimeline.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,16 +45,14 @@ fun PremiumScreen(
             onDismissRequest = { showConfirmationDialog = false },
             title = {
                 Text(
-                    text = "Confirm Premium Purchase",
+                    text = stringResource(R.string.premium_confirm_purchase_title),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold
                 )
             },
             text = {
                 Text(
-                    text = "Premium access will be permanently linked to the account:\n\n" +
-                            "$userEmail\n\n" +
-                            "Please ensure you are logged in with the correct account before continuing. This purchase cannot be transferred to another account.",
+                    text = stringResource(R.string.premium_confirmation_message, userEmail),
                     style = MaterialTheme.typography.bodyMedium
                 )
             },
@@ -63,12 +63,12 @@ fun PremiumScreen(
                         (context as? Activity)?.let { viewModel.buyPremium(it) }
                     }
                 ) {
-                    Text("Continue")
+                    Text(stringResource(R.string.continue_button))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showConfirmationDialog = false }) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.cancel))
                 }
             }
         )
@@ -77,10 +77,13 @@ fun PremiumScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Premium") },
+                title = { Text(stringResource(R.string.premium_title)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.back)
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -107,7 +110,7 @@ fun PremiumScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             Text(
-                text = if (isPremium) "Premium Member" else "Upgrade to Premium",
+                text = if (isPremium) stringResource(R.string.premium_member) else stringResource(R.string.upgrade_to_premium),
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
@@ -116,7 +119,7 @@ fun PremiumScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "Unlock all features and enjoy an ad-free experience while supporting the development of LifeTracker Timeline.",
+                text = stringResource(R.string.premium_description),
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center,
                 color = Color.Gray
@@ -124,9 +127,9 @@ fun PremiumScreen(
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            PremiumFeatureItem("Ad-free experience", primaryColor)
-            PremiumFeatureItem("Priority support", primaryColor)
-            PremiumFeatureItem("Lifetime access", primaryColor)
+            PremiumFeatureItem(stringResource(R.string.feature_ad_free), primaryColor)
+            PremiumFeatureItem(stringResource(R.string.feature_priority_support), primaryColor)
+            PremiumFeatureItem(stringResource(R.string.feature_lifetime_access), primaryColor)
 
             Spacer(modifier = Modifier.weight(1f))
 
@@ -144,8 +147,8 @@ fun PremiumScreen(
                 ) {
                     Text(
                         text = premiumProduct?.let { 
-                            "Buy Lifetime Premium - ${it.oneTimePurchaseOfferDetails?.formattedPrice ?: ""}"
-                        } ?: "Loading...",
+                            stringResource(R.string.buy_premium_with_price, it.oneTimePurchaseOfferDetails?.formattedPrice ?: "")
+                        } ?: stringResource(R.string.loading),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White
@@ -161,7 +164,7 @@ fun PremiumScreen(
                 ) {
                     Box(contentAlignment = Alignment.Center) {
                         Text(
-                            text = "Premium Active",
+                            text = stringResource(R.string.premium_active),
                             style = MaterialTheme.typography.titleMedium,
                             color = Color(0xFF2E7D32),
                             fontWeight = FontWeight.Bold
@@ -173,7 +176,7 @@ fun PremiumScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             TextButton(onClick = { viewModel.restorePurchases() }) {
-                Text("Restore Purchases", color = primaryColor)
+                Text(stringResource(R.string.restore_purchases), color = primaryColor)
             }
         }
     }

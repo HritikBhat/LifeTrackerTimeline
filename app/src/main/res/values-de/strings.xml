@@ -88,13 +88,18 @@
     <string name="daily_avg">TÄGL. DURCHSCHN.</string>
     <string name="goal_hours">Ziel: %1$s</string>
     <string name="peak_productivity">Spitzenproduktivität</string>
+    <string name="peak_unproductivity">Spitzen-Unproduktivität</string>
     <string name="focus_allocation">Fokus-Verteilung</string>
+    <string name="unproductive_activities">Unproduktive Aktivitäten</string>
     <string name="monthly_highlights">Monatliche Highlights</string>
     <string name="activity_name">Aktivitätsname</string>
     <string name="total_duration">Gesamtdauer</string>
     <string name="monthly_trend">Monatstrend</string>
     <string name="hours_label">Stunden</string>
     <string name="hours_value">%1$sh</string>
+    <string name="no_data_available">Keine Daten verfügbar</string>
+    <string name="focus_allocation_empty_desc">Beginnen Sie mit der Protokollierung Ihrer Aktivitäten, um zu sehen, wohin Ihr Fokus fließt.</string>
+    <string name="monthly_highlights_empty_desc">Durch konsequente Verfolgung werden hier Ihre wichtigsten monatlichen Erfolge angezeigt.</string>
 
     <!-- Home Screen -->
     <string name="welcome_message">Willkommen bei LifeTracker Timeline</string>
@@ -128,4 +133,19 @@
     <string name="continue_with_google">Mit Google fortfahren</string>
     <string name="privacy_policy">Datenschutz-Bestimmungen</string>
     <string name="terms_of_service">Nutzungsbedingungen</string>
+
+    <!-- Premium Screen -->
+    <string name="premium_title">Premium</string>
+    <string name="upgrade_to_premium">Auf Premium upgraden</string>
+    <string name="premium_description">Schalten Sie alle Funktionen frei und genießen Sie ein werbefreies Erlebnis, während Sie die Entwicklung von LifeTracker Timeline unterstützen.</string>
+    <string name="feature_ad_free">Werbefreies Erlebnis</string>
+    <string name="feature_priority_support">Prioritärer Support</string>
+    <string name="feature_lifetime_access">Lebenslanger Zugriff</string>
+    <string name="premium_active">Premium aktiv</string>
+    <string name="restore_purchases">Käufe wiederherstellen</string>
+    <string name="buy_premium_with_price">Lebenslanges Premium kaufen - %1$s</string>
+    <string name="loading">Lädt...</string>
+    <string name="premium_confirm_purchase_title">Premium-Kauf bestätigen</string>
+    <string name="premium_confirmation_message">Der Premium-Zugang wird dauerhaft mit dem Konto verknüpft:\n\n%1$s\n\nBitte stellen Sie sicher, dass Sie mit dem richtigen Konto angemeldet sind, bevor Sie fortfahren. Dieser Kauf kann nicht auf ein anderes Konto übertragen werden.</string>
+    <string name="continue_button">Weiter</string>
 </resources>

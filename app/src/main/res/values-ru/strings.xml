@@ -88,13 +88,18 @@
     <string name="daily_avg">СРЕДНЕЕ ЗА ДЕНЬ</string>
     <string name="goal_hours">Цель: %1$s</string>
     <string name="peak_productivity">Пик продуктивности</string>
+    <string name="peak_unproductivity">Пик непродуктивности</string>
     <string name="focus_allocation">Распределение внимания</string>
+    <string name="unproductive_activities">Непродуктивные активности</string>
     <string name="monthly_highlights">Главные события месяца</string>
     <string name="activity_name">Название активности</string>
     <string name="total_duration">Общая длительность</string>
     <string name="monthly_trend">Месячный тренд</string>
     <string name="hours_label">Часы</string>
     <string name="hours_value">%1$sч</string>
+    <string name="no_data_available">Нет доступных данных</string>
+    <string name="focus_allocation_empty_desc">Начните записывать свои действия, чтобы увидеть, на чем сосредоточено ваше внимание.</string>
+    <string name="monthly_highlights_empty_desc">Последовательное отслеживание покажет ваши главные ежемесячные достижения здесь.</string>
 
     <!-- Home Screen -->
     <string name="welcome_message">Добро пожаловать в LifeTracker Timeline</string>
@@ -128,4 +133,19 @@
     <string name="continue_with_google">Продолжить с Google</string>
     <string name="privacy_policy">Политика конфиденциальности</string>
     <string name="terms_of_service">Условия использования</string>
+
+    <!-- Premium Screen -->
+    <string name="premium_title">Премиум</string>
+    <string name="upgrade_to_premium">Перейти на Премиум</string>
+    <string name="premium_description">Разблокируйте все функции и наслаждайтесь отсутствием рекламы, поддерживая разработку LifeTracker Timeline.</string>
+    <string name="feature_ad_free">Без рекламы</string>
+    <string name="feature_priority_support">Приоритетная поддержка</string>
+    <string name="feature_lifetime_access">Пожизненный доступ</string>
+    <string name="premium_active">Премиум активен</string>
+    <string name="restore_purchases">Восстановить покупки</string>
+    <string name="buy_premium_with_price">Купить пожизненный Премиум — %1$s</string>
+    <string name="loading">Загрузка...</string>
+    <string name="premium_confirm_purchase_title">Подтверждение покупки Премиум</string>
+    <string name="premium_confirmation_message">Премиум-доступ будет навсегда привязан к аккаунту:\n\n%1$s\n\nПожалуйста, убедитесь, что вы вошли в нужный аккаунт перед продолжением. Эту покупку нельзя перенести на другой аккаунт.</string>
+    <string name="continue_button">Продолжить</string>
 </resources>
