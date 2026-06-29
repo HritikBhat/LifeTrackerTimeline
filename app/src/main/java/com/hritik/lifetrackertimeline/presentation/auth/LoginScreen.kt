@@ -109,13 +109,13 @@ fun LoginScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(48.dp))
-
-            Row {
-                Text(text = stringResource(R.string.privacy_policy), fontSize = 12.sp, color = Color.Gray)
-                Spacer(modifier = Modifier.width(32.dp))
-                Text(text = stringResource(R.string.terms_of_service), fontSize = 12.sp, color = Color.Gray)
-            }
+//            Spacer(modifier = Modifier.height(48.dp))
+//
+//            Row {
+//                Text(text = stringResource(R.string.privacy_policy), fontSize = 12.sp, color = Color.Gray)
+//                Spacer(modifier = Modifier.width(32.dp))
+//                Text(text = stringResource(R.string.terms_of_service), fontSize = 12.sp, color = Color.Gray)
+//            }
         }
     }
 }
