@@ -1,7 +1,6 @@
 package com.hritik.lifetrackertimeline.presentation.premium
 
 import android.app.Activity
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -20,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.google.firebase.auth.FirebaseAuth
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -31,8 +31,48 @@ fun PremiumScreen(
     val isPremium by viewModel.isPremium.collectAsState()
     val products by viewModel.products.collectAsState()
 
+    // Dialog state
+    var showConfirmationDialog by remember { mutableStateOf(false) }
+    val userEmail = remember { FirebaseAuth.getInstance().currentUser?.email ?: "unknown account" }
+
     val primaryColor = Color(0xFF673AB7)
     val backgroundColor = Color(0xFFF8F9FE)
+
+    if (showConfirmationDialog) {
+        AlertDialog(
+            onDismissRequest = { showConfirmationDialog = false },
+            title = {
+                Text(
+                    text = "Confirm Premium Purchase",
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold
+                )
+            },
+            text = {
+                Text(
+                    text = "Premium access will be permanently linked to the account:\n\n" +
+                            "$userEmail\n\n" +
+                            "Please ensure you are logged in with the correct account before continuing. This purchase cannot be transferred to another account.",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        showConfirmationDialog = false
+                        (context as? Activity)?.let { viewModel.buyPremium(it) }
+                    }
+                ) {
+                    Text("Continue")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showConfirmationDialog = false }) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
 
     Scaffold(
         topBar = {
@@ -94,7 +134,7 @@ fun PremiumScreen(
                 val premiumProduct = products.find { it.productId == "ad_free_lifetime" }
                 Button(
                     onClick = { 
-                        (context as? Activity)?.let { viewModel.buyPremium(it) }
+                        showConfirmationDialog = true
                     },
                     modifier = Modifier
                         .fillMaxWidth()

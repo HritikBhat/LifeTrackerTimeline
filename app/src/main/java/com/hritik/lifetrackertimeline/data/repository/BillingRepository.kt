@@ -1,5 +1,6 @@
 package com.hritik.lifetrackertimeline.data.repository
 
+import android.app.Activity
 import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
 import kotlinx.coroutines.flow.StateFlow
@@ -12,7 +13,8 @@ interface BillingRepository {
     suspend fun startConnection()
     suspend fun queryProducts()
     suspend fun queryPurchases()
+    suspend fun restorePurchases()
     suspend fun processPurchases(purchases: List<Purchase>)
     fun getProductDetails(productId: String): ProductDetails?
-    fun launchBillingFlow(activity: android.app.Activity, productDetails: ProductDetails)
+    fun launchBillingFlow(activity: Activity, productDetails: ProductDetails)
 }

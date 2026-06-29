@@ -13,5 +13,8 @@ data class User(
     @get:PropertyName("isPremium")
     @set:PropertyName("isPremium")
     @JvmField
-    var isPremium: Boolean = false
+    var isPremium: Boolean = false,
+    val purchaseToken: String? = null,
+    val productId: String? = null,
+    val purchaseTime: Timestamp? = null
 )
