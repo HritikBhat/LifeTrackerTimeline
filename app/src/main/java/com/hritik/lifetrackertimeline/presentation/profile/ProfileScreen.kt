@@ -1,13 +1,13 @@
 package com.hritik.lifetrackertimeline.presentation.profile
 
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -31,13 +31,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.core.os.LocaleListCompat
 import coil.compose.AsyncImage
 import com.hritik.lifetrackertimeline.R
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.os.LocaleListCompat
 import com.hritik.lifetrackertimeline.presentation.auth.AuthViewModel
 import com.hritik.lifetrackertimeline.presentation.main.MainViewModel
-import java.util.Locale
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun ProfileScreen(
@@ -50,9 +49,36 @@ fun ProfileScreen(
     val isPremium by mainViewModel.premiumManager.isPremium.collectAsState(initial = false)
     val notificationInterval by mainViewModel.dataStoreManager.notificationInterval.collectAsState(initial = "0")
     val selectedLanguage by mainViewModel.dataStoreManager.selectedLanguage.collectAsState(initial = "en")
-    
+
+    val isBackupLoading by mainViewModel.isBackupLoading.collectAsState()
+
     var showIntervalDialog by remember { mutableStateOf(false) }
     var showLanguageDialog by remember { mutableStateOf(false) }
+    var showImportConfirmation by remember { mutableStateOf(false) }
+    var selectedImportUri by remember { mutableStateOf<Uri?>(null) }
+
+    LaunchedEffect(Unit) {
+        mainViewModel.backupMessage.collectLatest { message ->
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    // Export Data Launcher
+    val exportLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.CreateDocument("application/json")
+    ) { uri ->
+        uri?.let { mainViewModel.exportData(it) }
+    }
+
+    // Import Data Launcher
+    val importLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.OpenDocument()
+    ) { uri ->
+        uri?.let {
+            selectedImportUri = it
+            showImportConfirmation = true
+        }
+    }
 
     // Map localized labels to consistent numeric values for the ViewModel
     val intervalOptions = listOf(
@@ -61,7 +87,7 @@ fun ProfileScreen(
         stringResource(R.string.interval_2_hours) to "120",
         stringResource(R.string.interval_never) to "0"
     )
-    
+
     val languages = listOf(
         stringResource(R.string.lang_english) to "en",
         stringResource(R.string.lang_hindi) to "hi",
@@ -158,95 +184,143 @@ fun ProfileScreen(
         )
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFF8F9FE))
-            .verticalScroll(rememberScrollState())
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        // User Profile Header
-        Spacer(modifier = Modifier.height(24.dp))
-        AsyncImage(
-            model = user?.photoUrl,
-            contentDescription = stringResource(R.string.profile_picture),
-            modifier = Modifier
-                .size(100.dp)
-                .clip(CircleShape),
-            contentScale = ContentScale.Crop
-        )
-        Spacer(modifier = Modifier.height(12.dp))
-        Text(
-            text = user?.displayName ?: stringResource(R.string.user_name),
-            style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.Bold
-        )
-        Text(
-            text = user?.email ?: stringResource(R.string.email_placeholder),
-            style = MaterialTheme.typography.bodyMedium,
-            color = Color.Gray
-        )
-        Spacer(modifier = Modifier.height(32.dp))
-
-        // Sections
-        ProfileItem(
-            icon = Icons.Default.Notifications,
-            title = stringResource(R.string.notification_interval),
-            trailing = {
-                val currentLabel = intervalOptions.find { it.second == notificationInterval }?.first 
-                    ?: stringResource(R.string.interval_never)
-                Text(
-                    text = currentLabel,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color(0xFF673AB7)
-                )
-            },
-            onClick = { showIntervalDialog = true }
-        )
-
-        ProfileItem(
-            icon = Icons.Default.Star,
-            title = if (isPremium) stringResource(R.string.premium_member) else stringResource(R.string.get_a_pro),
-            onClick = onNavigateToPremium
-        )
-
-        ProfileItem(
-            icon = Icons.Default.Language,
-            title = stringResource(R.string.change_language),
-            trailing = {
-                Text(
-                    text = languages.find { it.second == selectedLanguage }?.first ?: stringResource(R.string.lang_english),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color(0xFF673AB7)
-                )
-            },
-            onClick = { showLanguageDialog = true }
-        )
-
-        ProfileItem(
-            icon = Icons.Default.Share,
-            title = stringResource(R.string.share_app),
-            onClick = {
-                val shareText = context.getString(R.string.share_text, context.packageName)
-                val sendIntent: Intent = Intent().apply {
-                    action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_TEXT, shareText)
-                    type = "text/plain"
+    if (showImportConfirmation) {
+        AlertDialog(
+            onDismissRequest = { showImportConfirmation = false },
+            title = { Text(stringResource(R.string.import_confirmation_title)) },
+            text = { Text(stringResource(R.string.import_confirmation_message)) },
+            confirmButton = {
+                TextButton(onClick = {
+                    selectedImportUri?.let { mainViewModel.importData(it) }
+                    showImportConfirmation = false
+                }) {
+                    Text(stringResource(R.string.continue_button))
                 }
-                val shareIntent = Intent.createChooser(sendIntent, null)
-                context.startActivity(shareIntent)
+            },
+            dismissButton = {
+                TextButton(onClick = { showImportConfirmation = false }) {
+                    Text(stringResource(R.string.cancel))
+                }
             }
         )
+    }
 
-        ProfileItem(
-            icon = Icons.AutoMirrored.Filled.Logout,
-            title = stringResource(R.string.logout),
-            titleColor = Color.Red,
-            onClick = {
-                authViewModel.logout()
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(0xFFF8F9FE))
+                .verticalScroll(rememberScrollState())
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            // User Profile Header
+            Spacer(modifier = Modifier.height(24.dp))
+            AsyncImage(
+                model = user?.photoUrl,
+                contentDescription = stringResource(R.string.profile_picture),
+                modifier = Modifier
+                    .size(100.dp)
+                    .clip(CircleShape),
+                contentScale = ContentScale.Crop
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                text = user?.displayName ?: stringResource(R.string.user_name),
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = user?.email ?: stringResource(R.string.email_placeholder),
+                style = MaterialTheme.typography.bodyMedium,
+                color = Color.Gray
+            )
+            Spacer(modifier = Modifier.height(32.dp))
+
+            // Sections
+            ProfileItem(
+                icon = Icons.Default.Notifications,
+                title = stringResource(R.string.notification_interval),
+                trailing = {
+                    val currentLabel = intervalOptions.find { it.second == notificationInterval }?.first
+                        ?: stringResource(R.string.interval_never)
+                    Text(
+                        text = currentLabel,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color(0xFF673AB7)
+                    )
+                },
+                onClick = { showIntervalDialog = true }
+            )
+
+            ProfileItem(
+                icon = Icons.Default.Star,
+                title = if (isPremium) stringResource(R.string.premium_member) else stringResource(R.string.get_a_pro),
+                onClick = onNavigateToPremium
+            )
+
+            ProfileItem(
+                icon = Icons.Default.Language,
+                title = stringResource(R.string.change_language),
+                trailing = {
+                    Text(
+                        text = languages.find { it.second == selectedLanguage }?.first ?: stringResource(R.string.lang_english),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color(0xFF673AB7)
+                    )
+                },
+                onClick = { showLanguageDialog = true }
+            )
+
+            // Data Import/Export
+            ProfileItem(
+                icon = Icons.Default.FileDownload,
+                title = stringResource(R.string.import_data),
+                onClick = { importLauncher.launch(arrayOf("application/json")) }
+            )
+
+            ProfileItem(
+                icon = Icons.Default.FileUpload,
+                title = stringResource(R.string.export_data),
+                onClick = { exportLauncher.launch("backup_timeline.json") }
+            )
+
+            ProfileItem(
+                icon = Icons.Default.Share,
+                title = stringResource(R.string.share_app),
+                onClick = {
+                    val shareText = context.getString(R.string.share_text, context.packageName)
+                    val sendIntent: Intent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_TEXT, shareText)
+                        type = "text/plain"
+                    }
+                    val shareIntent = Intent.createChooser(sendIntent, null)
+                    context.startActivity(shareIntent)
+                }
+            )
+
+            ProfileItem(
+                icon = Icons.AutoMirrored.Filled.Logout,
+                title = stringResource(R.string.logout),
+                titleColor = Color.Red,
+                onClick = {
+                    authViewModel.logout()
+                }
+            )
+        }
+
+        if (isBackupLoading) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.3f))
+                    .clickable(enabled = false) { },
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(color = Color(0xFF673AB7))
             }
-        )
+        }
     }
 }
 

@@ -12,6 +12,9 @@ interface TimelineDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTimelineEntry(entry: TimelineEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertTimelineEntries(entries: List<TimelineEntity>)
+
     @Delete
     suspend fun deleteTimelineEntry(entry: TimelineEntity)
     
@@ -20,4 +23,10 @@ interface TimelineDao {
 
     @Query("SELECT * FROM timeline")
     fun getAllTimelineEntries(): Flow<List<TimelineEntity>>
+
+    @Query("SELECT * FROM timeline")
+    suspend fun getAllTimelineEntriesList(): List<TimelineEntity>
+
+    @Query("DELETE FROM timeline")
+    suspend fun clearTimeline()
 }

@@ -16,8 +16,8 @@ android {
         applicationId = "com.hritik.lifetrackertimeline"
         minSdk = 28
         targetSdk = 35
-        versionCode = 5
-        versionName = "1.0.4"
+        versionCode = 6
+        versionName = "1.0.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -91,6 +91,10 @@ dependencies {
     // DataStore
     implementation(libs.androidx.datastore.preferences)
     implementation("com.google.android.material:material:1.12.0")
+    
+    // Gson
+    implementation(libs.gson)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

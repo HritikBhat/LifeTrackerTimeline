@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.gson.Gson
 import com.hritik.lifetrackertimeline.data.local.dao.TaskDao
 import com.hritik.lifetrackertimeline.data.local.dao.TimelineDao
 import com.hritik.lifetrackertimeline.data.local.dao.UserDao
@@ -61,4 +62,8 @@ object AppModule {
     @Provides
     @Singleton
     fun provideContext(@ApplicationContext context: Context): Context = context
+
+    @Provides
+    @Singleton
+    fun provideGson(): Gson = Gson()
 }

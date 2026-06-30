@@ -154,4 +154,10 @@
     <string name="notification_channel_desc">Reminders to log your latest activities</string>
     <string name="notification_title_log">Update your Timeline</string>
     <string name="notification_content_log">It\'s time to log what you\'ve been doing!</string>
+
+    <!-- Data Import/Export -->
+    <string name="import_data">Import Data</string>
+    <string name="export_data">Export Data</string>
+    <string name="import_confirmation_title">Import Data</string>
+    <string name="import_confirmation_message">Importing data may overwrite your existing data. Do you want to continue?</string>
 </resources>
