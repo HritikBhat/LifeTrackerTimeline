@@ -37,7 +37,7 @@
     <string name="save">Guardar</string>
     <string name="task_details">Detalles de la tarea</string>
     <string name="label_task_name">NOMBRE DE LA TAREA</string>
-    <string name="label_notes">NOTAS</string>
+    <string name="label_notes">NOTIZEN</string>
     <string name="mark_as_unproductive">Marcar como improductivo</string>
     <string name="identifier_color">COLOR IDENTIFICADOR</string>
     <string name="task_icon">ICONO DE TAREA</string>
@@ -148,4 +148,10 @@
     <string name="premium_confirm_purchase_title">Confirmar compra Premium</string>
     <string name="premium_confirmation_message">El acceso premium se vinculará permanentemente a la cuenta:\n\n%1$s\n\nAsegúrese de haber iniciado sesión con la cuenta correcta antes de continuar. Esta compra no se puede transferir a otra cuenta.</string>
     <string name="continue_button">Continuar</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_name">Recordatorios de Timeline</string>
+    <string name="notification_channel_desc">Recordatorios para registrar tus últimas actividades</string>
+    <string name="notification_title_log">Actualiza tu Timeline</string>
+    <string name="notification_content_log">¡Es hora de registrar lo que has estado haciendo!</string>
 </resources>

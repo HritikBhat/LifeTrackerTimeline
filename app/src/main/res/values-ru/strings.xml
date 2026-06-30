@@ -148,4 +148,10 @@
     <string name="premium_confirm_purchase_title">Подтверждение покупки Премиум</string>
     <string name="premium_confirmation_message">Премиум-доступ будет навсегда привязан к аккаунту:\n\n%1$s\n\nПожалуйста, убедитесь, что вы вошли в нужный аккаунт перед продолжением. Эту покупку нельзя перенести на другой аккаунт.</string>
     <string name="continue_button">Продолжить</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_name">Напоминания Timeline</string>
+    <string name="notification_channel_desc">Напоминания о необходимости записать ваши последние действия</string>
+    <string name="notification_title_log">Обновите свою временную шкалу</string>
+    <string name="notification_content_log">Пришло время записать, чем вы занимались!</string>
 </resources>

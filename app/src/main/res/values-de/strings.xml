@@ -148,4 +148,10 @@
     <string name="premium_confirm_purchase_title">Premium-Kauf bestätigen</string>
     <string name="premium_confirmation_message">Der Premium-Zugang wird dauerhaft mit dem Konto verknüpft:\n\n%1$s\n\nBitte stellen Sie sicher, dass Sie mit dem richtigen Konto angemeldet sind, bevor Sie fortfahren. Dieser Kauf kann nicht auf ein anderes Konto übertragen werden.</string>
     <string name="continue_button">Weiter</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_name">Timeline-Erinnerungen</string>
+    <string name="notification_channel_desc">Erinnerungen zum Protokollieren Ihrer neuesten Aktivitäten</string>
+    <string name="notification_title_log">Aktualisieren Sie Ihre Timeline</string>
+    <string name="notification_content_log">Es ist Zeit zu protokollieren, was Sie getan haben!</string>
 </resources>

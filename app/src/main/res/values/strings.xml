@@ -148,4 +148,10 @@
     <string name="premium_confirm_purchase_title">Confirm Premium Purchase</string>
     <string name="premium_confirmation_message">Premium access will be permanently linked to the account:\n\n%1$s\n\nPlease ensure you are logged in with the correct account before continuing. This purchase cannot be transferred to another account.</string>
     <string name="continue_button">Continue</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_name">Timeline Reminders</string>
+    <string name="notification_channel_desc">Reminders to log your latest activities</string>
+    <string name="notification_title_log">Update your Timeline</string>
+    <string name="notification_content_log">It\'s time to log what you\'ve been doing!</string>
 </resources>

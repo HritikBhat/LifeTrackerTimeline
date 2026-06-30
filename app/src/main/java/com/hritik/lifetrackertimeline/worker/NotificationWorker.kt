@@ -6,11 +6,11 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.hritik.lifetrackertimeline.MainActivity
+import com.hritik.lifetrackertimeline.R
 
 class NotificationWorker(context: Context, workerParams: WorkerParameters) :
     Worker(context, workerParams) {
@@ -28,10 +28,10 @@ class NotificationWorker(context: Context, workerParams: WorkerParameters) :
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
-                "Timeline Reminders",
+                applicationContext.getString(R.string.notification_channel_name),
                 NotificationManager.IMPORTANCE_HIGH
             ).apply {
-                description = "Reminders to log your latest activities"
+                description = applicationContext.getString(R.string.notification_channel_desc)
                 enableLights(true)
                 enableVibration(true)
             }
@@ -51,8 +51,8 @@ class NotificationWorker(context: Context, workerParams: WorkerParameters) :
 
         val notification = NotificationCompat.Builder(applicationContext, channelId)
             .setSmallIcon(android.R.drawable.ic_dialog_info) // Consider using a custom app icon here
-            .setContentTitle("Update your Timeline")
-            .setContentText("It's time to log what you've been doing!")
+            .setContentTitle(applicationContext.getString(R.string.notification_title_log))
+            .setContentText(applicationContext.getString(R.string.notification_content_log))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setCategory(NotificationCompat.CATEGORY_REMINDER)
             .setContentIntent(pendingIntent)

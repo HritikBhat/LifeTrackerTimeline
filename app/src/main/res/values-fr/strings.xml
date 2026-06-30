@@ -148,4 +148,10 @@
     <string name="premium_confirm_purchase_title">Confirmer l\'achat Premium</string>
     <string name="premium_confirmation_message">L\'accès premium sera lié de manière permanente au compte :\n\n%1$s\n\nVeuillez vous assurer d\'être connecté au bon compte avant de continuer. Cet achat ne peut pas être transféré vers un autre compte.</string>
     <string name="continue_button">Continuer</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_name">Rappels de chronologie</string>
+    <string name="notification_channel_desc">Rappels pour enregistrer vos dernières activités</string>
+    <string name="notification_title_log">Mettez à jour votre chronologie</string>
+    <string name="notification_content_log">Il est temps d\'enregistrer ce que vous avez fait !</string>
 </resources>

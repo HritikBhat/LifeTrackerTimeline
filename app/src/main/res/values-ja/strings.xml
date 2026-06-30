@@ -148,4 +148,10 @@
     <string name="premium_confirm_purchase_title">プレミアム購入の確認</string>
     <string name="premium_confirmation_message">プレミアムアクセスはこのアカウントに永久に関連付けられます：\n\n%1$s\n\n続行する前に、正しいアカウントでログインしていることを確認してください。この購入は別のアカウントに譲渡することはできません。</string>
     <string name="continue_button">続行</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_name">タイムラインリマインダー</string>
+    <string name="notification_channel_desc">最新のアクティビティを記録するためのリマインダー</string>
+    <string name="notification_title_log">タイムラインを更新してください</string>
+    <string name="notification_content_log">何をしていたか記録する時間です！</string>
 </resources>

@@ -149,4 +149,10 @@
     <string name="premium_confirm_purchase_title">प्रीमियम खरीद की पुष्टि करें</string>
     <string name="premium_confirmation_message">प्रीमियम एक्सेस स्थायी रूप से इस खाते से जुड़ जाएगा:\n\n%1$s\n\nकृपया जारी रखने से पहले सुनिश्चित करें कि आपने सही खाते से लॉगिन किया है। यह खरीद दूसरे खाते में स्थानांतरित नहीं की जा सकती।</string>
     <string name="continue_button">जारी रखें</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_name">टाइमलाइन रिमाइंडर</string>
+    <string name="notification_channel_desc">आपकी नवीनतम गतिविधियों को लॉग करने के लिए रिमाइंडर</string>
+    <string name="notification_title_log">अपनी टाइमलाइन अपडेट करें</string>
+    <string name="notification_content_log">यह लॉग करने का समय है कि आप क्या कर रहे हैं!</string>
 </resources>
