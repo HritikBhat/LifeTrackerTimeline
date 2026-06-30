@@ -335,12 +335,12 @@ fun PeakProductivityCard(data: List<Pair<String, Int>>, peakTimeRange: String) {
             
             Spacer(modifier = Modifier.height(24.dp))
 
-            Row(
-                modifier = Modifier.fillMaxWidth().height(160.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.Bottom
-            ) {
-                if (data.isNotEmpty() && data.any { it.second > 0 }) {
+            if (data.isNotEmpty() && data.any { it.second > 0 }) {
+                Row(
+                    modifier = Modifier.fillMaxWidth().height(160.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.Bottom
+                ) {
                     val maxVal = data.maxOf { it.second }.toFloat().coerceAtLeast(1f)
                     data.forEach { (label, value) ->
                         val heightFactor = value / maxVal
@@ -366,12 +366,11 @@ fun PeakProductivityCard(data: List<Pair<String, Int>>, peakTimeRange: String) {
                             Text(text = label, fontSize = 10.sp, color = Color.Gray, textAlign = TextAlign.Center)
                         }
                     }
-                } else {
-                    Spacer(modifier = Modifier.height(16.dp))
-                    EmptyStateView(
-                        description = stringResource(R.string.focus_allocation_empty_desc)
-                    )
                 }
+            } else {
+                EmptyStateView(
+                    description = stringResource(R.string.focus_allocation_empty_desc)
+                )
             }
         }
     }
@@ -394,12 +393,12 @@ fun PeakUnproductivityCard(data: List<Pair<String, Int>>) {
             
             Spacer(modifier = Modifier.height(24.dp))
 
-            Row(
-                modifier = Modifier.fillMaxWidth().height(160.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.Bottom
-            ) {
-                if (data.isNotEmpty() && data.any { it.second > 0 }) {
+            if (data.isNotEmpty() && data.any { it.second > 0 }) {
+                Row(
+                    modifier = Modifier.fillMaxWidth().height(160.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.Bottom
+                ) {
                     val maxVal = data.maxOf { it.second }.toFloat().coerceAtLeast(1f)
                     data.forEach { (label, value) ->
                         val heightFactor = value / maxVal
@@ -425,12 +424,11 @@ fun PeakUnproductivityCard(data: List<Pair<String, Int>>) {
                             Text(text = label, fontSize = 10.sp, color = Color.Gray, textAlign = TextAlign.Center)
                         }
                     }
-                } else {
-                    Spacer(modifier = Modifier.height(16.dp))
-                    EmptyStateView(
-                        description = stringResource(R.string.focus_allocation_empty_desc)
-                    )
                 }
+            } else {
+                EmptyStateView(
+                    description = stringResource(R.string.focus_allocation_empty_desc)
+                )
             }
         }
     }
