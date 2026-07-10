@@ -1,19 +1,21 @@
 # LifeTracker Timeline
 
-LifeTracker Timeline is a modern Android application that helps users record and visualize life events on an interactive timeline. It provides an intuitive way to preserve memories, milestones, achievements, and important moments in chronological order.
+LifeTracker Timeline is a productivity and self-awareness app that helps users log daily activities, visualize their timeline, and identify where time is being spent. By tracking daily events, users can discover unproductive hours, build better habits, and improve time management.
+
+---
 
 ## ✨ Features
 
-- 📅 Create and manage life events
-- 🕒 Beautiful chronological timeline
-- 📝 Rich event details
-- 🔍 Search events
-- 🌙 Light & Dark Theme
-- 🌍 Multi-language support
-- 💾 Offline-first storage
+- 🕒 Log daily activities with timestamps
+- 📅 Interactive chronological timeline
+- 📊 Analyze productive and unproductive hours
+- 🔍 Search previous events
+- 📈 Daily activity history
+- 🌙 Light & Dark Mode
+- 🌍 Multiple language support
 - ☁️ Google Sign-In
 - 🔥 Firebase Cloud Sync
-- ⚡ Smooth and responsive UI
+- 💾 Offline support using Room Database
 
 ---
 
@@ -35,69 +37,50 @@ LifeTracker Timeline is a modern Android application that helps users record and
 
 ## 🏗 Architecture
 
-LifeTracker follows Google's recommended MVVM architecture.
+The application follows Google's recommended MVVM architecture.
 
 ```
-UI (Compose)
-      │
-ViewModel
-      │
- Repository
-      │
-Room + Firestore
+UI (Jetpack Compose)
+        │
+    ViewModel
+        │
+   Repository
+        │
+Room Database + Firestore
 ```
-
-### Architecture Benefits
-
-- Clean separation of concerns
-- Offline-first experience
-- Easy maintenance
-- Scalable project structure
-
----
-
-## 📦 Libraries Used
-
-- Jetpack Compose
-- Room
-- Firebase Authentication
-- Cloud Firestore
-- Hilt
-- Navigation Compose
-- Kotlin Coroutines
-- DataStore
-- Material 3
 
 ---
 
 ## 🚀 Why I Built This
 
-LifeTracker Timeline was created to provide a simple and elegant way to preserve personal memories and milestones. Instead of scattered notes or photos, users can organize important life moments in a structured timeline that's easy to revisit and maintain.
+Many people know they "waste time" but don't know exactly **where** it goes.
+
+LifeTracker Timeline was built to help users record daily events and visualize how every hour is spent. By reviewing the timeline, users can identify patterns, eliminate distractions, and make better use of their day.
 
 ---
 
-## 🔮 Future Roadmap
+## Future Improvements
 
-- Image attachments
-- Video memories
-- Cloud backup improvements
-- Event categories
-- Timeline filters
+- Weekly productivity analytics
+- Charts & Insights
+- AI-generated productivity suggestions
 - Calendar integration
 - Export & Import
-- Family timeline sharing
+- Home screen widgets
+- Goal tracking
+- Habit analytics
 
 ---
 
-## 📥 Download
+## Download
 
 Google Play:
 https://play.google.com/store/apps/details?id=com.hritik.lifetrackertimeline
 
 ---
 
-## 👨‍💻 Developed By
+## Developed By
 
 **Hritik Bhat**
 
-Android Developer | Kotlin | Jetpack Compose | MVVM | Firebase
+Android Developer | Kotlin | Jetpack Compose | MVVM
