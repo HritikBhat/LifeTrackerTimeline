@@ -155,4 +155,10 @@
     <string name="notification_channel_desc">आपकी नवीनतम गतिविधियों को लॉग करने के लिए रिमाइंडर</string>
     <string name="notification_title_log">अपनी टाइमलाइन अपडेट करें</string>
     <string name="notification_content_log">यह लॉग करने का समय है कि आप क्या कर रहे हैं!</string>
+
+    <!-- Data Import/Export -->
+    <string name="import_data">डेटा आयात करें</string>
+    <string name="export_data">डेटा निर्यात करें</string>
+    <string name="import_confirmation_title">डेटा आयात करें</string>
+    <string name="import_confirmation_message">डेटा आयात करने से आपका मौजूदा डेटा ओवरराइट हो सकता है। क्या आप जारी रखना चाहते हैं?</string>
 </resources>

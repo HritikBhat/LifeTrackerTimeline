@@ -154,4 +154,10 @@
     <string name="notification_channel_desc">Erinnerungen zum Protokollieren Ihrer neuesten Aktivitäten</string>
     <string name="notification_title_log">Aktualisieren Sie Ihre Timeline</string>
     <string name="notification_content_log">Es ist Zeit zu protokollieren, was Sie getan haben!</string>
+
+    <!-- Data Import/Export -->
+    <string name="import_data">Daten importieren</string>
+    <string name="export_data">Daten exportieren</string>
+    <string name="import_confirmation_title">Daten importieren</string>
+    <string name="import_confirmation_message">Das Importieren von Daten kann Ihre vorhandenen Daten überschreiben. Möchten Sie fortfahren?</string>
 </resources>

@@ -154,4 +154,10 @@
     <string name="notification_channel_desc">Recordatorios para registrar tus últimas actividades</string>
     <string name="notification_title_log">Actualiza tu Timeline</string>
     <string name="notification_content_log">¡Es hora de registrar lo que has estado haciendo!</string>
+
+    <!-- Data Import/Export -->
+    <string name="import_data">Importar datos</string>
+    <string name="export_data">Exportar datos</string>
+    <string name="import_confirmation_title">Importar datos</string>
+    <string name="import_confirmation_message">La importación de datos puede sobrescribir los datos existentes. ¿Desea continuar?</string>
 </resources>

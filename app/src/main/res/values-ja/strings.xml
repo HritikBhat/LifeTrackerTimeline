@@ -154,4 +154,10 @@
     <string name="notification_channel_desc">最新のアクティビティを記録するためのリマインダー</string>
     <string name="notification_title_log">タイムラインを更新してください</string>
     <string name="notification_content_log">何をしていたか記録する時間です！</string>
+
+    <!-- Data Import/Export -->
+    <string name="import_data">データをインポート</string>
+    <string name="export_data">データをエクスポート</string>
+    <string name="import_confirmation_title">データをインポート</string>
+    <string name="import_confirmation_message">データをインポートすると既存のデータが上書きされる可能性があります。続行しますか？</string>
 </resources>

@@ -154,4 +154,10 @@
     <string name="notification_channel_desc">Напоминания о необходимости записать ваши последние действия</string>
     <string name="notification_title_log">Обновите свою временную шкалу</string>
     <string name="notification_content_log">Пришло время записать, чем вы занимались!</string>
+
+    <!-- Data Import/Export -->
+    <string name="import_data">Импорт данных</string>
+    <string name="export_data">Экспорт данных</string>
+    <string name="import_confirmation_title">Импорт данных</string>
+    <string name="import_confirmation_message">Импорт данных может перезаписать существующие данные. Вы хотите продолжить?</string>
 </resources>

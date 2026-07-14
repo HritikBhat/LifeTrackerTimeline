@@ -154,4 +154,10 @@
     <string name="notification_channel_desc">Rappels pour enregistrer vos dernières activités</string>
     <string name="notification_title_log">Mettez à jour votre chronologie</string>
     <string name="notification_content_log">Il est temps d\'enregistrer ce que vous avez fait !</string>
+
+    <!-- Data Import/Export -->
+    <string name="import_data">Importer des données</string>
+    <string name="export_data">Exporter des données</string>
+    <string name="import_confirmation_title">Importer des données</string>
+    <string name="import_confirmation_message">L\'importation de données peut écraser vos données existantes. Voulez-vous continuer ?</string>
 </resources>
