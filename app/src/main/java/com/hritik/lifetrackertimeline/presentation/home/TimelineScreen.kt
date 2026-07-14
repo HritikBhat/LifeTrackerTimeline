@@ -238,18 +238,21 @@ fun TimelineItemRow(item: TimelineUiItem, onClick: () -> Unit) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.Top
                     ) {
                         Text(
                             text = item.title,
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF1A1A1A)
+                            color = Color(0xFF1A1A1A),
+                            modifier = Modifier.weight(1f)
                         )
+                        
+                        Spacer(modifier = Modifier.width(8.dp))
                         
                         Box(
                             modifier = Modifier
+                                .padding(top = 2.dp)
                                 .background(Color(item.color).copy(alpha = 0.1f), RoundedCornerShape(4.dp))
                                 .padding(horizontal = 6.dp, vertical = 2.dp)
                         ) {
