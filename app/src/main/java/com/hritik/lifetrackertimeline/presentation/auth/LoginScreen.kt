@@ -82,7 +82,7 @@ fun LoginScreen(
                 CircularProgressIndicator()
             } else {
                 OutlinedButton(
-                    onClick = { viewModel.signIn() },
+                    onClick = { viewModel.signIn(context) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(56.dp),

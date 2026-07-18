@@ -25,7 +25,7 @@ class AuthRepository @Inject constructor(
 ) {
     private val credentialManager = CredentialManager.create(context)
 
-    suspend fun signInWithGoogle(): Result<GoogleIdTokenCredential> {
+    suspend fun signInWithGoogle(activityContext: Context): Result<GoogleIdTokenCredential> {
         return try {
             val googleIdTokenOption = GetGoogleIdOption.Builder()
                 .setFilterByAuthorizedAccounts(false)
@@ -38,7 +38,7 @@ class AuthRepository @Inject constructor(
                 .build()
 
             val result = credentialManager.getCredential(
-                context = context,
+                context = activityContext,
                 request = request
             )
 

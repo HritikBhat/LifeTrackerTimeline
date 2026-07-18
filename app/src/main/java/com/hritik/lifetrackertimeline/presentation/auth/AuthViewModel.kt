@@ -1,5 +1,6 @@
 package com.hritik.lifetrackertimeline.presentation.auth
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
@@ -50,10 +51,10 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun signIn() {
+    fun signIn(context: Context) {
         viewModelScope.launch {
             _authState.value = AuthState.Loading
-            authRepository.signInWithGoogle().fold(
+            authRepository.signInWithGoogle(context).fold(
                 onSuccess = { credential ->
                     handleFirebaseSignIn(credential)
                 },
