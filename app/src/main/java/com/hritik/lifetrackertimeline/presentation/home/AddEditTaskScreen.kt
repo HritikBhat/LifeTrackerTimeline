@@ -45,7 +45,6 @@ fun AddEditTaskScreen(
     val scope = rememberCoroutineScope()
     val isPremium = LocalIsPremium.current
     var title by remember { mutableStateOf(taskName ?: "") }
-    var notes by remember { mutableStateOf("") }
     var isUnproductive by remember { mutableStateOf(false) }
     var selectedColor by remember { mutableStateOf(colors[0]) }
     var selectedIcon by remember { mutableStateOf(icons[0].name) }
@@ -54,7 +53,6 @@ fun AddEditTaskScreen(
         if (taskId != -1) {
             viewModel.getTaskById(taskId)?.let { task ->
                 title = task.title
-                notes = task.notes
                 isUnproductive = task.isUnproductive
                 selectedColor = Color(task.color)
                 selectedIcon = task.icon
@@ -78,7 +76,6 @@ fun AddEditTaskScreen(
                                 val task = TaskEntity(
                                     id = if (taskId == -1) 0 else taskId,
                                     title = title,
-                                    notes = notes,
                                     isUnproductive = isUnproductive,
                                     color = selectedColor.toArgb(),
                                     icon = selectedIcon
@@ -134,16 +131,6 @@ fun AddEditTaskScreen(
                     value = title,
                     onValueChange = { title = it },
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(8.dp)
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(stringResource(R.string.label_notes), style = MaterialTheme.typography.labelSmall, color = Color.Gray)
-                OutlinedTextField(
-                    value = notes,
-                    onValueChange = { notes = it },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(100.dp),
                     shape = RoundedCornerShape(8.dp)
                 )
                 Spacer(modifier = Modifier.height(16.dp))
@@ -212,7 +199,6 @@ fun AddEditTaskScreen(
                         val task = TaskEntity(
                             id = taskId,
                             title = title,
-                            notes = notes,
                             isUnproductive = isUnproductive,
                             color = selectedColor.toArgb(),
                             icon = selectedIcon

@@ -35,8 +35,7 @@ fun TaskListScreen(
     var searchQuery by remember { mutableStateOf("") }
     
     val filteredTasks = tasks.filter {
-        it.title.contains(searchQuery, ignoreCase = true) || 
-        it.notes.contains(searchQuery, ignoreCase = true)
+        it.title.contains(searchQuery, ignoreCase = true)
     }
 
     Column(
@@ -156,12 +155,13 @@ fun ManageTaskItem(
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
-                Text(
-                    text = task.notes,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = Color.Gray,
-                    maxLines = 2
-                )
+                if (task.isUnproductive) {
+                    Text(
+                        text = stringResource(R.string.mark_as_unproductive),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = Color.Red.copy(alpha = 0.7f)
+                    )
+                }
             }
             
             Row(verticalAlignment = Alignment.CenterVertically) {

@@ -42,7 +42,7 @@ class CalendarViewModel @Inject constructor(
                     timeSlot = entry.timeSlot,
                     taskId = entry.taskId,
                     title = task.title,
-                    description = task.notes,
+                    description = entry.description,
                     color = task.color,
                     icon = task.icon,
                     isCompleted = entry.isCompleted

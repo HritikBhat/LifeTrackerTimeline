@@ -7,7 +7,6 @@ import androidx.room.PrimaryKey
 data class TaskEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val title: String,
-    val notes: String,
     val isUnproductive: Boolean = false,
     val color: Int, // Store as ARGB Int
     val icon: String,

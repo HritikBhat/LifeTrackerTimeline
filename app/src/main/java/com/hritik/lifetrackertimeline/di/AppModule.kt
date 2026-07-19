@@ -47,7 +47,10 @@ object AppModule {
             context,
             AppDatabase::class.java,
             "life_tracker_db"
-        ).fallbackToDestructiveMigration().build()
+        )
+        .addMigrations(AppDatabase.MIGRATION_1_2)
+        .fallbackToDestructiveMigration()
+        .build()
     }
 
     @Provides
