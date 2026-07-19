@@ -49,7 +49,7 @@ class TimelineViewModel @Inject constructor(
                     timeSlot = entry.timeSlot,
                     taskId = entry.taskId,
                     title = task.title,
-                    description = task.notes,
+                    description = entry.description,
                     color = task.color,
                     icon = task.icon,
                     isCompleted = entry.isCompleted
@@ -62,7 +62,7 @@ class TimelineViewModel @Inject constructor(
         _selectedDate.value = date
     }
 
-    suspend fun upsertTimelineEntry(timeSlot: String, taskId: Int, date: String) {
+    suspend fun upsertTimelineEntry(timeSlot: String, taskId: Int, date: String, description: String = "") {
         // Update last selected time for the task
         taskRepository.updateLastSelectedAt(taskId, System.currentTimeMillis())
 
@@ -72,7 +72,8 @@ class TimelineViewModel @Inject constructor(
             TimelineEntity(
                 timeSlot = timeSlot,
                 taskId = taskId,
-                date = date
+                date = date,
+                description = description
             )
         )
     }

@@ -9,5 +9,6 @@ data class TimelineEntity(
     val timeSlot: String, // e.g., "08:00"
     val taskId: Int,
     val date: String, // e.g., "yyyy-MM-dd"
+    val description: String = "",
     val isCompleted: Boolean = false
 )

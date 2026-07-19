@@ -44,6 +44,8 @@ fun TaskSelectionScreen(
 ) {
     val scope = rememberCoroutineScope()
     var searchQuery by remember { mutableStateOf("") }
+    var slotDescription by remember { mutableStateOf("") }
+    
     val availableTasks by viewModel.availableTasks.collectAsState()
     
     val filteredTasks = remember(searchQuery, availableTasks) {
@@ -110,6 +112,23 @@ fun TaskSelectionScreen(
                 }
                 
                 Spacer(modifier = Modifier.height(24.dp))
+                
+                OutlinedTextField(
+                    value = slotDescription,
+                    onValueChange = { slotDescription = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    placeholder = { Text("What are you doing in this slot?") },
+                    label = { Text("Slot Description (Optional)") },
+                    shape = RoundedCornerShape(12.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        unfocusedContainerColor = Color.White,
+                        focusedContainerColor = Color.White,
+                        unfocusedBorderColor = Color(0xFFEEEEEE)
+                    ),
+                    singleLine = true
+                )
+                
+                Spacer(modifier = Modifier.height(16.dp))
                 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -193,7 +212,7 @@ fun TaskSelectionScreen(
                         onEdit = { onEditTask(task.id) },
                         onClick = {
                             scope.launch {
-                                viewModel.upsertTimelineEntry(timeSlot, task.id, date)
+                                viewModel.upsertTimelineEntry(timeSlot, task.id, date, slotDescription)
                                 onTaskSelected(task.id)
                             }
                         }
