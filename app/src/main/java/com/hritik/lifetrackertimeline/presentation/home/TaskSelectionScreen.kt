@@ -45,8 +45,22 @@ fun TaskSelectionScreen(
     val scope = rememberCoroutineScope()
     var searchQuery by remember { mutableStateOf("") }
     var slotDescription by remember { mutableStateOf("") }
+    var isDescriptionInitialized by remember { mutableStateOf(false) }
     
     val availableTasks by viewModel.availableTasks.collectAsState()
+    val timelineItems by viewModel.timelineItems.collectAsState()
+
+    LaunchedEffect(date) {
+        viewModel.setSelectedDate(date)
+    }
+
+    // Pre-fill the description UI if an entry exists for this slot
+    LaunchedEffect(timelineItems, timeSlot) {
+        if (!isDescriptionInitialized && timelineItems.containsKey(timeSlot)) {
+            slotDescription = timelineItems[timeSlot]?.description ?: ""
+            isDescriptionInitialized = true
+        }
+    }
     
     val filteredTasks = remember(searchQuery, availableTasks) {
         if (searchQuery.isBlank()) {
@@ -212,6 +226,7 @@ fun TaskSelectionScreen(
                         onEdit = { onEditTask(task.id) },
                         onClick = {
                             scope.launch {
+                                // Save the description along with the task selection
                                 viewModel.upsertTimelineEntry(timeSlot, task.id, date, slotDescription)
                                 onTaskSelected(task.id)
                             }
@@ -348,15 +363,15 @@ fun TaskSelectionItem(task: TaskEntity, onEdit: () -> Unit, onClick: () -> Unit)
     }
 }
 
-private fun getEndTime(startTime: String): String {
-    val parts = startTime.split(":")
-    if (parts.size < 2) return ""
-    var hour = parts[0].toInt()
-    var minute = parts[1].toInt() + 30
-    if (minute >= 60) {
-        hour += 1
-        minute = 0
+fun getEndTime(startTime: String): String {
+    return try {
+        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+        val date = sdf.parse(startTime) ?: return ""
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+        calendar.add(Calendar.HOUR_OF_DAY, 1)
+        sdf.format(calendar.time)
+    } catch (e: Exception) {
+        ""
     }
-    if (hour >= 24) hour = 0
-    return String.format(Locale.getDefault(), "%02d:%02d", hour, minute)
 }
