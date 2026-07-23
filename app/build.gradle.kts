@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
@@ -10,14 +9,14 @@ plugins {
 
 android {
     namespace = "com.hritik.lifetrackertimeline"
-    compileSdk = 35
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.hritik.lifetrackertimeline"
         minSdk = 28
-        targetSdk = 35
-        versionCode = 11
-        versionName = "1.0.10"
+        targetSdk = 37
+        versionCode = 12
+        versionName = "1.0.11"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -40,9 +39,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
     }
     buildFeatures {
         compose = true
@@ -96,7 +92,7 @@ dependencies {
 
     // DataStore
     implementation(libs.androidx.datastore.preferences)
-    implementation("com.google.android.material:material:1.12.0")
+    implementation(libs.material)
     
     // Gson
     implementation(libs.gson)

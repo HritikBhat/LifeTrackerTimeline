@@ -1,0 +1,3 @@
+- [x] Update Firebase dependencies in `libs.versions.toml`
+- [/] Run Gradle sync to verify resolution
+- [ ] Verify build completion

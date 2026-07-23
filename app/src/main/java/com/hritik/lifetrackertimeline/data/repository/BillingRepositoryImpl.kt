@@ -47,7 +47,11 @@ class BillingRepositoryImpl @Inject constructor(
 
     private val billingClient = BillingClient.newBuilder(context)
         .setListener(this)
-        .enablePendingPurchases()
+        .enablePendingPurchases(
+            PendingPurchasesParams.newBuilder()
+                .enableOneTimeProducts()
+                .build()
+        )
         .build()
 
     init {
@@ -121,9 +125,9 @@ class BillingRepositoryImpl @Inject constructor(
         )
         val params = QueryProductDetailsParams.newBuilder().setProductList(productList).build()
 
-        billingClient.queryProductDetailsAsync(params) { result, productDetailsList ->
+        billingClient.queryProductDetailsAsync(params) { result, queryProductDetailsResult ->
             if (result.responseCode == BillingClient.BillingResponseCode.OK) {
-                _products.value = productDetailsList
+                _products.value = queryProductDetailsResult.productDetailsList
             }
         }
     }
